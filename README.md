@@ -26,7 +26,7 @@
 
 ## Herramienta de coordinación
 Trello:
-- https://trello.com/invite/b/bXT0KXzy/ATTIe7a9323a8c26017d8cf67e800305ffc643CB3438/daw-proyecto
+- [https://trello.com/invite/b/bXT0KXzy/ATTIe7a9323a8c26017d8cf67e800305ffc643CB3438/daw-proyecto](https://trello.com/invite/daw359/ATTI234911d5a220db201ad3876bbe912dbd0CC8CC0A)
 
 
 ## Descripción del proyecto: 
