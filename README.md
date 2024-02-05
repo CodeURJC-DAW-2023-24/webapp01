@@ -66,7 +66,7 @@ Trello:
 
 ### Tecnología complementaria
 - Envío de correos
-- Generador de PDFs con el título del curos una vez completado
+- Generador de PDFs con el diploma del curos una vez completado
 
 ### Algoritmos o consulta avanzada
-- Recomendador de cursos: Dentro de la paltaforma veo quién se parece a mi y miro a ver a que cursos se ha apuntado que yo no lo haya hecho. 
+- Recomendador de cursos: Dentro de la plataforma veo quién se parece a mi y miro a ver a que cursos se ha apuntado que yo no lo haya hecho. 
