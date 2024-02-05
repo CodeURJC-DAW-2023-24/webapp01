@@ -66,9 +66,7 @@ Trello:
 
 ### Tecnología complementaria
 - Envío de correos
-- Uso de APIs
+- Generador de PDFs con el título del curos una vez completado
 
 ### Algoritmos o consulta avanzada
-- Ordenación de cursos por precio
-- Ordenación de cursos por categoría
-Ordenación de cursos por puntuación media de reviews
+- Recomendador de cursos: Dentro de la paltaforma veo quién se parece a mi y miro a ver a que cursos se ha apuntado que yo no lo haya hecho. 
