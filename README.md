@@ -1,5 +1,5 @@
 # webapp01
-#Fase 0
+# Fase 0
 
 ## Nombre de la aplicación web
 - **Tatademy**
@@ -72,7 +72,7 @@ Trello:
 ### Algoritmos o consulta avanzada
 - Recomendador de cursos: Dentro de la plataforma veo quién se parece a mi y miro a ver a que cursos se ha apuntado que yo no lo haya hecho. 
 
-#Fase 1
+# Fase 1
 
 ## Mapa de navegación
 
