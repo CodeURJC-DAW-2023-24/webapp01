@@ -1,0 +1,636 @@
+<!DOCTYPE html> 
+<html lang="en">
+	<head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		<title>Tatademy</title>
+		
+		<!-- Favicon -->
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.svg">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+		
+		<!-- Feather CSS -->
+		<link rel="stylesheet" href="assets/css/feather.css">
+
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="assets/css/style.css">
+	
+	</head>
+	<body>
+
+		<!-- Main Wrapper -->
+		<div class="main-wrapper">		
+				 <!-- Header -->
+				 <header class="header header-page">
+					<div class="header-fixed">
+						<nav class="navbar navbar-expand-lg header-nav scroll-sticky">
+							<div class="container header-border">
+								<div class="navbar-header">
+									<a id="mobile_btn" href="javascript:void(0);">
+										<span class="bar-icon">
+											<span></span>
+											<span></span>
+											<span></span>
+										</span>
+									</a>
+									<a href="index.html" class="navbar-brand logo">
+										<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+									</a>
+								</div>
+								<div class="main-menu-wrapper">
+									<div class="menu-header">
+										<a href="index.html" class="menu-logo">
+												<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+											</a>
+										<a id="menu_close" class="menu-close" href="javascript:void(0);">
+												<i class="fas fa-times"></i>
+											</a>
+									</div>
+									<ul class="main-nav">
+										<li class="has-submenu">
+											<a class="" href="index.html">Inicio</a>
+										</li>
+										<li class="has-submenu active">
+											<a class="" href="course-grid.html">Cursos</a>
+										</li>
+										<li class="has-submenu">
+											<a href="">Administrador<i class="fas fa-chevron-down"></i></a>
+											<ul class="submenu">
+												<li><a href="instructor-manager.html">Perfil</a></li>
+												<li><a href="add-course.html">Crear Curso</a></li>
+												<li><a href="instructor-edit-profile.html">Gestionar Usuarios</a></li>
+												
+												<li><a href="instructor-dashboard.html">Estadísticas</a></li>
+												<li><a href="instructor-security.html">Seguridad Cuenta</a></li>
+											</ul>
+										</li>
+										<li class="has-submenu">
+											<a href="">Estudiante<i class="fas fa-chevron-down"></i></a>
+											<ul class="submenu first-submenu">
+												<li><a href="setting-edit-profile.html">Perfil</a></li>
+												<li><a href="my-course-list.html">Mis Cursos</a></li>
+												<li><a href="setting-student-security.html">Seguridad Cuenta</a></li>
+											</ul>
+										</li>
+										<li class="has-submenu">
+											<a href="faq.html">FAQ</a>
+										</li>
+									</ul>
+								</div>
+	
+								<ul class="nav header-navbar-rht">
+									<li class="nav-item user-nav">
+										<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+											<span class="user-img">
+												<img src="assets/img/user/user11.jpg" alt="">
+												<span class="status online"></span>
+											</span>
+										</a>
+										<div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end" >
+											<div class="user-header">
+												<div class="avatar avatar-sm">
+													<img src="assets/img/user/user11.jpg" alt="User Image" class="avatar-img rounded-circle">
+												</div>
+												<div class="user-text">
+													<h6>Rolands R</h6>
+													<p class="text-muted mb-0">Student</p>
+												</div>
+											</div>
+											<a class="dropdown-item" href="setting-edit-profile.html"><i class="feather-user me-1"></i> Perfil</a>
+											<a class="dropdown-item" href="my-course-list.html"><i class="feather-star me-1"></i> Mis cursos</a>
+											<a class="dropdown-item" href="index.html"><i class="feather-log-out me-1"></i> Cerrar Sesión</a>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</nav>
+					</div>
+				</header>
+				<!-- /Header -->
+	
+	
+					
+			<!-- Breadcrumb -->
+			<div class="breadcrumb-bar">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 col-12">
+							<div class="breadcrumb-list" style="text-align: center">
+								<nav aria-label="breadcrumb" class="page-breadcrumb">
+
+
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+										<li class="breadcrumb-item"><a href="course-grid.html">Buscar cursos</a></li>
+										<li class="breadcrumb-item" aria-current="page" style="margin-right: 200px">The Complete Web Developer Course 2.0</li>
+									</ol>
+
+									
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->
+			
+			<!-- Inner Banner -->
+			<div class="inner-banner">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="instructor-wrap border-bottom-0 m-0">
+								
+								<span class="web-badge mb-3">WEB DEVELOPMENT</span>
+							</div>
+							<h2>The Complete Web Developer Course 2.0</h2>
+							<p>Learn Web Development by building 25 websites and mobile apps using HTML, CSS, Javascript, PHP, Python, MySQL & more!</p>
+							<div class="about-instructor align-items-center">								
+								<div class="rating mb-0">							
+									<i class="fas fa-star filled"></i>
+									<i class="fas fa-star filled"></i>
+									<i class="fas fa-star filled"></i>
+									<i class="fas fa-star filled"></i>
+									<i class="fas fa-star"></i>
+									<span class="d-inline-block average-rating"><span>4.5</span> (15)</span>
+								</div>
+							</div>				
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Inner Banner -->
+			
+			<!-- Course Content -->
+			<section class="page-content course-sec">
+				<div class="container">
+				
+					<div class="row">
+						<div class="col-lg-8">
+						
+							<!-- Overview -->
+							<div class="card overview-sec">
+								<div class="card-body">
+									<h5 class="subs-title">Acerca del curso</h5>
+									<h6>Descripción del curso</h6>
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+									<p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+									
+									<h6>Lo que aprenderas</h6>
+									<div class="row">
+										<div class="col-md-6">
+											<ul>
+												<li>Become a UX designer.</li>
+												<li>You will be able to add UX designer to your CV</li>
+												<li>Become a UI designer.</li>
+												<li>Build & test a full website design.</li>
+												<li>Build & test a full mobile app.</li>
+											</ul>
+										</div>
+										<div class="col-md-6">
+											<ul>
+												<li>Learn to design websites & mobile phone apps.</li>
+												<li>You'll learn how to choose colors.</li>
+												<li>Prototype your designs with interactions.</li>
+												<li>Export production ready assets.</li>
+												<li>All the techniques used by UX professionals</li>
+											</ul>
+										</div>
+									</div>
+									<h6>Conocimientos previos y material necesario</h6>
+									<ul class="mb-0">
+										<li>You will need a copy of Adobe XD 2019 or above. A free trial can be downloaded from Adobe.</li>
+										<li>No previous design experience is needed.</li>
+										<li class="mb-0">No previous Adobe XD skills are needed.</li>
+									</ul>
+								</div>
+							</div>
+							<!-- /Overview -->
+							
+							<!-- Course Content -->
+							<div class="card content-sec">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-6">
+											<h5 class="subs-title">Contenido del curso</h5>
+										</div>
+									</div>
+									<div class="course-card">
+										<h6 class="cou-title">
+											<a class="collapsed" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="false">In which areas do you operate?</a>
+										</h6>
+										<div id="collapseOne" class="card-collapse collapse">
+											<ul>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.1 Introduction to the User Experience Course</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.2 Exercise: Your first design challenge</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.5 How to use text layers effectively</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="course-card">
+										<h6 class="cou-title">
+											<a class="collapsed" data-bs-toggle="collapse" href="#course2" aria-expanded="false">The Brief</a>
+										</h6>
+										<div id="course2" class="card-collapse collapse">
+											<ul>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.1 Introduction to the User Experience Course</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.2 Exercise: Your first design challenge</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.5 How to use text layers effectively</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="course-card">
+										<h6 class="cou-title">
+											<a class="collapsed" data-bs-toggle="collapse" href="#course3" aria-expanded="false">Wireframing Low Fidelity</a>
+										</h6>
+										<div id="course3" class="card-collapse collapse">
+											<ul>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.1 Introduction to the User Experience Course</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.2 Exercise: Your first design challenge</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.5 How to use text layers effectively</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="course-card">
+										<h6 class="cou-title mb-0">
+											<a class="collapsed" data-bs-toggle="collapse" href="#coursefour" aria-expanded="false">Type, Color & Icon Introduction</a>
+										</h6>
+										<div id="coursefour" class="card-collapse collapse">
+											<ul>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.1 Introduction to the User Experience Course</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.2 Exercise: Your first design challenge</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.3 How to solve the previous exercise</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.4 How to solve the previous exercise</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+												<li>
+													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.5 How to use text layers effectively</p>
+													<div>
+														<a href="javascript:void(0);">Preview</a>
+													</div>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /Course Content -->
+							
+							<!-- Reviews -->
+							<div class="card review-sec">
+								<div class="card-body">
+									<h5 class="subs-title">Reseñas</h5>
+									<div class="instructor-wrap">
+										<div class="about-instructor">
+											<div class="abt-instructor-img">
+												<a href="instructor-profile.html"><img src="assets/img/user/user1.jpg" alt="img" class="img-fluid"></a>
+											</div>
+											<div class="instructor-detail">
+												<h5><a href="instructor-profile.html">Nicole Brown</a></h5>
+												<p>UX/UI Designer</p>
+											</div>
+										</div>
+										<div class="rating">							
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star filled"></i>
+											<i class="fas fa-star"></i>
+											<span class="d-inline-block average-rating">4.5 Instructor Rating</span>
+										</div>
+									</div>
+									<p class="rev-info">“ This is the second Photoshop course I have completed with Cristian. Worth every penny and recommend it highly. To get the most out of this course, its best to to take the Beginner to Advanced course first. The sound and video quality is of a good standard. Thank you Cristian. “</p>
+									<a href="javascript:void(0);" class="btn btn-reply"><i class="feather-corner-up-left"></i> Responder </a>
+								</div>
+							</div>
+							<!-- /Reviews -->
+
+							<!-- Comment -->
+							<div class="card comment-sec">
+								<div class="card-body">
+									<h5 class="subs-title">Escribe tu reseña</h5>
+									<form>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="input-block">
+													<input type="text" class="form-control" placeholder="Nombre completo">
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="input-block">
+													<input type="email" class="form-control" placeholder="Email">
+												</div>
+											</div>
+										</div>
+										<div class="input-block">
+											<input type="email" class="form-control" placeholder="Asunto">
+										</div>
+										<div class="input-block">
+											<textarea rows="4" class="form-control" placeholder="Tus comentarios"></textarea>
+										</div>
+										<div class="submit-section">
+											<button class="btn submit-btn" type="submit">Enviar</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- /Comment -->
+							
+							
+							
+							
+							
+							
+						</div>	
+						
+						<div class="col-lg-4">
+							<div class="sidebar-sec">
+							
+								<!-- Video -->
+								<div class="video-sec vid-bg">
+									<div class="card">
+										<div class="card-body">
+											<a href="https://www.youtube.com/embed/1trvO6dqQUI" class="video-thumbnail" data-fancybox="">
+												<div class="play-icon">
+													<i class="fa-solid fa-play"></i>
+												</div>
+												<img class="" src="assets/img/video.jpg" alt="">
+											</a>
+											<div class="video-details">
+												<div class="course-fee">
+												<h2>Gratuito</h2>
+												</div>
+												<a href="#" class="btn btn-enroll w-100">Inscribirse</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- /Video -->
+								
+								<!-- Include -->
+								<div class="card include-sec">
+									<div class="card-body">
+										<div class="cat-title">
+											<h4>Este curso contiene</h4>
+										</div>
+										<ul>
+											<li><img src="assets/img/icon/import.svg" class="me-2" alt=""> 11 hours on-demand video</li>
+											<li><img src="assets/img/icon/play.svg" class="me-2" alt=""> 69 downloadable resources</li>
+											<li><img src="assets/img/icon/key.svg" class="me-2" alt=""> Full lifetime access</li>
+											<li><img src="assets/img/icon/mobile.svg" class="me-2" alt=""> Access on mobile and TV</li>
+											<li><img src="assets/img/icon/cloud.svg" class="me-2" alt=""> Assignments</li>
+											<li><img src="assets/img/icon/teacher.svg" class="me-2" alt=""> Certificate of Completion</li>
+										</ul>
+									</div>
+								</div>
+								<!-- /Include -->
+								
+								<!-- Features -->
+								<div class="card feature-sec">
+									<div class="card-body">
+										<div class="cat-title">
+											<h4>Acerca del curso</h4>
+										</div>
+										<ul>
+											<li><img src="assets/img/icon/users.svg" class="me-2" alt=""> Matriculados: <span>32 usuarios</span></li>
+											<li><img src="assets/img/icon/timer.svg" class="me-2" alt=""> Duración: <span>20 horas</span></li>
+											<li><img src="assets/img/icon/chapter.svg" class="me-2" alt=""> Módulos: <span>15</span></li>
+											<li><img src="assets/img/icon/chart.svg" class="me-2" alt=""> Nivel de dificultad: <span>Principiante</span></li>
+										</ul>
+									</div>
+								</div>
+								<!-- /Features -->
+								
+								
+							</div>
+						</div>
+					</div>	
+				</div>
+			</section>
+			<!-- /Pricing Plan -->
+			
+
+
+			<!-- Footer -->
+			<footer class="footer">
+
+				<!-- Footer Top -->
+				<div class="footer-top aos" data-aos="fade-up">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6 col-md-8">
+	
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-about">
+									<div class="footer-logo">
+										<img src="assets/img/logo.svg" alt="logo">
+									</div>
+									<div class="">
+										<p>
+											Descubre cursos gratuitos en Tatademy. Aprende a tu propio ritmo, desde cualquier lugar. ¡Únete a nuestra comunidad hoy!
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+	
+							</div>
+	
+							<div class="col-lg-2 col-md-6">
+	
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<h2 class="footer-title">Enlace útiles</h2>
+									<ul>
+										<li><a href="course-grid.html">Cursos</a></li>
+										<li><a href="login.html">Iniciar sesión</a></li>
+										<li><a href="register.html">Registrarse</a></li>
+									</ul>
+								</div>
+								<!-- /Footer Widget -->
+	
+							</div>
+	
+							<div class="col-lg-4 col-md-6">
+	
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-contact">
+									<h2 class="footer-title">Contacto</h2>
+									<div class="footer-contact-info">
+										<div class="footer-address">
+											<img src="assets/img/icon/icon-20.svg" alt="" class="img-fluid">
+											<p> C. Tulipán, s/n, Móstoles<br> Madrid, 28933</p>
+										</div>
+										<p>
+											<img src="assets/img/icon/icon-19.svg" alt="" class="img-fluid">
+											<a href="mailto:tatademy@gmail.com">tatademy@gmail.com</a>
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+	
+							</div>
+	
+						</div>
+					</div>
+				</div>
+				<!-- /Footer Top -->
+	
+				<!-- Footer Bottom -->
+				<div class="footer-bottom">
+					<div class="container">
+	
+						<!-- Copyright -->
+						<div class="copyright">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="privacy-policy">
+										<ul>
+											<li><a href="term-condition.html">Terminos y condiciones</a></li>
+											<li><a href="privacy-policy.html">Política de privacidad</a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="copyright-text">
+										<p class="mb-0">&copy; 2024 DAW G1. Todos los derechos reservados.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /Copyright -->
+	
+					</div>
+				</div>
+				<!-- /Footer Bottom -->
+	
+			</footer>
+			<!-- /Footer -->
+		   
+		</div>
+	   <!-- /Main Wrapper -->
+	  
+		<!-- jQuery -->
+		<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery-3.7.1.min.js"></script>
+		
+		<!-- Bootstrap Core JS -->
+		<script src="assets/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Select2 JS -->
+	  	<script src="assets/plugins/select2/js/select2.min.js"></script>
+
+	  	<!-- Ckeditor JS -->
+	  	<script src="assets/js/ckeditor.js"></script>
+
+	  	<!-- Bootstrap Tagsinput JS -->
+		<script src="assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+		
+		<!-- Custom JS -->
+		<script src="assets/js/script.js"></script>
+		
+	</body>
+</html>
