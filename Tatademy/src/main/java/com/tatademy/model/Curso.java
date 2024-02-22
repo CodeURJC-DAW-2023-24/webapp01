@@ -1,10 +1,9 @@
 package com.tatademy.model;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +19,7 @@ public class Curso {
 	private int id;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Material> materiales;
+	private List<Material> materiales = new ArrayList<Material>();
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Review> reviews;
