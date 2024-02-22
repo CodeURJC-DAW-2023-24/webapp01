@@ -3,10 +3,10 @@ document.getElementById('courseContentInput').addEventListener('change', functio
     var archivos = this.files;
     var texto = '';
     for (var i = 0; i < archivosList.length; i++) {
-        texto += '<div>'+ archivosList[i].name + '<img data-nombre=\'' + archivosList[i].name + '\' class="bin"  style="width: 2em; height: 2em;" src="assets/img/archivo-bin.png">'+'</div>'+'<br>';
+        texto += '<div>'+ archivosList[i].name + '<img data-nombre=\'' + archivosList[i].name + '\' class="bin"  style="width: 2em; height: 2em;" src="/assets/img/archivo-bin.png">'+'</div>'+'<br>';
     }
     for (var i = 0; i < archivos.length; i++) {
-        texto += '<div>'+ archivos[i].name + '<img data-nombre=\'' + archivos[i].name + '\' class="bin"  style="width: 2em; height: 2em;" src="assets/img/archivo-bin.png">'+'</div>'+'<br>';
+        texto += '<div>'+ archivos[i].name + '<img data-nombre=\'' + archivos[i].name + '\' class="bin"  style="width: 2em; height: 2em;" src="/assets/img/archivo-bin.png">'+'</div>'+'<br>';
         archivosList.push(archivos[i]);
     }
     document.getElementById('courseContent').innerHTML = texto || 'No se seleccionó archivo';
@@ -32,7 +32,7 @@ function eliminarElemento(nombreArchivo) {
 function actualizarContenido() {
     var texto = '';
     for (var i = 0; i < archivosList.length; i++) {
-        texto += '<div>'+ archivosList[i].name + '<img class="bin" data-nombre="' + archivosList[i].name + '" style="width: 2em; height: 2em;" src="assets/img/archivo-bin.png">'+'</div>'+'<br>';
+        texto += '<div>'+ archivosList[i].name + '<img class="bin" data-nombre="' + archivosList[i].name + '" style="width: 2em; height: 2em;" src="/assets/img/archivo-bin.png">'+'</div>'+'<br>';
     }
     document.getElementById('courseContent').innerHTML = texto || 'No se seleccionó archivo';
 }
@@ -54,9 +54,6 @@ document.getElementById('courseSubmit').addEventListener('submit', function(even
     fetch("/create/course", {
         method: 'POST',
         body: formData
-    }).then(response => {
-        // Manejar la respuesta del servidor si es necesario
-
     })
     
 }); 
