@@ -3,16 +3,22 @@ package com.tatademy.controller;
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tatademy.model.Curso;
@@ -23,8 +29,9 @@ import com.tatademy.repository.ReviewRepository;
 import com.tatademy.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 
-@RestController
+@Controller
 public class RestControler {
 
 	@Autowired
@@ -93,8 +100,76 @@ public class RestControler {
 
 	// CRUD Cursos
 	@GetMapping("/courses")
-	public List<Curso> getMethodName() {
-		return cursos.findAll();
+	public String getMethodName(Model model) {
+		List<String> filters = cursos.findAllCategorias();
+		List<String[]> filterPair = new ArrayList<>();
+		for(int i = 0; i < filters.size(); ++i) {
+			String[] aux = new String[2];
+			aux[0] = filters.get(i);
+			aux[1] = "";
+			filterPair.add(aux);
+		}
+		model.addAttribute("courses", cursos.findAll());
+		model.addAttribute("filters", filterPair);
+		return "course-grid";
+	}
+	
+	@GetMapping("/course-search")
+	public String courseSearch(Model model, @RequestParam String name) {
+		List<Curso> courses;
+		courses = cursos.findByNombreContains(name);
+		List<String> filters = cursos.findAllCategorias();
+		List<String[]> filterPair = new ArrayList<>();
+		for(int i = 0; i < filters.size(); ++i) {
+			String[] aux = new String[2];
+			aux[0] = filters.get(i);
+			aux[1] = "";
+			filterPair.add(aux);
+		}
+		model.addAttribute("filters", filterPair);
+		model.addAttribute("courses", courses);
+		return "course-grid";
+	}
+	
+	@GetMapping("/course-filter")
+    public String processForm(Model model, HttpServletRequest request) {
+        Map<String, String[]> paramMap = request.getParameterMap();
+        List<String> allFilters = cursos.findAllCategorias();
+        List<String> filters = new ArrayList<>();
+        List<String> filtersMode = new ArrayList<>();
+        List<String> filtersName = new ArrayList<>();
+        List<String[]> filterPair = new ArrayList<>();
+        if (!paramMap.isEmpty()) {
+            for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
+                String paramName = entry.getKey();
+                String[] paramValues = entry.getValue();
+                filtersName.add(paramName);
+                for (String paramValue : paramValues) {
+                	filtersMode.add(paramValue);
+                	if (paramValue.equals("on")) {
+                		filters.add(paramName);
+                	}
+                }
+            }
+            
+            model.addAttribute("courses", cursos.findByCategoriaIn(filters));
+        }
+        else {
+        	model.addAttribute("courses", cursos.findAll());
+        }
+        for(int i = 0; i < allFilters.size(); ++i) {
+        	String[] aux = new String[2];
+        	aux[0] = allFilters.get(i);
+        	if (filters.contains(allFilters.get(i))) {
+        		aux[1] = "checked";
+        	}
+        	else {
+        		aux[1] = "";
+        	}
+        	filterPair.add(aux);
+        }
+        model.addAttribute("filters", filterPair);
+        return "course-grid";
 	}
 
 	@PostMapping("/admin/{id}/new/course")

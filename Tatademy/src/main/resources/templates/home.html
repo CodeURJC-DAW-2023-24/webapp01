@@ -54,13 +54,13 @@
 										<span></span>
 									</span>
 								</a>
-                            <a href="index.html" class="navbar-brand logo">
+                            <a href="index" class="navbar-brand logo">
 									<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
 								</a>
                         </div>
                         <div class="main-menu-wrapper">
                             <div class="menu-header">
-                                <a href="index.html" class="menu-logo">
+                                <a href="index" class="menu-logo">
                                         <img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
                                     </a>
                                 <a id="menu_close" class="menu-close" href="javascript:void(0);">
@@ -69,40 +69,40 @@
                             </div>
                             <ul class="main-nav">
                                 <li class="has-submenu active">
-                                    <a class="" href="index.html">Inicio</a>
+                                    <a class="" href="index">Inicio</a>
                                 </li>
                                 <li class="has-submenu">
-                                    <a class="" href="course-grid.html">Cursos</a>
+                                    <a class="" href="courses">Cursos</a>
                                 </li>
                                 <li class="has-submenu">
                                     <a href="">Administrador<i class="fas fa-chevron-down"></i></a>
                                     <ul class="submenu">
-                                        <li><a href="instructor-manager.html">Perfil</a></li>
-                                        <li><a href="/create/course">Crear Curso</a></li>
-                                        <li><a href="instructor-edit-profile.html">Gestionar Usuarios</a></li>
-                                        <li><a href="instructor-dashboard.html">Estadísticas</a></li>
-                                        <li><a href="instructor-security.html">Seguridad Cuenta</a></li>
+                                        <li><a href="instructor-manager">Perfil</a></li>
+                                        <li><a href="add-course">Crear Curso</a></li>
+                                        <li><a href="instructor-edit-profile">Gestionar Usuarios</a></li>
+                                        <li><a href="instructor-dashboard">Estadísticas</a></li>
+                                        <li><a href="instructor-security">Seguridad Cuenta</a></li>
                                     </ul>
                                 </li>
                                 <li class="has-submenu">
                                     <a href="">Estudiante<i class="fas fa-chevron-down"></i></a>
                                     <ul class="submenu first-submenu">
-                                        <li><a href="setting-edit-profile.html">Perfil</a></li>
-                                        <li><a href="my-course-list.html">Mis Cursos</a></li>
-                                        <li><a href="setting-student-security.html">Seguridad Cuenta</a></li>
+                                        <li><a href="setting-edit-profile">Perfil</a></li>
+                                        <li><a href="my-course-list">Mis Cursos</a></li>
+                                        <li><a href="setting-student-security">Seguridad Cuenta</a></li>
                                     </ul>
                                 </li>
                                 <li class="has-submenu">
-                                    <a href="faq.html">FAQ</a>
+                                    <a href="faq">FAQ</a>
                                 </li>
                             </ul>
                         </div>
                         <ul class="nav header-navbar-rht">
                             <li class="nav-item">
-                                <a class="nav-link header-sign" href="login.html">Iniciar sesión</a>
+                                <a class="nav-link header-sign" href="login">Iniciar sesión</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link header-login" href="register.html">Crear cuenta</a>
+                                <a class="nav-link header-login" href="register">Crear cuenta</a>
                             </li>
                         </ul>
                     </div>
@@ -123,11 +123,11 @@
                                 <p>Domina tu futuro aprendiendo nuevas habilidades en línea</p>
                             </div>
                             <div class="banner-content">
-                                <form class="form" action="course-grid.html">
+                                <form class="form" action="course-search">
                                     <div class="form-inner">
                                         <div class="input-group">
                                             <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                                            <input type="email" class="form-control" placeholder="Busca el curso que quieras">
+                                            <input type="text" class="form-control" placeholder="Busca el curso que quieras" name="name">
                                             <button class="btn btn-primary sub-btn" type="submit"><i class="fas fa-arrow-right"></i></button>
                                         </div>
                                     </div>
@@ -239,7 +239,7 @@
                         <h2>Top categorias</h2>
                     </div>
                     <div class="all-btn all-category d-flex align-items-center">
-                        <a href="job-category.html" class="btn btn-primary">Todas las categorias</a>
+                        <a href="job-category" class="btn btn-primary">Todas las categorias</a>
                     </div>
                 </div>
                 <div class="section-text aos" data-aos="fade-up">
@@ -440,7 +440,7 @@
                         <h2>Cursos recomendados</h2>
                     </div>
                     <div class="all-btn all-category d-flex align-items-center">
-                        <a href="course-list.html" class="btn btn-primary">Todos los cursos</a>
+                        <a href="courses" class="btn btn-primary">Todos los cursos</a>
                     </div>
                 </div>
                 <div class="section-text aos" data-aos="fade-up">
@@ -452,12 +452,12 @@
                             <div class="course-box d-flex aos" data-aos="fade-up">
                                 <div class="product">
                                     <div class="product-img">
-                                        <a href="course-details.html">
+                                        <a href="course-details">
 												<img class="img-fluid" alt="" src="assets/img/course/course-01.jpg">
 											</a>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title instructor-text"><a href="course-details.html">Información sobre el Grado en Diseño UI/UX</a></h3>
+                                        <h3 class="title instructor-text"><a href="course-details">Información sobre el Grado en Diseño UI/UX</a></h3>
                                         <div class="course-info d-flex align-items-center">
                                             <div class="rating-img d-flex align-items-center">
                                                 <img src="assets/img/icon/icon-01.svg" alt="">
@@ -477,7 +477,7 @@
                                             <span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
                                         </div>
                                         <div class="all-btn all-category d-flex align-items-center">
-                                            <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                            <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                         </div>
                                     </div>
                                 </div>
@@ -487,12 +487,12 @@
                             <div class="course-box d-flex aos" data-aos="fade-up">
                                 <div class="product">
                                     <div class="product-img">
-                                        <a href="course-details.html">
+                                        <a href="course-details">
 												<img class="img-fluid" alt="" src="assets/img/course/course-02.jpg">
 											</a>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title instructor-text"><a href="course-details.html">Wordpress para principiantes - Domina Wordpress rápidamente</a></h3>
+                                        <h3 class="title instructor-text"><a href="course-details">Wordpress para principiantes - Domina Wordpress rápidamente</a></h3>
                                         <div class="course-info d-flex align-items-center">
                                             <div class="rating-img d-flex align-items-center">
                                                 <img src="assets/img/icon/icon-01.svg" alt="">
@@ -512,7 +512,7 @@
                                             <span class="d-inline-block average-rating"><span>4.3</span> (15)</span>
                                         </div>
                                         <div class="all-btn all-category d-flex align-items-center">
-                                            <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                            <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                         </div>
                                     </div>
                                 </div>
@@ -522,12 +522,12 @@
                             <div class="course-box d-flex aos" data-aos="fade-up">
                                 <div class="product">
                                     <div class="product-img">
-                                        <a href="course-details.html">
+                                        <a href="course-details">
 												<img class="img-fluid" alt="" src="assets/img/course/course-03.jpg">
 											</a>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title instructor-text"><a href="course-details.html">Sketch de la A a la Z (2024): Diseñador de aplicaciones</a></h3>
+                                        <h3 class="title instructor-text"><a href="course-details">Sketch de la A a la Z (2024): Diseñador de aplicaciones</a></h3>
                                         <div class="course-info d-flex align-items-center">
                                             <div class="rating-img d-flex align-items-center">
                                                 <img src="assets/img/icon/icon-01.svg" alt="">
@@ -547,7 +547,7 @@
                                             <span class="d-inline-block average-rating"><span>4.5</span> (15)</span>
                                         </div>
                                         <div class="all-btn all-category d-flex align-items-center">
-                                            <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                            <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                         </div>
                                     </div>
                                 </div>
@@ -557,12 +557,12 @@
                             <div class="course-box d-flex aos" data-aos="fade-up">
                                 <div class="product">
                                     <div class="product-img">
-                                        <a href="course-details.html">
+                                        <a href="course-details">
 												<img class="img-fluid" alt="" src="assets/img/course/course-04.jpg">
 											</a>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title instructor-text"><a href="course-details.html">Fundamentos de Angular hasta el nivel avanzado</a></h3>
+                                        <h3 class="title instructor-text"><a href="course-details">Fundamentos de Angular hasta el nivel avanzado</a></h3>
                                         <div class="course-info d-flex align-items-center">
                                             <div class="rating-img d-flex align-items-center">
                                                 <img src="assets/img/icon/icon-01.svg" alt="">
@@ -582,7 +582,7 @@
                                             <span class="d-inline-block average-rating"><span>4.2</span> (15)</span>
                                         </div>
                                         <div class="all-btn all-category d-flex align-items-center">
-                                            <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                            <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                         </div>
                                     </div>
                                 </div>
@@ -592,12 +592,12 @@
                             <div class="course-box d-flex aos" data-aos="fade-up">
                                 <div class="product">
                                     <div class="product-img">
-                                        <a href="course-details.html">
+                                        <a href="course-details">
 												<img class="img-fluid" alt="" src="assets/img/course/course-05.jpg">
 											</a>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title instructor-text"><a href="course-details.html">Construir sitios web responsive en el mundo real con HTML5 y CSS3</a></h3>
+                                        <h3 class="title instructor-text"><a href="course-details">Construir sitios web responsive en el mundo real con HTML5 y CSS3</a></h3>
                                         <div class="course-info d-flex align-items-center">
                                             <div class="rating-img d-flex align-items-center">
                                                 <img src="assets/img/icon/icon-01.svg" alt="">
@@ -617,7 +617,7 @@
                                             <span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
                                         </div>
                                         <div class="all-btn all-category d-flex align-items-center">
-                                            <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                            <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                         </div>
                                     </div>
                                 </div>
@@ -627,12 +627,12 @@
                             <div class="course-box d-flex aos" data-aos="fade-up">
                                 <div class="product">
                                     <div class="product-img">
-                                        <a href="course-details.html">
+                                        <a href="course-details">
 												<img class="img-fluid" alt="" src="assets/img/course/course-06.jpg">
 											</a>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title instructor-text"><a href="course-details.html">Programación C# con Visual Studio Code</a></h3>
+                                        <h3 class="title instructor-text"><a href="course-details">Programación C# con Visual Studio Code</a></h3>
                                         <div class="course-info d-flex align-items-center">
                                             <div class="rating-img d-flex align-items-center">
                                                 <img src="assets/img/icon/icon-01.svg" alt="">
@@ -652,7 +652,7 @@
                                             <span class="d-inline-block average-rating"><span>4.6</span> (15)</span>
                                         </div>
                                         <div class="all-btn all-category d-flex align-items-center">
-                                            <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                            <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                         </div>
                                     </div>
                                 </div>
@@ -750,7 +750,7 @@
                         <h2>CURSOS EN TENDENCIA</h2>
                     </div>
                     <div class="all-btn all-category d-flex align-items-center">
-                        <a href="course-list.html" class="btn btn-primary">Todos los cursos</a>
+                        <a href="course-list" class="btn btn-primary">Todos los cursos</a>
                     </div>
                 </div>
                 <div class="section-text aos" data-aos="fade-up">
@@ -760,12 +760,12 @@
                     <div class="course-box trend-box">
                         <div class="product trend-product">
                             <div class="product-img">
-                                <a href="course-details.html">
+                                <a href="course-details">
 										<img class="img-fluid" alt="" src="assets/img/course/course-07.jpg">
 									</a>
                             </div>
                             <div class="product-content">
-                                <h3 class="title"><a href="course-details.html">Learn JavaScript and Express to become a professional JavaScript</a></h3>
+                                <h3 class="title"><a href="course-details">Learn JavaScript and Express to become a professional JavaScript</a></h3>
                                 <div class="course-info d-flex align-items-center">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="assets/img/icon/icon-01.svg" alt="" class="img-fluid">
@@ -785,7 +785,7 @@
                                     <span class="d-inline-block average-rating"><span>4.6</span> (637)</span>
                                 </div>
                                 <div class="all-btn all-category d-flex align-items-center">
-                                    <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                    <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                 </div>
                             </div>
                         </div>
@@ -793,12 +793,12 @@
                     <div class="course-box trend-box">
                         <div class="product trend-product">
                             <div class="product-img">
-                                <a href="course-details.html">
+                                <a href="course-details">
 										<img class="img-fluid" alt="" src="assets/img/course/course-08.jpg">
 									</a>
                             </div>
                             <div class="product-content">
-                                <h3 class="title"><a href="course-details.html">Responsive Web Design Essentials HTML5 CSS3 and Bootstrap</a></h3>
+                                <h3 class="title"><a href="course-details">Responsive Web Design Essentials HTML5 CSS3 and Bootstrap</a></h3>
                                 <div class="course-info d-flex align-items-center">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="assets/img/icon/icon-01.svg" alt="" class="img-fluid">
@@ -817,7 +817,7 @@
                                     <span class="d-inline-block average-rating"><span>3.8</span> (359)</span>
                                 </div>
                                 <div class="all-btn all-category d-flex align-items-center">
-                                    <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                    <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                 </div>
                             </div>
                         </div>
@@ -825,12 +825,12 @@
                     <div class="course-box trend-box">
                         <div class="product trend-product">
                             <div class="product-img">
-                                <a href="course-details.html">
+                                <a href="course-details">
 										<img class="img-fluid" alt="" src="assets/img/course/course-05.jpg">
 									</a>
                             </div>
                             <div class="product-content">
-                                <h3 class="title"><a href="course-details.html">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
+                                <h3 class="title"><a href="course-details">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
                                 <div class="course-info d-flex align-items-center">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="assets/img/icon/icon-01.svg" alt="" class="img-fluid">
@@ -850,7 +850,7 @@
                                     <span class="d-inline-block average-rating"><span>4.3</span> (176)</span>
                                 </div>
                                 <div class="all-btn all-category d-flex align-items-center">
-                                    <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                    <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                 </div>
                             </div>
                         </div>
@@ -858,12 +858,12 @@
                     <div class="course-box trend-box">
                         <div class="product trend-product">
                             <div class="product-img">
-                                <a href="course-details.html">
+                                <a href="course-details">
 										<img class="img-fluid" alt="" src="assets/img/course/course-05.jpg">
 									</a>
                             </div>
                             <div class="product-content">
-                                <h3 class="title"><a href="course-details.html">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
+                                <h3 class="title"><a href="course-details">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
                                 <div class="course-info d-flex align-items-center">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="assets/img/icon/icon-01.svg" alt="" class="img-fluid">
@@ -883,7 +883,7 @@
                                     <span class="d-inline-block average-rating"><span>4.3</span> (176)</span>
                                 </div>
                                 <div class="all-btn all-category d-flex align-items-center">
-                                    <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                    <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                 </div>
                             </div>
                         </div>
@@ -891,12 +891,12 @@
                     <div class="course-box trend-box">
                         <div class="product trend-product">
                             <div class="product-img">
-                                <a href="course-details.html">
+                                <a href="course-details">
 										<img class="img-fluid" alt="" src="assets/img/course/course-05.jpg">
 									</a>
                             </div>
                             <div class="product-content">
-                                <h3 class="title"><a href="course-details.html">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
+                                <h3 class="title"><a href="course-details">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
                                 <div class="course-info d-flex align-items-center">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="assets/img/icon/icon-01.svg" alt="" class="img-fluid">
@@ -916,7 +916,7 @@
                                     <span class="d-inline-block average-rating"><span>4.3</span> (176)</span>
                                 </div>
                                 <div class="all-btn all-category d-flex align-items-center">
-                                    <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                    <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                 </div>
                             </div>
                         </div>
@@ -924,12 +924,12 @@
                     <div class="course-box trend-box">
                         <div class="product trend-product">
                             <div class="product-img">
-                                <a href="course-details.html">
+                                <a href="course-details">
 										<img class="img-fluid" alt="" src="assets/img/course/course-05.jpg">
 									</a>
                             </div>
                             <div class="product-content">
-                                <h3 class="title"><a href="course-details.html">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
+                                <h3 class="title"><a href="course-details">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
                                 <div class="course-info d-flex align-items-center">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="assets/img/icon/icon-01.svg" alt="" class="img-fluid">
@@ -949,7 +949,7 @@
                                     <span class="d-inline-block average-rating"><span>4.3</span> (176)</span>
                                 </div>
                                 <div class="all-btn all-category d-flex align-items-center">
-                                    <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                    <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                 </div>
                             </div>
                         </div>
@@ -957,12 +957,12 @@
                     <div class="course-box trend-box">
                         <div class="product trend-product">
                             <div class="product-img">
-                                <a href="course-details.html">
+                                <a href="course-details">
 										<img class="img-fluid" alt="" src="assets/img/course/course-05.jpg">
 									</a>
                             </div>
                             <div class="product-content">
-                                <h3 class="title"><a href="course-details.html">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
+                                <h3 class="title"><a href="course-details">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
                                 <div class="course-info d-flex align-items-center">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="assets/img/icon/icon-01.svg" alt="" class="img-fluid">
@@ -982,7 +982,7 @@
                                     <span class="d-inline-block average-rating"><span>4.3</span> (176)</span>
                                 </div>
                                 <div class="all-btn all-category d-flex align-items-center">
-                                    <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                    <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                 </div>
                             </div>
                         </div>
@@ -990,12 +990,12 @@
                     <div class="course-box trend-box">
                         <div class="product trend-product">
                             <div class="product-img">
-                                <a href="course-details.html">
+                                <a href="course-details">
 										<img class="img-fluid" alt="" src="assets/img/course/course-05.jpg">
 									</a>
                             </div>
                             <div class="product-content">
-                                <h3 class="title"><a href="course-details.html">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
+                                <h3 class="title"><a href="course-details">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
                                 <div class="course-info d-flex align-items-center">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="assets/img/icon/icon-01.svg" alt="" class="img-fluid">
@@ -1015,7 +1015,7 @@
                                     <span class="d-inline-block average-rating"><span>4.3</span> (176)</span>
                                 </div>
                                 <div class="all-btn all-category d-flex align-items-center">
-                                    <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                    <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                 </div>
                             </div>
                         </div>
@@ -1023,12 +1023,12 @@
                     <div class="course-box trend-box">
                         <div class="product trend-product">
                             <div class="product-img">
-                                <a href="course-details.html">
+                                <a href="course-details">
 										<img class="img-fluid" alt="" src="assets/img/course/course-05.jpg">
 									</a>
                             </div>
                             <div class="product-content">
-                                <h3 class="title"><a href="course-details.html">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
+                                <h3 class="title"><a href="course-details">The Complete App Design Course - UX, UI and Design Thinking</a></h3>
                                 <div class="course-info d-flex align-items-center">
                                     <div class="rating-img d-flex align-items-center">
                                         <img src="assets/img/icon/icon-01.svg" alt="" class="img-fluid">
@@ -1048,7 +1048,7 @@
                                     <span class="d-inline-block average-rating"><span>4.3</span> (176)</span>
                                 </div>
                                 <div class="all-btn all-category d-flex align-items-center">
-                                    <a href="course-details.html" class="btn btn-primary">APÚNTATE</a>
+                                    <a href="course-details" class="btn btn-primary">APÚNTATE</a>
                                 </div>
                             </div>
                         </div>
@@ -1123,7 +1123,7 @@
                                 <li><i class="fa-solid fa-circle-check"></i>Los materiales mejor valorados</li>
                             </ul>
                             <div class="all-btn all-category d-flex align-items-center">
-                                <a href="register.html" class="btn btn-primary">Crear cuenta</a>
+                                <a href="register" class="btn btn-primary">Crear cuenta</a>
                             </div>
                         </div>
                     </div>
@@ -1162,9 +1162,9 @@
                             <div class="footer-widget footer-menu">
                                 <h2 class="footer-title">Enlace útiles</h2>
                                 <ul>
-                                    <li><a href="course-grid.html">Cursos</a></li>
-                                    <li><a href="login.html">Iniciar sesión</a></li>
-                                    <li><a href="register.html">Registrarse</a></li>
+                                    <li><a href="courses">Cursos</a></li>
+                                    <li><a href="login">Iniciar sesión</a></li>
+                                    <li><a href="register">Registrarse</a></li>
                                 </ul>
                             </div>
                             <!-- /Footer Widget -->
@@ -1206,8 +1206,8 @@
                             <div class="col-md-6">
                                 <div class="privacy-policy">
                                     <ul>
-                                        <li><a href="term-condition.html">Terminos y condiciones</a></li>
-                                        <li><a href="privacy-policy.html">Política de privacidad</a></li>
+                                        <li><a href="term-condition">Terminos y condiciones</a></li>
+                                        <li><a href="privacy-policy">Política de privacidad</a></li>
                                     </ul>
                                 </div>
                             </div>
