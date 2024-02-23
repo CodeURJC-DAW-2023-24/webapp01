@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import com.tatademy.model.Course;
 
 public interface CursoRepository extends JpaRepository<Course, Integer> {
-	List<Course> findByNombreContains(String name);
+	List<Course> findByNameContains(String name);
 
-	@Query("SELECT DISTINCT c.categoria FROM Curso c")
-	List<String> findAllCategorias();
+	@Query("SELECT DISTINCT c.category FROM Course c")
+	List<String> findAllCategories();
 
-	@Query("SELECT c FROM Curso c WHERE c.categoria IN :filters")
-	List<Course> findByCategoriaIn(List<String> filters);
+	@Query("SELECT c FROM Course c WHERE c.category IN :filters")
+	List<Course> findByCategoriyIn(List<String> filters);
 }

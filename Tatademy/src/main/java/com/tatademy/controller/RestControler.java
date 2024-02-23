@@ -96,7 +96,7 @@ public class RestControler {
 	// CRUD Cursos
 	@GetMapping("/courses")
 	public String getMethodName(Model model) {
-		List<String> filters = cursos.findAllCategorias();
+		List<String> filters = cursos.findAllCategories();
 		List<String[]> filterPair = new ArrayList<>();
 		for (int i = 0; i < filters.size(); ++i) {
 			String[] aux = new String[2];
@@ -112,8 +112,8 @@ public class RestControler {
 	@GetMapping("/course-search")
 	public String courseSearch(Model model, @RequestParam String name) {
 		List<Course> courses;
-		courses = cursos.findByNombreContains(name);
-		List<String> filters = cursos.findAllCategorias();
+		courses = cursos.findByNameContains(name);
+		List<String> filters = cursos.findAllCategories();
 		List<String[]> filterPair = new ArrayList<>();
 		for (int i = 0; i < filters.size(); ++i) {
 			String[] aux = new String[2];
@@ -129,7 +129,7 @@ public class RestControler {
 	@GetMapping("/course-filter")
 	public String processForm(Model model, HttpServletRequest request) {
 		Map<String, String[]> paramMap = request.getParameterMap();
-		List<String> allFilters = cursos.findAllCategorias();
+		List<String> allFilters = cursos.findAllCategories();
 		List<String> filters = new ArrayList<>();
 		List<String> filtersMode = new ArrayList<>();
 		List<String> filtersName = new ArrayList<>();
@@ -146,7 +146,7 @@ public class RestControler {
 					}
 				}
 			}
-			model.addAttribute("courses", cursos.findByCategoriaIn(filters));
+			model.addAttribute("courses", cursos.findByCategoriyIn(filters));
 		} else {
 			model.addAttribute("courses", cursos.findAll());
 		}
