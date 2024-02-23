@@ -42,7 +42,7 @@ public class UserController {
 		} else {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			userService.save(user);
-			return "redirect:/login";
+			return "redirect-/login";
 		}
 	}
 

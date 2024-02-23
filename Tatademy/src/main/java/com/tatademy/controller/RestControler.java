@@ -33,7 +33,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class RestControler {
 
 	@Autowired
-	private CursoRepository cursos;
+	private CursoRepository coursesList;
 
 	// @Autowired
 	// private MaterialRepositoy materiales;
@@ -94,75 +94,7 @@ public class RestControler {
 	// ! CRUD USERS
 
 	// CRUD Cursos
-	@GetMapping("/courses")
-	public String getMethodName(Model model) {
-		List<String> filters = cursos.findAllCategories();
-		List<String[]> filterPair = new ArrayList<>();
-		for (int i = 0; i < filters.size(); ++i) {
-			String[] aux = new String[2];
-			aux[0] = filters.get(i);
-			aux[1] = "";
-			filterPair.add(aux);
-		}
-		model.addAttribute("courses", cursos.findAll());
-		model.addAttribute("filters", filterPair);
-		return "course-grid";
-	}
-
-	@GetMapping("/course-search")
-	public String courseSearch(Model model, @RequestParam String name) {
-		List<Course> courses;
-		courses = cursos.findByNameContains(name);
-		List<String> filters = cursos.findAllCategories();
-		List<String[]> filterPair = new ArrayList<>();
-		for (int i = 0; i < filters.size(); ++i) {
-			String[] aux = new String[2];
-			aux[0] = filters.get(i);
-			aux[1] = "";
-			filterPair.add(aux);
-		}
-		model.addAttribute("filters", filterPair);
-		model.addAttribute("courses", courses);
-		return "course-grid";
-	}
-
-	@GetMapping("/course-filter")
-	public String processForm(Model model, HttpServletRequest request) {
-		Map<String, String[]> paramMap = request.getParameterMap();
-		List<String> allFilters = cursos.findAllCategories();
-		List<String> filters = new ArrayList<>();
-		List<String> filtersMode = new ArrayList<>();
-		List<String> filtersName = new ArrayList<>();
-		List<String[]> filterPair = new ArrayList<>();
-		if (!paramMap.isEmpty()) {
-			for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
-				String paramName = entry.getKey();
-				String[] paramValues = entry.getValue();
-				filtersName.add(paramName);
-				for (String paramValue : paramValues) {
-					filtersMode.add(paramValue);
-					if (paramValue.equals("on")) {
-						filters.add(paramName);
-					}
-				}
-			}
-			model.addAttribute("courses", cursos.findByCategoriyIn(filters));
-		} else {
-			model.addAttribute("courses", cursos.findAll());
-		}
-		for (int i = 0; i < allFilters.size(); ++i) {
-			String[] aux = new String[2];
-			aux[0] = allFilters.get(i);
-			if (filters.contains(allFilters.get(i))) {
-				aux[1] = "checked";
-			} else {
-				aux[1] = "";
-			}
-			filterPair.add(aux);
-		}
-		model.addAttribute("filters", filterPair);
-		return "course-grid";
-	}
+	
 
 	@PostMapping("/admin/{id}/new/course")
 	public ResponseEntity<Course> postMethodName(@PathVariable Integer id, @RequestBody Course course) {
@@ -174,18 +106,16 @@ public class RestControler {
 
 	@PutMapping("/new/course")
 	public ResponseEntity<Course> putMethodName(@RequestBody Course course) {
-		Course curso = cursos.findById(course.getId()).orElseThrow();
+		Course curso = coursesList.findById(course.getId()).orElseThrow();
 		return ResponseEntity.ok(curso);
 	}
 
 	@DeleteMapping("/course/{courseId}")
 	public ResponseEntity<Course> deleteCourse(@PathVariable Integer courseId) {
-		Course curso = cursos.findById(courseId).orElseThrow();
-		cursos.deleteById(curso.getId());
+		Course curso = coursesList.findById(courseId).orElseThrow();
+		coursesList.deleteById(curso.getId());
 		return ResponseEntity.ok(curso);
 	}
-
-	// !CRUD Cursos
 
 	// CRUD REVIEWS
 	@GetMapping("/reviews")
@@ -197,11 +127,11 @@ public class RestControler {
 	public ResponseEntity<Review> postMethodName(@PathVariable Integer idCourse, @PathVariable Integer idUser,
 			@RequestBody Review review) {
 		User user = users.findById(idUser).orElseThrow();
-		Course course = cursos.findById(idCourse).orElseThrow();
+		Course course = coursesList.findById(idCourse).orElseThrow();
 
 		users.save(user);
 		course.getReviews().add(review);
-		cursos.save(course);
+		coursesList.save(course);
 
 		return ResponseEntity.ok(review);
 	}
