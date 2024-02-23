@@ -1,10 +1,13 @@
 package com.tatademy.model;
+
+import java.sql.Blob;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import java.sql.Blob;
+
 @Entity
 public class Material {
 
@@ -18,6 +21,7 @@ public class Material {
 	public String getFilelocation() {
 		return filelocation;
 	}
+
 	public void setFilelocation(String filelocation) {
 		this.filelocation = filelocation;
 	}
@@ -32,9 +36,11 @@ public class Material {
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public Blob getFile() {
 		return file;
 	}
+
 	public void setFile(Blob imagenFile) {
 		this.file = imagenFile;
 	}

@@ -18,34 +18,35 @@ import com.tatademy.model.Curso;
 import com.tatademy.model.Material;
 import com.tatademy.repository.CursoRepository;
 
-@Controller 
+@Controller
 public class CourseController {
 
-    @Autowired
-    private CursoRepository courses;
+	@Autowired
+	private CursoRepository courses;
 
-    @GetMapping("/create/course")
-    public String getMethodName() {
-        return "add-course";
-    }
+	@GetMapping("/create/course")
+	public String getMethodName() {
+		return "add-course";
+	}
 
-    @PostMapping("/create/course")
-    public String postMethodName(@RequestParam String title, @RequestParam String subject, @RequestParam String description, @RequestParam("fileImage") MultipartFile fileImage, @RequestParam("courseContentInputFiles") List<MultipartFile> courseContentInputFiles) throws IOException{
+	@PostMapping("/create/course")
+	public String postMethodName(@RequestParam String title, @RequestParam String subject,
+			@RequestParam String description, @RequestParam("fileImage") MultipartFile fileImage,
+			@RequestParam("courseContentInputFiles") List<MultipartFile> courseContentInputFiles) throws IOException {
+		Curso course = new Curso(title, subject, description);
+		URI location = fromCurrentRequest().build().toUri();
+		course.setImagen(location.toString());
+		course.setImagenFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+		for (int i = 0; i < courseContentInputFiles.size(); i++) {
+			Material material = new Material();
+			material.setFilelocation(location.toString());
+			material.setFile(BlobProxy.generateProxy(courseContentInputFiles.get(i).getInputStream(),
+					courseContentInputFiles.get(i).getSize()));
+			course.getMateriales().add(material);
+		}
+		courses.save(course);
 
-
-        Curso course = new Curso(title, subject, description);
-        URI location = fromCurrentRequest().build().toUri();
-        course.setImagen(location.toString());
-        course.setImagenFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
-        for (int i=0; i < courseContentInputFiles.size(); i++) {
-        Material material = new Material();
-        material.setFilelocation(location.toString());
-        material.setFile(BlobProxy.generateProxy(courseContentInputFiles.get(i).getInputStream(), courseContentInputFiles.get(i).getSize()));
-        course.getMateriales().add(material);
-        }
-        courses.save(course);
-
-        return "redirect:/create/course"; //MODIFICAR ESTO EN ALGUN MOMENTO QUE REDIRIJA A CURSOS
-    }
+		return "redirect:/create/course"; // MODIFY THIS AT SOME POINT TO REDIRECT TO COURSES
+	}
 
 }

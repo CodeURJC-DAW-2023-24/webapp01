@@ -34,7 +34,7 @@
 			passwordInfo.style.color = "black";
 			if(whitespace)
 			{
-				passwordInfo.textContent = "Espacios en blanco no están permitidos";
+				passwordInfo.textContent = "No se permiten espacios en blanco";
 			}
 			else {
 				poorPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword);
@@ -159,7 +159,7 @@
 			passwordInfos.style.color = "black";
 			if(whitespace1)
 			{
-				passwordInfos.textContent = "whitespace1s are not allowed";
+				passwordInfos.textContent = "No se permiten espacios en blanco";
 			}
 			else {
 				poor1Password1Strength1(passwordLength1, poor1Password1, weak1Password1, strong1Password1);
@@ -221,7 +221,7 @@
 			 passwordStrength1.classList.remove("poor-active");
 			 passwordStrength1.classList.add("strong-active");
 			 passwordStrength1.classList.remove("heavy-active");
-			 passwordInfos.innerHTML = '<img src="assets/img/icon/smile.svg" class="me-2">' + "Debe contener al menos un símbolo Ej: .-*!";
+			 passwordInfos.innerHTML = '<img src="assets/img/icon/smile.svg" class="me-2">' + "Debe contener un símbolo especial";
 			 passwordInfos.style.color = "#1D9CFD";
 		   
 		   }else{

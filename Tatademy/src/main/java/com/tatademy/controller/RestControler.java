@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,11 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.tatademy.model.Curso;
 import com.tatademy.model.Review;
-import com.tatademy.model.Usuario;
+import com.tatademy.model.User;
 import com.tatademy.repository.CursoRepository;
 import com.tatademy.repository.ReviewRepository;
 import com.tatademy.repository.UserRepository;
@@ -47,15 +45,14 @@ public class RestControler {
 
 	// CRUD USERS
 	@GetMapping("/users")
-	public List<Usuario> getAllUsers() {
+	public List<User> getAllUsers() {
 		return users.findAll();
 	}
 
 	@GetMapping("/user/{id}")
-	public ResponseEntity<Usuario> getUser(@PathVariable int id) {
-
+	public ResponseEntity<User> getUser(@PathVariable int id) {
 		try {
-			Usuario user = users.getReferenceById(id);
+			User user = users.getReferenceById(id);
 			return ResponseEntity.ok(user);
 		} catch (EntityNotFoundException e) {
 			return ResponseEntity.notFound().build();
@@ -63,31 +60,29 @@ public class RestControler {
 	}
 
 	@PostMapping("/new/user")
-	public ResponseEntity<Usuario> postUser(@RequestBody Usuario user) {
+	public ResponseEntity<User> postUser(@RequestBody User user) {
 		this.users.save(user);
 		URI location = fromCurrentRequest().path("/user/{id}").buildAndExpand(users.getReferenceById(user.getId()))
 				.toUri();
-
 		return ResponseEntity.created(location).body(user);
 	}
 
 	@PutMapping("/user/{id}")
-	public ResponseEntity<Usuario> putUser(@PathVariable Integer id, @RequestBody Usuario user) {
+	public ResponseEntity<User> putUser(@PathVariable Integer id, @RequestBody User user) {
 		try {
-			Usuario oldUser = users.getReferenceById(id);
+			// User oldUser = users.getReferenceById(id);
 			user.setId(id);
 			users.save(user);
 			return ResponseEntity.ok(user);
 		} catch (EntityNotFoundException e) {
 			return ResponseEntity.notFound().build();
 		}
-
 	}
 
 	@DeleteMapping("/user/{id}")
-	public ResponseEntity<Usuario> DeleteUser(@PathVariable Integer id) {
+	public ResponseEntity<User> DeleteUser(@PathVariable Integer id) {
 		try {
-			Usuario user = users.getReferenceById(id);
+			User user = users.getReferenceById(id);
 			users.deleteById(id);
 			// Esta línea emite error y no entiendo porqué, pero funciona bien
 			return ResponseEntity.ok(user);
@@ -103,7 +98,7 @@ public class RestControler {
 	public String getMethodName(Model model) {
 		List<String> filters = cursos.findAllCategorias();
 		List<String[]> filterPair = new ArrayList<>();
-		for(int i = 0; i < filters.size(); ++i) {
+		for (int i = 0; i < filters.size(); ++i) {
 			String[] aux = new String[2];
 			aux[0] = filters.get(i);
 			aux[1] = "";
@@ -113,14 +108,14 @@ public class RestControler {
 		model.addAttribute("filters", filterPair);
 		return "course-grid";
 	}
-	
+
 	@GetMapping("/course-search")
 	public String courseSearch(Model model, @RequestParam String name) {
 		List<Curso> courses;
 		courses = cursos.findByNombreContains(name);
 		List<String> filters = cursos.findAllCategorias();
 		List<String[]> filterPair = new ArrayList<>();
-		for(int i = 0; i < filters.size(); ++i) {
+		for (int i = 0; i < filters.size(); ++i) {
 			String[] aux = new String[2];
 			aux[0] = filters.get(i);
 			aux[1] = "";
@@ -130,52 +125,49 @@ public class RestControler {
 		model.addAttribute("courses", courses);
 		return "course-grid";
 	}
-	
+
 	@GetMapping("/course-filter")
-    public String processForm(Model model, HttpServletRequest request) {
-        Map<String, String[]> paramMap = request.getParameterMap();
-        List<String> allFilters = cursos.findAllCategorias();
-        List<String> filters = new ArrayList<>();
-        List<String> filtersMode = new ArrayList<>();
-        List<String> filtersName = new ArrayList<>();
-        List<String[]> filterPair = new ArrayList<>();
-        if (!paramMap.isEmpty()) {
-            for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
-                String paramName = entry.getKey();
-                String[] paramValues = entry.getValue();
-                filtersName.add(paramName);
-                for (String paramValue : paramValues) {
-                	filtersMode.add(paramValue);
-                	if (paramValue.equals("on")) {
-                		filters.add(paramName);
-                	}
-                }
-            }
-            
-            model.addAttribute("courses", cursos.findByCategoriaIn(filters));
-        }
-        else {
-        	model.addAttribute("courses", cursos.findAll());
-        }
-        for(int i = 0; i < allFilters.size(); ++i) {
-        	String[] aux = new String[2];
-        	aux[0] = allFilters.get(i);
-        	if (filters.contains(allFilters.get(i))) {
-        		aux[1] = "checked";
-        	}
-        	else {
-        		aux[1] = "";
-        	}
-        	filterPair.add(aux);
-        }
-        model.addAttribute("filters", filterPair);
-        return "course-grid";
+	public String processForm(Model model, HttpServletRequest request) {
+		Map<String, String[]> paramMap = request.getParameterMap();
+		List<String> allFilters = cursos.findAllCategorias();
+		List<String> filters = new ArrayList<>();
+		List<String> filtersMode = new ArrayList<>();
+		List<String> filtersName = new ArrayList<>();
+		List<String[]> filterPair = new ArrayList<>();
+		if (!paramMap.isEmpty()) {
+			for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
+				String paramName = entry.getKey();
+				String[] paramValues = entry.getValue();
+				filtersName.add(paramName);
+				for (String paramValue : paramValues) {
+					filtersMode.add(paramValue);
+					if (paramValue.equals("on")) {
+						filters.add(paramName);
+					}
+				}
+			}
+			model.addAttribute("courses", cursos.findByCategoriaIn(filters));
+		} else {
+			model.addAttribute("courses", cursos.findAll());
+		}
+		for (int i = 0; i < allFilters.size(); ++i) {
+			String[] aux = new String[2];
+			aux[0] = allFilters.get(i);
+			if (filters.contains(allFilters.get(i))) {
+				aux[1] = "checked";
+			} else {
+				aux[1] = "";
+			}
+			filterPair.add(aux);
+		}
+		model.addAttribute("filters", filterPair);
+		return "course-grid";
 	}
 
 	@PostMapping("/admin/{id}/new/course")
 	public ResponseEntity<Curso> postMethodName(@PathVariable Integer id, @RequestBody Curso course) {
-		Usuario usuario = users.findById(id).orElseThrow();
-		usuario.getCursos().add(course);
+		User usuario = users.findById(id).orElseThrow();
+		usuario.getCourses().add(course);
 		users.save(usuario);
 		return ResponseEntity.ok(course);
 	}
@@ -183,7 +175,6 @@ public class RestControler {
 	@PutMapping("/new/course")
 	public ResponseEntity<Curso> putMethodName(@RequestBody Curso course) {
 		Curso curso = cursos.findById(course.getId()).orElseThrow();
-
 		return ResponseEntity.ok(curso);
 	}
 
@@ -205,7 +196,7 @@ public class RestControler {
 	@PostMapping("/course/{idCourse}/new/review/{idUser}")
 	public ResponseEntity<Review> postMethodName(@PathVariable Integer idCourse, @PathVariable Integer idUser,
 			@RequestBody Review review) {
-		Usuario user = users.findById(idUser).orElseThrow();
+		User user = users.findById(idUser).orElseThrow();
 		Curso course = cursos.findById(idCourse).orElseThrow();
 
 		users.save(user);

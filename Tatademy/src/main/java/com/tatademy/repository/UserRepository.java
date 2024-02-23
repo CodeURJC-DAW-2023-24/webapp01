@@ -2,8 +2,8 @@ package com.tatademy.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tatademy.model.Usuario;
+import com.tatademy.model.User;
 
-public interface UserRepository extends JpaRepository<Usuario, Integer> {
-
+public interface UserRepository extends JpaRepository<User, Integer> {
+	boolean existsByEmail(String email);
 }

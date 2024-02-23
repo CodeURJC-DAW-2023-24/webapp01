@@ -58,23 +58,27 @@
 							<div class="img-logo">
 								<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
 								<div class="back-home">
-									<a href="index.html">Volver al inicio</a>
+									<a href="/">Volver al inicio</a>
 								</div>
 							</div>
 							<h1>Crear cuenta</h1>
-							<form action="login.html">
+							<form action="/signup" method="post" enctype="multipart/form-data">
 								<div class="input-block">
-									<label class="form-control-label">Nombre completo</label>
-									<input type="text" class="form-control" placeholder="Introduzca el nombre completo">
+									<label class="form-control-label">Nombre</label>
+									<input name="name" type="text" class="form-control" placeholder="Introduzca el nombre">
+								</div>
+								<div class="input-block">
+									<label class="form-control-label">Apellidos</label>
+									<input name="surname" type="text" class="form-control" placeholder="Introduzca los apellidos">
 								</div>
 								<div class="input-block">
 									<label class="form-control-label">Correo electrónico</label>
-									<input type="email" class="form-control" placeholder="Introduzca la dirección de correo electrónico">
+									<input name="email" type="email" class="form-control" placeholder="Introduzca la dirección de correo electrónico">
 								</div>
 								<div class="input-block">
 									<label class="form-control-label">Contraseña</label>
 									<div class="pass-group" id="passwordInput">																	
-										<input type="password" class="form-control pass-input" placeholder="Introduzca la contraseña">
+										<input name="password" type="password" class="form-control pass-input" placeholder="Introduzca la contraseña">
 										<span class="toggle-password feather-eye"></span>
 										<span class="pass-checked"><i class="feather-check"></i></span>
 									</div>
@@ -98,7 +102,7 @@
 							</form>
 						</div>
 						<div class="google-bg text-center">
-							<p class="mb-0">¿Ya tienes una cuenta? <a href="login.html">Iniciar Sesión</a></p>
+							<p class="mb-0">¿Ya tienes una cuenta? <a href="/login">Iniciar Sesión</a></p>
 						</div>
 					</div>
 					<!-- /Login -->
@@ -120,7 +124,7 @@
 		<script src="assets/js/owl.carousel.min.js"></script>	
 		
 		<!-- Validation-->
-		<script src="assets/js/validation.js"></script>	
+		<script src="assets/js/validation.js" charset="utf-8"></script>	
 		
 		<!-- Custom JS -->
 		<script src="assets/js/script.js"></script>

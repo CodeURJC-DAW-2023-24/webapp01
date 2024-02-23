@@ -14,25 +14,17 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private int valorEstrellas;
-	private String descripcion;
+	private int starsValue;
+	private String description;
 	@ManyToOne
 	@JsonIgnore
-	private Usuario user;
+	private User user;
 
-	public Review() {
-	}
-
-	public Review(int estrellas, String desc) {
-		this.valorEstrellas = estrellas;
-		descripcion = desc;
-	}
-
-	public Usuario getUser() {
-		return user;
-	}
-
-	public void setUser(Usuario user) {
+	public Review(Integer id, int starsValue, String description, User user) {
+		super();
+		this.id = id;
+		this.starsValue = starsValue;
+		this.description = description;
 		this.user = user;
 	}
 
@@ -44,20 +36,28 @@ public class Review {
 		this.id = id;
 	}
 
-	public int getValorEstrellas() {
-		return valorEstrellas;
+	public int getStarsValue() {
+		return starsValue;
 	}
 
-	public void setValorEstrellas(int valorEstrellas) {
-		this.valorEstrellas = valorEstrellas;
+	public void setStarsValue(int starsValue) {
+		this.starsValue = starsValue;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

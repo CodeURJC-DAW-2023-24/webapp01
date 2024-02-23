@@ -3,7 +3,9 @@ package com.tatademy.model;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,23 +16,17 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Curso {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Material> materiales = new ArrayList<Material>();
-
+	private List<Material> materiales = new ArrayList<>();
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Review> reviews;
-
 	private String nombre;
-
 	private String categoria;
-
 	private String descripcion;
-
-	// Zona imagen de cabecera
 	private String imagen;
 	@Lob
 	@JsonIgnore
@@ -43,7 +39,6 @@ public class Curso {
 		this.nombre = nombre;
 		this.categoria = categoria;
 		this.descripcion = descripcion;
-
 	}
 
 	public List<Material> getMateriales() {
