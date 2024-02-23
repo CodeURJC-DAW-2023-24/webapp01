@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tatademy.model.Curso;
+import com.tatademy.model.Course;
 import com.tatademy.model.Material;
 import com.tatademy.repository.CursoRepository;
 
@@ -33,16 +33,16 @@ public class CourseController {
 	public String postMethodName(@RequestParam String title, @RequestParam String subject,
 			@RequestParam String description, @RequestParam("fileImage") MultipartFile fileImage,
 			@RequestParam("courseContentInputFiles") List<MultipartFile> courseContentInputFiles) throws IOException {
-		Curso course = new Curso(title, subject, description);
+		Course course = new Course(title, subject, description);
 		URI location = fromCurrentRequest().build().toUri();
-		course.setImagen(location.toString());
-		course.setImagenFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+		course.setimageString(location.toString());
+		course.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
 		for (int i = 0; i < courseContentInputFiles.size(); i++) {
 			Material material = new Material();
 			material.setFilelocation(location.toString());
 			material.setFile(BlobProxy.generateProxy(courseContentInputFiles.get(i).getInputStream(),
 					courseContentInputFiles.get(i).getSize()));
-			course.getMateriales().add(material);
+			course.getMaterial().add(material);
 		}
 		courses.save(course);
 

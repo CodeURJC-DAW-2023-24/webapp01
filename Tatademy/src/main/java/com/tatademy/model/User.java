@@ -25,7 +25,7 @@ public class User {
 	private String email;
 	private String password;
 	@ManyToMany
-	private List<Curso> courses;
+	private List<Course> courses;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Review> reviews;
 	private String image;
@@ -72,11 +72,11 @@ public class User {
 		this.email = email;
 	}
 
-	public List<Curso> getCourses() {
+	public List<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(List<Curso> courses) {
+	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
 

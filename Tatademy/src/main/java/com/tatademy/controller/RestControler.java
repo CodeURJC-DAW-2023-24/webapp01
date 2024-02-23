@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tatademy.model.Curso;
+import com.tatademy.model.Course;
 import com.tatademy.model.Review;
 import com.tatademy.model.User;
 import com.tatademy.repository.CursoRepository;
@@ -111,7 +111,7 @@ public class RestControler {
 
 	@GetMapping("/course-search")
 	public String courseSearch(Model model, @RequestParam String name) {
-		List<Curso> courses;
+		List<Course> courses;
 		courses = cursos.findByNombreContains(name);
 		List<String> filters = cursos.findAllCategorias();
 		List<String[]> filterPair = new ArrayList<>();
@@ -165,7 +165,7 @@ public class RestControler {
 	}
 
 	@PostMapping("/admin/{id}/new/course")
-	public ResponseEntity<Curso> postMethodName(@PathVariable Integer id, @RequestBody Curso course) {
+	public ResponseEntity<Course> postMethodName(@PathVariable Integer id, @RequestBody Course course) {
 		User usuario = users.findById(id).orElseThrow();
 		usuario.getCourses().add(course);
 		users.save(usuario);
@@ -173,14 +173,14 @@ public class RestControler {
 	}
 
 	@PutMapping("/new/course")
-	public ResponseEntity<Curso> putMethodName(@RequestBody Curso course) {
-		Curso curso = cursos.findById(course.getId()).orElseThrow();
+	public ResponseEntity<Course> putMethodName(@RequestBody Course course) {
+		Course curso = cursos.findById(course.getId()).orElseThrow();
 		return ResponseEntity.ok(curso);
 	}
 
 	@DeleteMapping("/course/{courseId}")
-	public ResponseEntity<Curso> deleteCourse(@PathVariable Integer courseId) {
-		Curso curso = cursos.findById(courseId).orElseThrow();
+	public ResponseEntity<Course> deleteCourse(@PathVariable Integer courseId) {
+		Course curso = cursos.findById(courseId).orElseThrow();
 		cursos.deleteById(curso.getId());
 		return ResponseEntity.ok(curso);
 	}
@@ -197,7 +197,7 @@ public class RestControler {
 	public ResponseEntity<Review> postMethodName(@PathVariable Integer idCourse, @PathVariable Integer idUser,
 			@RequestBody Review review) {
 		User user = users.findById(idUser).orElseThrow();
-		Curso course = cursos.findById(idCourse).orElseThrow();
+		Course course = cursos.findById(idCourse).orElseThrow();
 
 		users.save(user);
 		course.getReviews().add(review);
