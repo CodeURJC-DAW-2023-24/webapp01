@@ -10,17 +10,17 @@
 		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.svg">
 		
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 		
 		<!-- Fontawesome CSS -->
-		<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
-		<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
-		
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+
 		<!-- Feather CSS -->
-		<link rel="stylesheet" href="assets/css/feather.css">
+		<link rel="stylesheet" href="/assets/css/feather.css">
 
 		<!-- Main CSS -->
-		<link rel="stylesheet" href="assets/css/style.css">
+		<link rel="stylesheet" href="/assets/css/style.css">
 	
 	</head>
 	<body>
@@ -41,7 +41,7 @@
 										</span>
 									</a>
 									<a href="index.html" class="navbar-brand logo">
-										<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+										<img src="/assets/img/logo.svg" class="img-fluid" alt="Logo">
 									</a>
 								</div>
 								<div class="main-menu-wrapper">
@@ -89,14 +89,14 @@
 									<li class="nav-item user-nav">
 										<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
 											<span class="user-img">
-												<img src="assets/img/user/user11.jpg" alt="">
+												<img src="/assets/img/user/user11.jpg" alt="">
 												<span class="status online"></span>
 											</span>
 										</a>
 										<div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end" >
 											<div class="user-header">
 												<div class="avatar avatar-sm">
-													<img src="assets/img/user/user11.jpg" alt="User Image" class="avatar-img rounded-circle">
+													<img src="/assets/img/user/user11.jpg" alt="User Image" class="avatar-img rounded-circle">
 												</div>
 												<div class="user-text">
 													<h6>Rolands R</h6>
@@ -129,7 +129,7 @@
 									<ol class="breadcrumb">
 										<li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
 										<li class="breadcrumb-item"><a href="course-grid.html">Buscar cursos</a></li>
-										<li class="breadcrumb-item" aria-current="page" style="margin-right: 200px">The Complete Web Developer Course 2.0</li>
+										<li class="breadcrumb-item" aria-current="page" style="margin-right: 200px">{{nameCourse}}</li>
 									</ol>
 
 									
@@ -148,20 +148,29 @@
 						<div class="col-lg-8">
 							<div class="instructor-wrap border-bottom-0 m-0">
 								
-								<span class="web-badge mb-3">WEB DEVELOPMENT</span>
+								<span class="web-badge mb-3">{{categoryCourse}}</span>
 							</div>
-							<h2>The Complete Web Developer Course 2.0</h2>
-							<p>Learn Web Development by building 25 websites and mobile apps using HTML, CSS, Javascript, PHP, Python, MySQL & more!</p>
-							<div class="about-instructor align-items-center">								
-								<div class="rating mb-0">							
-									<i class="fas fa-star filled"></i>
-									<i class="fas fa-star filled"></i>
-									<i class="fas fa-star filled"></i>
-									<i class="fas fa-star filled"></i>
+							<h2>{{nameCourse}}</h2>							
+								<!--Fill or not the star depending on the starAverage -->
+								<div class="rating" data-stars="{{starAverage}}">
 									<i class="fas fa-star"></i>
-									<span class="d-inline-block average-rating"><span>4.5</span> (15)</span>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<span class="d-inline-block average-rating">{{starAverage}}<span>    </span>   ({{numReviews}})</span></span>
 								</div>
-							</div>				
+								
+								<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+								<script>
+								$(document).ready(function() {
+									$('.rating').each(function() {
+										var stars = $(this).data('stars');
+										$(this).find('.fa-star').slice(0, stars).addClass('filled');
+									});
+								});
+								</script>
+								<!-- End of fill stars-->
 						</div>
 					</div>
 				</div>
@@ -178,38 +187,8 @@
 							<!-- Overview -->
 							<div class="card overview-sec">
 								<div class="card-body">
-									<h5 class="subs-title">Acerca del curso</h5>
-									<h6>Descripción del curso</h6>
-									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-									<p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-									
-									<h6>Lo que aprenderas</h6>
-									<div class="row">
-										<div class="col-md-6">
-											<ul>
-												<li>Become a UX designer.</li>
-												<li>You will be able to add UX designer to your CV</li>
-												<li>Become a UI designer.</li>
-												<li>Build & test a full website design.</li>
-												<li>Build & test a full mobile app.</li>
-											</ul>
-										</div>
-										<div class="col-md-6">
-											<ul>
-												<li>Learn to design websites & mobile phone apps.</li>
-												<li>You'll learn how to choose colors.</li>
-												<li>Prototype your designs with interactions.</li>
-												<li>Export production ready assets.</li>
-												<li>All the techniques used by UX professionals</li>
-											</ul>
-										</div>
-									</div>
-									<h6>Conocimientos previos y material necesario</h6>
-									<ul class="mb-0">
-										<li>You will need a copy of Adobe XD 2019 or above. A free trial can be downloaded from Adobe.</li>
-										<li>No previous design experience is needed.</li>
-										<li class="mb-0">No previous Adobe XD skills are needed.</li>
-									</ul>
+									<h5 class="subs-title">Descripción del curso</h5>
+									<p>{{descripcionCourse}}</p>
 								</div>
 							</div>
 							<!-- /Overview -->
@@ -224,156 +203,18 @@
 									</div>
 									<div class="course-card">
 										<h6 class="cou-title">
-											<a class="collapsed" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="false">In which areas do you operate?</a>
+											<a class="collapsed" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="false">Material del curso</a>
 										</h6>
 										<div id="collapseOne" class="card-collapse collapse">
 											<ul>
+												{{#materialsFromCourse}}
 												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.1 Introduction to the User Experience Course</p>
+													<p><img src="/assets/img/icon/play.svg" alt="" class="me-2">{{getFileName}}</p>
 													<div>
-														<a href="javascript:void(0);">Preview</a>
+														<a href="{{id}}/DownloadFile">Descargar</a>
 													</div>
 												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.2 Exercise: Your first design challenge</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.5 How to use text layers effectively</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="course-card">
-										<h6 class="cou-title">
-											<a class="collapsed" data-bs-toggle="collapse" href="#course2" aria-expanded="false">The Brief</a>
-										</h6>
-										<div id="course2" class="card-collapse collapse">
-											<ul>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.1 Introduction to the User Experience Course</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.2 Exercise: Your first design challenge</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.5 How to use text layers effectively</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="course-card">
-										<h6 class="cou-title">
-											<a class="collapsed" data-bs-toggle="collapse" href="#course3" aria-expanded="false">Wireframing Low Fidelity</a>
-										</h6>
-										<div id="course3" class="card-collapse collapse">
-											<ul>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.1 Introduction to the User Experience Course</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.2 Exercise: Your first design challenge</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.3 How to solve the previous exercise</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture1.5 How to use text layers effectively</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="course-card">
-										<h6 class="cou-title mb-0">
-											<a class="collapsed" data-bs-toggle="collapse" href="#coursefour" aria-expanded="false">Type, Color & Icon Introduction</a>
-										</h6>
-										<div id="coursefour" class="card-collapse collapse">
-											<ul>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.1 Introduction to the User Experience Course</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.2 Exercise: Your first design challenge</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.3 How to solve the previous exercise</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.4 How to solve the previous exercise</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
-												<li>
-													<p><img src="assets/img/icon/play.svg" alt="" class="me-2">Lecture4.5 How to use text layers effectively</p>
-													<div>
-														<a href="javascript:void(0);">Preview</a>
-													</div>
-												</li>
+												{{/materialsFromCourse}}
 											</ul>
 										</div>
 									</div>
@@ -382,56 +223,73 @@
 							<!-- /Course Content -->
 							
 							<!-- Reviews -->
+							{{#reviewsFromCourse}}
 							<div class="card review-sec">
 								<div class="card-body">
-									<h5 class="subs-title">Reseñas</h5>
 									<div class="instructor-wrap">
 										<div class="about-instructor">
 											<div class="abt-instructor-img">
-												<a href="instructor-profile.html"><img src="assets/img/user/user1.jpg" alt="img" class="img-fluid"></a>
+												<a href="instructor-profile.html"><img src="/assets/img/user/user1.jpg" alt="img" class="img-fluid"></a>
 											</div>
 											<div class="instructor-detail">
-												<h5><a href="instructor-profile.html">Nicole Brown</a></h5>
-												<p>UX/UI Designer</p>
+												<h5><a href="instructor-profile.html">{{user.name}}</a></h5>
+												
 											</div>
 										</div>
-										<div class="rating">							
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
-											<i class="fas fa-star filled"></i>
+										<!-- Fill or not the star depending on the {{starsValue}} -->
+										<div class="rating" data-stars="{{starsValue}}">
 											<i class="fas fa-star"></i>
-											<span class="d-inline-block average-rating">4.5 Instructor Rating</span>
+											<i class="fas fa-star"></i>
+											<i class="fas fa-star"></i>
+											<i class="fas fa-star"></i>
+											<i class="fas fa-star"></i>
+											<span class="d-inline-block average-rating">{{starsValue}}</span>
 										</div>
+										
+										<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+										<script>
+										$(document).ready(function() {
+											$('.rating').each(function() {
+												var stars = $(this).data('stars');
+												$(this).find('.fa-star').slice(0, stars).addClass('filled');
+											});
+										});
+										</script>
+										<!-- End of fill stars-->
 									</div>
-									<p class="rev-info">“ This is the second Photoshop course I have completed with Cristian. Worth every penny and recommend it highly. To get the most out of this course, its best to to take the Beginner to Advanced course first. The sound and video quality is of a good standard. Thank you Cristian. “</p>
-									<a href="javascript:void(0);" class="btn btn-reply"><i class="feather-corner-up-left"></i> Responder </a>
+									<p class="rev-info">{{description}}</p>
+									
 								</div>
 							</div>
+							{{/reviewsFromCourse}}
+
+
+
 							<!-- /Reviews -->
 
 							<!-- Comment -->
 							<div class="card comment-sec">
 								<div class="card-body">
 									<h5 class="subs-title">Escribe tu reseña</h5>
-									<form>
+									<form action="/saveReview" method="post">
 										<div class="row">
 											<div class="col-md-6">
 												<div class="input-block">
-													<input type="text" class="form-control" placeholder="Nombre completo">
+													<input type="text" class="form-control" placeholder="Nombre" name="userNameReview">
 												</div>
+												
 											</div>
 											<div class="col-md-6">
 												<div class="input-block">
-													<input type="email" class="form-control" placeholder="Email">
+													<input type="text" class="form-control" placeholder="Apellidos" name="userSurnameReview">
 												</div>
 											</div>
 										</div>
 										<div class="input-block">
-											<input type="email" class="form-control" placeholder="Asunto">
+											<input type="integer" class="form-control" placeholder="Valoración del 0-5" name="rateReview">
 										</div>
 										<div class="input-block">
-											<textarea rows="4" class="form-control" placeholder="Tus comentarios"></textarea>
+											<textarea rows="4" class="form-control" placeholder="Tus comentarios" name="descriptionReview"></textarea>
 										</div>
 										<div class="submit-section">
 											<button class="btn submit-btn" type="submit">Enviar</button>
@@ -459,13 +317,13 @@
 												<div class="play-icon">
 													<i class="fa-solid fa-play"></i>
 												</div>
-												<img class="" src="assets/img/video.jpg" alt="">
+												<img class="" src="/assets/img/video.jpg" alt="">
 											</a>
 											<div class="video-details">
 												<div class="course-fee">
 												<h2>Gratuito</h2>
 												</div>
-												<a href="#" class="btn btn-enroll w-100">Inscribirse</a>
+												<a href="/{idCourse}/enroll" class="btn btn-enroll w-100">Inscribirse</a>
 											</div>
 										</div>
 									</div>
@@ -479,12 +337,12 @@
 											<h4>Este curso contiene</h4>
 										</div>
 										<ul>
-											<li><img src="assets/img/icon/import.svg" class="me-2" alt=""> 11 hours on-demand video</li>
-											<li><img src="assets/img/icon/play.svg" class="me-2" alt=""> 69 downloadable resources</li>
-											<li><img src="assets/img/icon/key.svg" class="me-2" alt=""> Full lifetime access</li>
-											<li><img src="assets/img/icon/mobile.svg" class="me-2" alt=""> Access on mobile and TV</li>
-											<li><img src="assets/img/icon/cloud.svg" class="me-2" alt=""> Assignments</li>
-											<li><img src="assets/img/icon/teacher.svg" class="me-2" alt=""> Certificate of Completion</li>
+											<li><img src="/assets/img/icon/import.svg" class="me-2" alt=""> Incluye ficheros descargables </li>
+											<li><img src="/assets/img/icon/play.svg" class="me-2" alt=""> Valorado por los usuarios: <span>{{starAverage}} sobre 5</span></li>
+											<li><img src="/assets/img/icon/key.svg" class="me-2" alt=""> Acceso a tiempo completo</li>
+											<li><img src="/assets/img/icon/mobile.svg" class="me-2" alt=""> Accesible desde el movil y PC</li>
+											<li><img src="/assets/img/icon/cloud.svg" class="me-2" alt=""> Tareas</li>
+											<li><img src="/assets/img/icon/teacher.svg" class="me-2" alt=""> Incluye diploma</li>
 										</ul>
 									</div>
 								</div>
@@ -497,10 +355,10 @@
 											<h4>Acerca del curso</h4>
 										</div>
 										<ul>
-											<li><img src="assets/img/icon/users.svg" class="me-2" alt=""> Matriculados: <span>32 usuarios</span></li>
-											<li><img src="assets/img/icon/timer.svg" class="me-2" alt=""> Duración: <span>20 horas</span></li>
-											<li><img src="assets/img/icon/chapter.svg" class="me-2" alt=""> Módulos: <span>15</span></li>
-											<li><img src="assets/img/icon/chart.svg" class="me-2" alt=""> Nivel de dificultad: <span>Principiante</span></li>
+											<li><img src="/assets/img/icon/chapter.svg" class="me-2" alt=""> Categoría: <span>{{categoryCourse}}</span></li>
+											<li><img src="/assets/img/icon/users.svg" class="me-2" alt=""> Matriculados: <span>{{numStudentsEnroll}} usuarios</span></li>
+											<li><img src="/assets/img/icon/timer.svg" class="me-2" alt=""> Número de materiales: <span>{{numMaterialsCourse}}</span></li>
+											<li><img src="/assets/img/icon/chart.svg" class="me-2" alt=""> Número de reseñas: <span>{{numReviews}}</span></li>
 										</ul>
 									</div>
 								</div>
@@ -516,6 +374,8 @@
 			
 
 
+
+
 			<!-- Footer -->
 			<footer class="footer">
 
@@ -528,7 +388,7 @@
 								<!-- Footer Widget -->
 								<div class="footer-widget footer-about">
 									<div class="footer-logo">
-										<img src="assets/img/logo.svg" alt="logo">
+										<img src="/assets/img/logo.svg" alt="logo">
 									</div>
 									<div class="">
 										<p>
@@ -562,11 +422,11 @@
 									<h2 class="footer-title">Contacto</h2>
 									<div class="footer-contact-info">
 										<div class="footer-address">
-											<img src="assets/img/icon/icon-20.svg" alt="" class="img-fluid">
+											<img src="/assets/img/icon/icon-20.svg" alt="" class="img-fluid">
 											<p> C. Tulipán, s/n, Móstoles<br> Madrid, 28933</p>
 										</div>
 										<p>
-											<img src="assets/img/icon/icon-19.svg" alt="" class="img-fluid">
+											<img src="/assets/img/icon/icon-19.svg" alt="" class="img-fluid">
 											<a href="mailto:tatademy@gmail.com">tatademy@gmail.com</a>
 										</p>
 									</div>
@@ -615,22 +475,22 @@
 	   <!-- /Main Wrapper -->
 	  
 		<!-- jQuery -->
-		<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery-3.7.1.min.js"></script>
+		<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery-3.7.1.min.js"></script>
 		
 		<!-- Bootstrap Core JS -->
-		<script src="assets/js/bootstrap.bundle.min.js"></script>
+		<script src="/assets/js/bootstrap.bundle.min.js"></script>
 
 		<!-- Select2 JS -->
-	  	<script src="assets/plugins/select2/js/select2.min.js"></script>
+	  	<script src="/assets/plugins/select2/js/select2.min.js"></script>
 
 	  	<!-- Ckeditor JS -->
-	  	<script src="assets/js/ckeditor.js"></script>
+	  	<script src="/assets/js/ckeditor.js"></script>
 
 	  	<!-- Bootstrap Tagsinput JS -->
-		<script src="assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+		<script src="/assets/plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
 		
 		<!-- Custom JS -->
-		<script src="assets/js/script.js"></script>
+		<script src="/assets/js/script.js"></script>
 		
 	</body>
 </html>

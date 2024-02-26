@@ -45,4 +45,10 @@ public class Material {
 		this.file = imagenFile;
 	}
 
+	public String getFileName (){
+		int lastSlashIndex = filelocation.lastIndexOf("/");
+        String fileName = filelocation.substring(lastSlashIndex + 1); // ./from/folder/example.pdf --> example.pdf
+		return fileName;
+	}
+
 }

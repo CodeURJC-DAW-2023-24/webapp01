@@ -33,6 +33,9 @@ public class User {
 	@JsonIgnore
 	private Blob imageFile;
 
+	public User(){
+	}
+
 	public User(String name, String surname, String email, String password) {
 		this.name = name;
 		this.surname = surname;

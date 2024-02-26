@@ -20,6 +20,9 @@ public class Review {
 	@JsonIgnore
 	private User user;
 
+	public Review(){		
+	}
+
 	public Review(Integer id, int starsValue, String description, User user) {
 		super();
 		this.id = id;
