@@ -51,6 +51,7 @@ public class AdminUserManager {
          model.addAttribute("users", usersPage);
          model.addAttribute("hasNext", usersPage.hasNext());
          model.addAttribute("currentPage", pageable.getPageNumber()+1);
+         model.addAttribute("searched", "");
          
             
         return "instructor-edit-profile";
@@ -96,6 +97,25 @@ public class AdminUserManager {
        users.save(user);
         
         return "redirect:/users";
+    }
+    @GetMapping("/admin/search-user")
+    public String searchUser(@RequestParam String email, Model model) {
+    	int page = 0;
+    	Pageable pageable = PageRequest.of(page, 2);
+    	Page<User> usersPage = users.findByEmail(pageable, email);
+    	if (email == "") {
+    		usersPage = users.findAll(pageable);
+    	}
+    	else {
+            usersPage = users.findByEmail(pageable, email);
+    	}
+        model.addAttribute("numUsers", usersPage.getNumberOfElements());
+        model.addAttribute("numUsersMax", users.findAll().size());
+        model.addAttribute("users", usersPage);
+        model.addAttribute("hasNext", usersPage.hasNext());
+        model.addAttribute("currentPage", pageable.getPageNumber()+1);
+        model.addAttribute("searched", email);
+    	return "instructor-edit-profile";
     }
 
     
