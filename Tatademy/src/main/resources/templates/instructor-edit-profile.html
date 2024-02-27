@@ -126,27 +126,7 @@
 				<div class="container">
 					<div class="row">
 						
-						<!-- Sidebar -->
-						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
-							<div class="settings-widget dash-profile">
-								<div class="settings-menu p-0">
-									<div class="profile-bg">
-										<img src="/assets/img/instructor-profile-bg.jpg" alt="">
-										<div class="profile-img">
-											<img src="/assets/img/user/user15.jpg" alt="">
-										</div>
-									</div>
-									<div class="profile-group">
-										<div class="profile-name text-center">
-											<h4>Jenny Wilson</h4>
-											<p>Cuenta de administrador</p>
-										</div>
-									</div>
-								</div>
-							</div>
-											
-						</div>
-						<!-- /Sidebar -->
+					
 						
 						<!-- Profile Details -->
 						<div class="col-xl-9 col-md-8">	
@@ -190,7 +170,7 @@
 												<img src="{{image}}" alt="" class="img-fluid">
 												{{/image}}
 												{{^image}}
-												<img src="/assets/img/user/user11.jpg" alt="" class="img-fluid">
+												<img src="/assets/img/user/default-user-icon.jpg" alt="" class="img-fluid">
 												{{/image}}
 											</a>
 											<div class="course-name">
@@ -200,7 +180,10 @@
 											</div>
 										</div>
 										<div class="profile-share d-flex align-items-center justify-content-center">
-											<a href="javascript:void(0);" class="btn btn-success">Actualizar</a>
+											<form action="/update" method="post">
+												<input type="hidden" value="{{id}}" name="userId">
+											<input class="btn btn-success" type="submit" value="Actualizar">
+											</form>
 											<button onclick="confirmDelete('{{id}}')" class="btn btn-danger">Eliminar</button>
 										</div>
 									</div>

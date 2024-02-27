@@ -40,10 +40,12 @@ public class AdminUserManager {
     public String getUsers(@RequestParam(defaultValue = "0") int page, Model model) throws SQLException {
         Pageable pageable = PageRequest.of(page, 2);
         Page<User> usersPage = users.findAll(pageable);
-
-
-        
-
+        for (int i =0 ; i < usersPage.getNumberOfElements(); i++) {
+            if (usersPage.getContent().get(i).getImageFile() != null) {
+            usersPage.getContent().get(i).setImage( "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(usersPage.getContent().get(i).getImageFile().getBytes(1, (int) usersPage.getContent().get(i).getImageFile().length())));
+            
+        }
+        }
         model.addAttribute("numUsers", usersPage.getNumberOfElements());
         model.addAttribute("numUsersMax", users.findAll().size());
          model.addAttribute("users", usersPage);
@@ -59,6 +61,49 @@ public class AdminUserManager {
         
         return "redirect:/users";
     }
+
+    @PostMapping("/update")
+    public String userinfo(Model model, @RequestParam int userId) throws SQLException {
+       User user = users.findById(userId).orElseThrow();
+        if (user.getImageFile() != null) {
+            user.setImage( "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(user.getImageFile().getBytes(1, (int) user.getImageFile().length())));
+        
+    }
+    
+       model.addAttribute("user", user);
+        return "edit-other-profiles";
+    }
+    @GetMapping("/user/deleteImage")
+    public String deleteimageProfile(Model model,@RequestParam int id) {
+        
+        User user = users.findById(id).orElseThrow();
+        user.setImage(null);
+        user.setImageFile(null);
+        users.save(user);
+        model.addAttribute("user", user);
+        return "edit-other-profiles";
+        
+    }
+
+    @PostMapping("/user/profile")
+    public String postMethodName(@RequestParam int id, @RequestParam("fileImage") MultipartFile fileImage, @RequestParam String name, @RequestParam String surname, @RequestParam String email) throws IOException {
+       User user = users.findById(id).orElseThrow();
+       user.setName(name);
+       user.setSurname(surname);
+       user.setImage(null);
+       user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+       user.setEmail(email);
+       users.save(user);
+        
+        return "redirect:/users";
+    }
+
+    
+    
+
+
+    
+    
     
 
     

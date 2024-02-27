@@ -1,16 +1,15 @@
-function confirmDelete(userId) {
-    console.log("Funciona")
-    var confirmDelete = confirm("¿Estás seguro de que deseas eliminar este usuario?");
+function deleteImage(userId) {
 
-    if (confirmDelete) {
-        fetch("/delete/"+userId, {
-            method: 'PUT',
+
+        fetch("/user/deleteImage?userId=" + userId, {
+            method: 'POST',
         })
         .then(response => {
 
-                    window.location.reload();
+            window.location.reload();
 
-            }
-        ) // Aquí faltaba cerrar un paréntesis y una llave
     }
+)
+
+
 }
