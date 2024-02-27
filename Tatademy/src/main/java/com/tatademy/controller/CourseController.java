@@ -96,12 +96,12 @@ public class CourseController {
 
 		Integer numReviews =  reviewsFromCourse.size();
 		model.addAttribute("numReviews", numReviews);
-		Integer starAverage = 0;
+		Double starAverage = 0.0;
 
 		for (Review review : reviewsFromCourse) {
-			starAverage = review.getStarsValue();
+			starAverage += review.getStarsValue();
 		}	
-		model.addAttribute("starAverage", starAverage/numReviews);
+		model.addAttribute("starAverage",  starAverage/numReviews);
 
 		//ABOUT THE COURSE
 		List<User> studentsEnroll = userRepository.findAllUserEnrollByIdCourse(idCourse);
