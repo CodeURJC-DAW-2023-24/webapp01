@@ -7,6 +7,8 @@ import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,6 +107,9 @@ public class CourseController {
 		    courseData.put("stars", stars);
 		    coursesModel.add(courseData);
 		}
+		model.addAttribute("newest", "selected");
+		model.addAttribute("valoration", "");
+		model.addAttribute("mostReviewed", "");
 		model.addAttribute("search", "");
 		model.addAttribute("courses", coursesModel);
 		model.addAttribute("filters", filterPair);
@@ -112,13 +117,14 @@ public class CourseController {
 	}
 
 	@GetMapping("/course-search")
-	public String courseSearch(Model model, @RequestParam String name) throws SQLException {
+	public String courseSearch(Model model, @RequestParam String name, @RequestParam String sellist1) throws SQLException {
 		List<Course> courses = new ArrayList<>();
 		List<String> filters = coursesList.findAllCategories();
 		List<String[]> filterPair = new ArrayList<>();
 		List<String[]> courseInfo = new ArrayList<>();
 		List<Map<String, Object>> coursesModel = new ArrayList<>();
 		Double valoration = 0.0;
+		String newest, valorationtxt, mostReviewed;
 		for (int i = 0; i < filters.size(); ++i) {
 			String[] aux = new String[2];
 			aux[0] = filters.get(i);
@@ -126,6 +132,64 @@ public class CourseController {
 			filterPair.add(aux);
 		}
 		courses = coursesList.findByNameContains(name);
+		switch(sellist1) {
+		case "Valoración":
+			newest = "";
+			valorationtxt = "selected";
+			mostReviewed = "";
+			Collections.sort(courses, new Comparator<Course>() {
+			    public int compare(Course c1, Course c2) {
+			        Double val1 = 0.0;
+			        Double val2 = 0.0;
+			        for (int i = 0; i < c1.getReviews().size(); ++i) {
+			        	val1 += c1.getReviews().get(i).getStarsValue();
+			        }
+			        val1 = val1 / c1.getReviews().size();
+			        for (int j = 0; j < c2.getReviews().size(); ++j) {
+			        	val2 += c2.getReviews().get(j).getStarsValue();
+			        }
+			        val2 = val2 / c2.getReviews().size();
+			        if (val1 < val2) {
+			            return -1;
+			        } else if (val1 > val2) {
+			            return 1;
+			        } else {
+			            return 0;
+			        }
+			    }
+			});
+			break;
+		case "Más veces valorado":
+			newest = "";
+			valorationtxt = "";
+			mostReviewed = "selected";
+			Collections.sort(courses, new Comparator<Course>() {
+			    public int compare(Course c1, Course c2) {
+			        int size1 = c1.getReviews().size();
+			        int size2 = c2.getReviews().size();
+
+			        if (size1 < size2) {
+			            return -1;
+			        } else if (size1 > size2) {
+			            return 1;
+			        } else {
+			            return 0;
+			        }
+			    }
+			});
+			break;
+		default:
+			newest = "selected";
+			valorationtxt = "";
+			mostReviewed = "";
+			Collections.sort(courses, new Comparator<Course>() {
+				public int compare(Course c1, Course c2) {
+					return c1.getcreationDate().compareTo(c2.getcreationDate());
+				}
+			});
+			break;
+		}
+		
 		for (int i = 0; i < courses.size(); ++i) {
 			String[] aux = new String[5];
 			List<Review> reviews = new ArrayList<>();
@@ -158,6 +222,31 @@ public class CourseController {
 		    courseData.put("stars", stars);
 		    coursesModel.add(courseData);
 		}
+		switch(sellist1) {
+		case "Publicado recientemente":
+			newest = "selected";
+			valorationtxt = "";
+			mostReviewed = "";
+			break;
+		case "Valoración":
+			newest = "";
+			valorationtxt = "selected";
+			mostReviewed = "";
+			break;
+		case "Más veces valorado":
+			newest = "";
+			valorationtxt = "";
+			mostReviewed = "selected";
+			break;
+		default:
+			newest = "selected";
+			valorationtxt = "";
+			mostReviewed = "";
+			break;
+		}
+		model.addAttribute("newest", newest);
+		model.addAttribute("valoration", valorationtxt);
+		model.addAttribute("mostReviewed", mostReviewed);
 		model.addAttribute("search", name);
 		model.addAttribute("filters", filterPair);
 		model.addAttribute("courses", coursesModel);
@@ -269,6 +358,9 @@ public class CourseController {
 			}
 			filterPair.add(aux);
 		}
+		model.addAttribute("newest", "selected");
+		model.addAttribute("valoration", "");
+		model.addAttribute("mostReviewed", "");
 		model.addAttribute("search", "");
 		model.addAttribute("filters", filterPair);
 		return "course-grid";

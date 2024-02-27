@@ -1,6 +1,7 @@
 package com.tatademy.model;
 
 import java.sql.Blob;
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,15 @@ public class Course {
 	private String category;
 	private String description;
 	private String imageString;
+	private Calendar creationDate;
+	public Calendar getcreationDate() {
+		return creationDate;
+	}
+
+	public void setcreationDate(Calendar creationDate) {
+		this.creationDate = creationDate;
+	}
+
 	@Lob
 	@JsonIgnore
 	private Blob imageFile;
@@ -39,6 +49,9 @@ public class Course {
 		this.name = name;
 		this.category = category;
 		this.description = description;
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		this.creationDate = today;
 	}
 
 	public List<Material> getMaterial() {
