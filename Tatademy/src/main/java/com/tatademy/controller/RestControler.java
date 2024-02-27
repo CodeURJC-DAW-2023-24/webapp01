@@ -1,4 +1,4 @@
-package com.tatademy.controller;
+/*package com.tatademy.controller;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
@@ -209,3 +209,4 @@ public class RestControler {
 	// !CRUD REVIEWS
 
 }
+*/
