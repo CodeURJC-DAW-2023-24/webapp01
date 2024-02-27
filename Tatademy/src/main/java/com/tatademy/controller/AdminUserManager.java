@@ -36,7 +36,7 @@ public class AdminUserManager {
     @Autowired
 	private UserRepository users;
 
-    @GetMapping("/users")
+    @GetMapping("/admin/users")
     public String getUsers(@RequestParam(defaultValue = "0") int page, Model model) throws SQLException {
         Pageable pageable = PageRequest.of(page, 2);
         Page<User> usersPage = users.findAll(pageable);
