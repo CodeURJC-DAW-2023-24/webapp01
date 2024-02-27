@@ -6,7 +6,9 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,6 +26,8 @@ public class User {
 	private int id;
 	private String email;
 	private String password;
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles;
 	@ManyToMany
 	private List<Course> courses;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -32,6 +36,10 @@ public class User {
 	@Lob
 	@JsonIgnore
 	private Blob imageFile;
+
+	public User() {
+		super();
+	}
 
 	public User(String name, String surname, String email, String password) {
 		this.name = name;
@@ -110,6 +118,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 
 }
