@@ -1,4 +1,4 @@
-/*package com.tatademy.controller;
+package com.tatademy.controller;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
 
@@ -49,7 +49,7 @@ public class RestControler {
 		return users.findAll();
 	}
 
-	@GetMapping("/user/{id}")
+	/*@GetMapping("/user/{id}")
 	public ResponseEntity<User> getUser(@PathVariable int id) {
 		try {
 			User user = users.getReferenceById(id);
@@ -92,7 +92,7 @@ public class RestControler {
 		}
 	}
 	// ! CRUD USERS
-
+*/
 	// CRUD Cursos
 	@GetMapping("/courses")
 	public String getMethodName(Model model) {
@@ -164,7 +164,7 @@ public class RestControler {
 		return "course-grid";
 	}
 
-	@PostMapping("/admin/{id}/new/course")
+	/*@PostMapping("/admin/{id}/new/course")
 	public ResponseEntity<Course> postMethodName(@PathVariable Integer id, @RequestBody Course course) {
 		User usuario = users.findById(id).orElseThrow();
 		usuario.getCourses().add(course);
@@ -183,12 +183,12 @@ public class RestControler {
 		Course curso = cursos.findById(courseId).orElseThrow();
 		cursos.deleteById(curso.getId());
 		return ResponseEntity.ok(curso);
-	}
-
+	}*/
+}
 	// !CRUD Cursos
 
 	// CRUD REVIEWS
-	@GetMapping("/reviews")
+	/*@GetMapping("/reviews")
 	public List<Review> getReviews() {
 		return reviews.findAll();
 	}

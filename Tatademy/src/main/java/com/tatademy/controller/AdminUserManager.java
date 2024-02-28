@@ -38,7 +38,7 @@ public class AdminUserManager {
 
     @GetMapping("/admin/users")
     public String getUsers(@RequestParam(defaultValue = "0") int page, Model model) throws SQLException {
-        Pageable pageable = PageRequest.of(page, 2);
+        Pageable pageable = PageRequest.of(page, 10);
         Page<User> usersPage = users.findAll(pageable);
         for (int i =0 ; i < usersPage.getNumberOfElements(); i++) {
             if (usersPage.getContent().get(i).getImageFile() != null) {
