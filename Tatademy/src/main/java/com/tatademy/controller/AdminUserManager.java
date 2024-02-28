@@ -74,7 +74,7 @@ public class AdminUserManager {
        model.addAttribute("user", user);
         return "edit-other-profiles";
     }
-    @GetMapping("/user/deleteImage")
+    @PostMapping("/admin/user/deleteImage")
     public String deleteimageProfile(Model model,@RequestParam int id) {
         
         User user = users.findById(id).orElseThrow();
@@ -86,7 +86,7 @@ public class AdminUserManager {
         
     }
 
-    @PostMapping("/user/profile")
+    @PostMapping("/admin/user/profile")
     public String postMethodName(@RequestParam int id, @RequestParam("fileImage") MultipartFile fileImage, @RequestParam String name, @RequestParam String surname, @RequestParam String email) throws IOException {
        User user = users.findById(id).orElseThrow();
        user.setName(name);

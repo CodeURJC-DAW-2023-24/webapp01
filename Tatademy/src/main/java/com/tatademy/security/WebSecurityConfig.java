@@ -50,7 +50,11 @@ public class WebSecurityConfig {
 				// USER PAGES
 				.requestMatchers("/setting-edit-profile").hasAnyRole("USER")
 				// ADMIN PAGES
-				.requestMatchers("/create/course").hasAnyRole("ADMIN")
+				.requestMatchers("/new/course").hasAnyRole("ADMIN")
+				.requestMatchers("/delete/{id}").hasAnyRole("ADMIN")
+				.requestMatchers("/admin/user/deleteImage").hasAnyRole("ADMIN")
+				.requestMatchers("/admin/user/deleteImage").hasAnyRole("ADMIN")
+				.requestMatchers("/admin/search-user").hasAnyRole("ADMIN")
 				
 				.anyRequest().anonymous())
 				// LOGIN
