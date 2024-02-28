@@ -24,12 +24,12 @@ public class CourseController {
 	@Autowired
 	private CursoRepository courses;
 
-	@GetMapping("/create/course")
+	@GetMapping("/new/course")
 	public String getMethodName() {
 		return "add-course";
 	}
 
-	@PostMapping("/create/course")
+	@PostMapping("/new/course")
 	public String postMethodName(@RequestParam String title, @RequestParam String subject,
 			@RequestParam String description, @RequestParam("fileImage") MultipartFile fileImage,
 			@RequestParam("courseContentInputFiles") List<MultipartFile> courseContentInputFiles) throws IOException {
@@ -46,7 +46,7 @@ public class CourseController {
 		}
 		courses.save(course);
 
-		return "redirect:/create/course"; // MODIFY THIS AT SOME POINT TO REDIRECT TO COURSES
+		return "redirect:/new/course"; // MODIFY THIS AT SOME POINT TO REDIRECT TO COURSES
 	}
 
 }

@@ -51,7 +51,7 @@ document.getElementById('courseSubmit').addEventListener('submit', function(even
     
 
     // Realizar una solicitud POST al servidor
-    fetch("/create/course", {
+    fetch("/new/course", {
         method: 'POST',
         body: formData
     })
