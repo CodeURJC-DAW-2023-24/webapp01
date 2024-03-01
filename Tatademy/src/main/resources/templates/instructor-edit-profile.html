@@ -59,17 +59,17 @@
 											</div>
 										</div>
 										<div class="profile-share d-flex align-items-center justify-content-center">
-											<form action="/update" method="post">
+											<form action="/admin/update" method="post">
 												<input type="hidden" value="{{id}}" name="userId">
 											<input class="btn btn-success" type="submit" value="Actualizar">
 											</form>
-											<button onclick="confirmDelete('{{id}}')" class="btn btn-danger">Eliminar</button>
+											<button onclick="deleteUser('{{id}}')" class="btn btn-danger">Eliminar</button>
 										</div>
 									</div>
 									{{/users}}
 									{{#hasNext}}
 									<div class="load-more-button" style="text-align: center;">
-										<a href="/users?page={{currentPage}}" class="btn btn-primary">Cargar más usuarios</a>
+										<a href="/admin/users?page={{currentPage}}" class="btn btn-primary">Cargar más usuarios</a>
 									</div>
 									{{/hasNext}}
 									
@@ -85,3 +85,5 @@
 			<!-- /Dashbord Student -->
 			
 {{>footer}}
+
+<script src="/js/src/deleteUser.js"></script>

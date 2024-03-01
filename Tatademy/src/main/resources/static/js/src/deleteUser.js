@@ -1,8 +1,8 @@
-function deleteImage(userId) {
+function deleteUser(userId) {
 
 
-        fetch("/user/deleteImage?userId=" + userId, {
-            method: 'POST',
+        fetch("/admin/delete?userId=" + userId, {
+            method: 'Post',
         })
         .then(response => {
 

@@ -52,13 +52,13 @@ public class AdminUserManager {
 		return "instructor-edit-profile";
 	}
 
-	@PutMapping("/delete/{id}")
-	public String deleteUser(@PathVariable int id) {
-		users.deleteById(id);
+	@PostMapping("/admin/delete")
+	public String deleteUser(@RequestParam int userId) {
+		users.deleteById(userId);
 		return "redirect:/users";
 	}
 
-	@PostMapping("/update")
+	@PostMapping("/admin/update")
 	public String userinfo(Model model, @RequestParam int userId) throws SQLException {
 		User user = users.findById(userId).orElseThrow();
 		if (user.getImageFile() != null) {
