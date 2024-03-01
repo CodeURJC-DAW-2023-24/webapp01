@@ -33,8 +33,8 @@ public class UserService {
 		return repository.existsByEmail(email);
 	}
 
-	public Page<User> findByEmail(Pageable pageable, String email) {
-		return repository.findByEmail(pageable, email);
+	public Page<User> findByEmailContains(Pageable pageable, String email) {
+		return repository.findByEmailContains(pageable, email);
 	}
 
 	public Optional<User> findByEmail(String email) {
