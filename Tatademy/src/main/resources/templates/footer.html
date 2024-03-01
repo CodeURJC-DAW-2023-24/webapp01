@@ -2,7 +2,12 @@
         <footer class="footer">
 
             <!-- Footer Top -->
+            {{#adminUsers}}
+            <div class="footer-top">
+            {{/adminUsers}}
+            {{^adminUsers}}
             <div class="footer-top aos" data-aos="fade-up">
+            {{/adminUsers}}
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 col-md-8">
@@ -131,6 +136,8 @@
 	{{/adminNewCourse}}
 	{{#adminUsers}}
 	<script src="/js/src/deleteUser.js"></script>
+	<script src="/js/src/deletePhoto.js"></script>
+	<script src="assets/js/contadorImages.js"></script>
 	{{/adminUsers}}
 
 </body>

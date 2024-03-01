@@ -42,15 +42,16 @@ public class CourseController {
 		Course course = new Course(title, subject, description);
 		course.setimageString(fileImage.getOriginalFilename());
 		course.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+		courses.save(course);
 		for (int i = 0; i < courseContentInputFiles.size(); i++) {
 			Material material = new Material();
 			material.setFilename(courseContentInputFiles.get(i).getOriginalFilename());
 			material.setFile(BlobProxy.generateProxy(courseContentInputFiles.get(i).getInputStream(),
 					courseContentInputFiles.get(i).getSize()));
+			material.setCourse(course);
 			materialRepository.save(material);
 			course.getMaterial().add(material);
 		}
-		courses.save(course);
 		return "redirect:/new/course"; // MODIFY THIS AT SOME POINT TO REDIRECT TO COURSES
 	}
 

@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -18,6 +19,10 @@ public class Review {
 	private String description;
 	@ManyToOne
 	@JsonIgnore
+	@JoinColumn(name = "course_id")
+	private Course course;
+	@ManyToOne
+	@JsonIgnore
 	private User user;
 
 	public Review() {
@@ -28,6 +33,14 @@ public class Review {
 		super();
 		this.starsValue = starsValue;
 		this.description = description;
+		this.user = user;
+	}
+
+	public Review(int starsValue, String description, Course course, User user) {
+		super();
+		this.starsValue = starsValue;
+		this.description = description;
+		this.course = course;
 		this.user = user;
 	}
 
@@ -61,6 +74,14 @@ public class Review {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 }

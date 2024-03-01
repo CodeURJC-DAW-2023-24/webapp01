@@ -20,9 +20,9 @@ public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Material> material = new ArrayList<>();
-	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Review> reviews;
 	private String name;
 	private String category;

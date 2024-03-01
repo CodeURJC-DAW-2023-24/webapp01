@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.tatademy.model.Course;
 
-public interface CourseRepository extends JpaRepository<Course, Integer> {
+public interface CourseRepository extends JpaRepository<Course, Long> {
 	List<Course> findByNameContains(String name);
 
 	@Query("SELECT DISTINCT c.category FROM Course c")

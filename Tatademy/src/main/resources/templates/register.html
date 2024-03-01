@@ -65,20 +65,20 @@
 							<form action="/signup" method="post" enctype="multipart/form-data">
 								<div class="input-block">
 									<label class="form-control-label">Nombre</label>
-									<input name="name" type="text" class="form-control" placeholder="Introduzca el nombre">
+									<input name="name" type="text" class="form-control" placeholder="Introduzca el nombre" required>
 								</div>
 								<div class="input-block">
 									<label class="form-control-label">Apellidos</label>
-									<input name="surname" type="text" class="form-control" placeholder="Introduzca los apellidos">
+									<input name="surname" type="text" class="form-control" placeholder="Introduzca los apellidos" required>
 								</div>
 								<div class="input-block">
 									<label class="form-control-label">Correo electrónico</label>
-									<input name="email" type="email" class="form-control" placeholder="Introduzca la dirección de correo electrónico">
+									<input name="email" type="email" class="form-control" placeholder="Introduzca la dirección de correo electrónico" required>
 								</div>
 								<div class="input-block">
 									<label class="form-control-label">Contraseña</label>
 									<div class="pass-group" id="passwordInput">																	
-										<input name="password" type="password" class="form-control pass-input" placeholder="Introduzca la contraseña">
+										<input name="password" type="password" class="form-control pass-input" placeholder="Introduzca la contraseña" required>
 										<span class="toggle-password feather-eye"></span>
 										<span class="pass-checked"><i class="feather-check"></i></span>
 									</div>
@@ -93,7 +93,7 @@
 
 								<div class="form-check remember-me">
 									<label class="form-check-label mb-0">
-									  <input class="form-check-input" type="checkbox" name="remember"> Estoy de acuerdo con los <a href="term-condition.html">Términos de Servicio</a> y la <a href="privacy-policy.html">Política de Privacidad.</a>
+									  <input class="form-check-input" type="checkbox" name="remember" required> Estoy de acuerdo con los <a href="term-condition.html">Términos de Servicio</a> y la <a href="privacy-policy.html">Política de Privacidad.</a>
 									</label>
 								</div>
 								<div class="d-grid">
