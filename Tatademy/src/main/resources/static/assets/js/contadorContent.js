@@ -37,13 +37,13 @@ function actualizarContenido() {
     document.getElementById('courseContent').innerHTML = texto || 'No se seleccionó archivo';
 }
 document.getElementById('courseSubmit').addEventListener('submit', function(event) {
+    
     event.preventDefault(); // Evitar que el formulario se envíe automáticamente
 
     // Aquí puedes agregar lógica adicional, como validar los campos del formulario
 
     // Obtener los datos del formulario
     var formData = new FormData(this);
-
     //Modificar FormData
    formData.delete('courseContentInput')
     
