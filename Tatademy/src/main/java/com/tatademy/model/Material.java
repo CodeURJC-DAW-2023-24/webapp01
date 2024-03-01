@@ -12,28 +12,35 @@ import jakarta.persistence.Lob;
 public class Material {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	private String filelocation;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String filename;
 	@Lob
 	private Blob file;
 
-	public String getFilelocation() {
-		return filelocation;
-	}
-
-	public void setFilelocation(String filelocation) {
-		this.filelocation = filelocation;
-	}
-
 	public Material() {
+		super();
 	}
 
-	public int getId() {
+	public Material(String filename, Blob file) {
+		super();
+		this.filename = filename;
+		this.file = file;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -12,27 +12,30 @@ import jakarta.persistence.ManyToOne;
 public class Review {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private int starsValue;
 	private String description;
 	@ManyToOne
 	@JsonIgnore
 	private User user;
 
-	public Review(Integer id, int starsValue, String description, User user) {
+	public Review() {
 		super();
-		this.id = id;
+	}
+
+	public Review(int starsValue, String description, User user) {
+		super();
 		this.starsValue = starsValue;
 		this.description = description;
 		this.user = user;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

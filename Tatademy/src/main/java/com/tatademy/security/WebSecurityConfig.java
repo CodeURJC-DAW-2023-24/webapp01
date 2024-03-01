@@ -36,7 +36,7 @@ public class WebSecurityConfig {
 		http.authenticationProvider(authenticationProvider());
 		http.authorizeHttpRequests(authorize -> authorize
 				// STATIC RESOURCES
-				.requestMatchers("/static/**","/assets/**", "/css/**", "/js/**", "/img/**", "/scss/**", "/cdn-cgi/**","/cloudflare-static/**").permitAll()
+				.requestMatchers("/assets/**", "/css/**", "/js/**", "/img/**", "/scss/**", "/cdn-cgi/**","/cloudflare-static/**").permitAll()
 				// PUBLIC PAGES
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/faq").permitAll()
@@ -47,24 +47,30 @@ public class WebSecurityConfig {
 				.requestMatchers("/logout").permitAll()
 				.requestMatchers("/error").permitAll()
 				.requestMatchers("/courses").permitAll()
+				.requestMatchers("/course-search").permitAll()
 				// USER PAGES
 				.requestMatchers("/setting-edit-profile").hasAnyRole("USER")
 				// ADMIN PAGES
 				.requestMatchers("/new/course").hasAnyRole("ADMIN")
 				.requestMatchers("/delete/{id}").hasAnyRole("ADMIN")
-				.requestMatchers("/admin/user/deleteImage").hasAnyRole("ADMIN")
-				.requestMatchers("/admin/user/deleteImage").hasAnyRole("ADMIN")
-				.requestMatchers("/admin/search-user").hasAnyRole("ADMIN")
+				.requestMatchers("/admin/**").hasAnyRole("ADMIN")
 				
 				.anyRequest().anonymous())
 				// LOGIN
-				.formLogin(formLogin -> formLogin.loginPage("/login").failureUrl("/login").defaultSuccessUrl("/")
+				.formLogin(formLogin -> formLogin
+						.loginPage("/login")
+						.failureUrl("/login")
+						.defaultSuccessUrl("/")
 						.permitAll())
 				// LOGOUT
-				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll());
+				.logout(logout -> logout
+						.logoutUrl("/logout")
+						.logoutSuccessUrl("/")
+						.permitAll());
 
 		http.csrf(csrf -> csrf.disable());
 
 		return http.build();
 	}
+
 }

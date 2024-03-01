@@ -1,44 +1,35 @@
 package com.tatademy.controller;
 
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
-
-import java.net.URI;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tatademy.model.Course;
-import com.tatademy.model.Review;
 import com.tatademy.model.User;
-import com.tatademy.repository.CursoRepository;
-import com.tatademy.repository.ReviewRepository;
+import com.tatademy.repository.CourseRepository;
 import com.tatademy.repository.UserRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class RestControler {
 
 	@Autowired
-	private CursoRepository cursos;
+	private CourseRepository cursos;
 
 	// @Autowired
 	// private MaterialRepositoy materiales;
-	@Autowired
-	private ReviewRepository reviews;
+	
+	// @Autowired
+	// private ReviewRepository reviews;
 
 	@Autowired
 	private UserRepository users;
@@ -47,6 +38,19 @@ public class RestControler {
 	@GetMapping("/users")
 	public List<User> getAllUsers() {
 		return users.findAll();
+	}
+	
+	@ModelAttribute
+	public void addAttributes(Model model, HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		if (principal != null) {
+			model.addAttribute("logged", true);
+			model.addAttribute("userName", principal.getName());
+			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			model.addAttribute("user", request.isUserInRole("USER"));
+		} else {
+			model.addAttribute("logged", false);
+		}
 	}
 
 	/*@GetMapping("/user/{id}")
@@ -104,6 +108,7 @@ public class RestControler {
 			aux[1] = "";
 			filterPair.add(aux);
 		}
+		model.addAttribute("coursesHeader", true);
 		model.addAttribute("courses", cursos.findAll());
 		model.addAttribute("filters", filterPair);
 		return "course-grid";
@@ -121,6 +126,7 @@ public class RestControler {
 			aux[1] = "";
 			filterPair.add(aux);
 		}
+		model.addAttribute("coursesHeader", true);
 		model.addAttribute("filters", filterPair);
 		model.addAttribute("courses", courses);
 		return "course-grid";
@@ -160,6 +166,7 @@ public class RestControler {
 			}
 			filterPair.add(aux);
 		}
+		model.addAttribute("coursesHeader", true);
 		model.addAttribute("filters", filterPair);
 		return "course-grid";
 	}

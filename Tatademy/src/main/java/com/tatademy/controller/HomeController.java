@@ -13,25 +13,25 @@ import jakarta.servlet.http.HttpServletRequest;
 public class HomeController {
 
 	@GetMapping("/")
-	public String home() {
+	public String home(Model model) {
+		model.addAttribute("home", true);
 		return "home";
 	}
 
 	@GetMapping("/faq")
-	public String faq() {
+	public String faq(Model model) {
+		model.addAttribute("faq", true);
 		return "faq";
 	}
-	
+
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
-
 		Principal principal = request.getUserPrincipal();
 		if (principal != null) {
 			model.addAttribute("logged", true);
-			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
-			System.out.println(principal.toString());
-
+			model.addAttribute("user", request.isUserInRole("USER"));
+			model.addAttribute("userName", principal.getName());
 		} else {
 			model.addAttribute("logged", false);
 		}

@@ -18,11 +18,11 @@ import jakarta.persistence.OneToMany;
 public class Course {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Material> material = new ArrayList<>();
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Review> reviews;
 	private String name;
 	private String category;
@@ -33,6 +33,7 @@ public class Course {
 	private Blob imageFile;
 
 	public Course() {
+		super();
 	}
 
 	public Course(String name, String category, String description) {
@@ -73,11 +74,11 @@ public class Course {
 		this.description = descripcion;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

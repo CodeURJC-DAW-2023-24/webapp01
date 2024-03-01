@@ -22,15 +22,15 @@ public class User {
 	private String name;
 	private String surname;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String email;
 	private String password;
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
 	@ManyToMany
 	private List<Course> courses;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Review> reviews;
 	private String image;
 	@Lob
@@ -64,11 +64,11 @@ public class User {
 		this.surname = surname;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
