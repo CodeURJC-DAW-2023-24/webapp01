@@ -2,6 +2,7 @@ package com.tatademy.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import com.tatademy.model.Course;
 import com.tatademy.model.User;
 import com.tatademy.repository.CourseRepository;
 import com.tatademy.repository.UserRepository;
+import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -34,6 +36,9 @@ public class RestControler {
 
 	@Autowired
 	private UserRepository users;
+	
+	@Autowired
+	private UserService userService;
 
 	// CRUD USERS
 	@GetMapping("/users")
@@ -46,9 +51,14 @@ public class RestControler {
 		Principal principal = request.getUserPrincipal();
 		if (principal != null) {
 			model.addAttribute("logged", true);
-			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
 			model.addAttribute("user", request.isUserInRole("USER"));
+			model.addAttribute("userName", userService.findNameByEmail(principal.getName()));
+			byte[] imageBlob = userService.findImageByEmail(principal.getName());
+			if (imageBlob != null) {
+				String base64Image = Base64.getEncoder().encodeToString(imageBlob);
+				model.addAttribute("userImage", base64Image);
+			}
 		} else {
 			model.addAttribute("logged", false);
 		}

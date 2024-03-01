@@ -119,14 +119,24 @@
 							<li class="nav-item user-nav">
 								<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
 									<span class="user-img">
-										<img src="/assets/img/user/default-user-icon.jpg" alt="">
+										{{#userImage}}
+										<img src="data:image/jpeg;base64,{{userImage}}" alt="{{userName}}" class="img-fluid">
+										{{/userImage}}
+										{{^userImage}}
+										<img src="/assets/img/user/default-user-icon.jpg" alt="{{userName}}">
+										{{/userImage}}
 										<span class="status online"></span>
 									</span>
 								</a>
 								<div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end">
 									<div class="user-header">
 										<div class="avatar avatar-sm">
-											<img src="/assets/img/user/default-user-icon.jpg" alt="User Image" class="avatar-img rounded-circle">
+											{{#userImage}}
+											<img src="data:image/jpeg;base64,{{userImage}}" alt="{{userName}}" class="img-fluid" class="avatar-img rounded-circle">
+											{{/userImage}}
+											{{^userImage}}
+											<img src="/assets/img/user/default-user-icon.jpg" alt="{{userName}}" class="avatar-img rounded-circle">
+											{{/userImage}}
 										</div>
 										<div class="user-text">
 											<h6>{{userName}}</h6>

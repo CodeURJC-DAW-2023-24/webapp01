@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tatademy.model.User;
 import com.tatademy.repository.UserRepository;
+import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -30,15 +31,22 @@ public class AdminUserManager {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private UserService userService;
+
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
 		if (principal != null) {
 			model.addAttribute("logged", true);
-			model.addAttribute("userName", principal.getName());
+			model.addAttribute("userName", userRepository.findNameByEmail(principal.getName()));
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
 			model.addAttribute("user", request.isUserInRole("USER"));
-			model.addAttribute("adminUsers", true);
+			byte[] imageBlob = userService.findImageByEmail(principal.getName());
+			if (imageBlob != null) {
+				String base64Image = Base64.getEncoder().encodeToString(imageBlob);
+				model.addAttribute("userImage", base64Image);
+			}
 		} else {
 			model.addAttribute("logged", false);
 		}

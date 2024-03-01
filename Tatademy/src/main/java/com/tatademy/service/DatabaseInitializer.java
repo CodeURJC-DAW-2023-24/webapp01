@@ -68,6 +68,15 @@ public class DatabaseInitializer {
 
 		User admin = new User("admin", "tatademy", adminMail, encodedPassword);
 		admin.setRoles(List.of("USER", "ADMIN"));
+		try (InputStream inputStream = getClass().getClassLoader()
+				.getResourceAsStream("static/assets/img/user/admin_image.jpg")) {
+			byte[] imageData = inputStream.readAllBytes();
+			SerialBlob imageBlob = new SerialBlob(imageData);
+			admin.setImageFile(imageBlob);
+			admin.setImage("admin_image.jpg");
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		}
 		userRepository.save(admin);
 
 		// Sample reviews

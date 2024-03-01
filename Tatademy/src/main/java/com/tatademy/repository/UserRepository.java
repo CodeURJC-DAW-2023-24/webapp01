@@ -16,4 +16,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Page<User> findByEmail(Pageable pageable, String email);
 
 	Optional<User> findByEmail(String email);
+	
+	@Query("SELECT u.name FROM User u WHERE u.email = :email")
+    String findNameByEmail(String email);
+	
+	@Query("SELECT u.imageFile FROM User u WHERE u.email = :email")
+	byte[] findImageByEmail(String email);
 }

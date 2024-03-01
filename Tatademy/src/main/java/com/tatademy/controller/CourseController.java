@@ -2,6 +2,7 @@ package com.tatademy.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.List;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -19,6 +20,7 @@ import com.tatademy.model.Course;
 import com.tatademy.model.Material;
 import com.tatademy.repository.CourseRepository;
 import com.tatademy.repository.MaterialRepository;
+import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -31,8 +33,33 @@ public class CourseController {
 	@Autowired
 	private MaterialRepository materialRepository;
 
+	@Autowired
+	private UserService userService;
+
+	@ModelAttribute
+	public void addAttributes(Model model, HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		if (principal != null) {
+			model.addAttribute("logged", true);
+			model.addAttribute("userName", userService.findNameByEmail(principal.getName()));
+			model.addAttribute("adminNewCourse", request.isUserInRole("ADMIN"));
+			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			model.addAttribute("user", request.isUserInRole("USER"));
+			byte[] imageBlob = userService.findImageByEmail(principal.getName());
+			if (imageBlob != null) {
+				String base64Image = Base64.getEncoder().encodeToString(imageBlob);
+				model.addAttribute("userImage", base64Image);
+			}
+		} else {
+			model.addAttribute("logged", false);
+		}
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
+	}
+
 	@GetMapping("/new/course")
-	public String getMethodName() {
+	public String getMethodName(Model model) {
+		model.addAttribute("adminNewCourset", true);
 		return "add-course";
 	}
 
@@ -54,22 +81,6 @@ public class CourseController {
 			course.getMaterial().add(material);
 		}
 		return "redirect:/new/course"; // MODIFY THIS AT SOME POINT TO REDIRECT TO COURSES
-	}
-
-	@ModelAttribute
-	public void addAttributes(Model model, HttpServletRequest request) {
-		Principal principal = request.getUserPrincipal();
-		if (principal != null) {
-			model.addAttribute("logged", true);
-			model.addAttribute("userName", principal.getName());
-			model.addAttribute("adminNewCourse", request.isUserInRole("ADMIN"));
-			model.addAttribute("admin", request.isUserInRole("ADMIN"));
-			model.addAttribute("user", request.isUserInRole("USER"));
-		} else {
-			model.addAttribute("logged", false);
-		}
-		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-		model.addAttribute("token", token.getToken());
 	}
 
 }
