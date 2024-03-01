@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,22 @@ public class AdminUserManager {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@ModelAttribute
+	public void addAttributes(Model model, HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		if (principal != null) {
+			model.addAttribute("logged", true);
+			model.addAttribute("userName", principal.getName());
+			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			model.addAttribute("user", request.isUserInRole("USER"));
+			model.addAttribute("adminUsers", true);
+		} else {
+			model.addAttribute("logged", false);
+		}
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
+	}
 
 	@GetMapping("/admin/users")
 	public String getUsers(@RequestParam(defaultValue = "0") int page, Model model) throws SQLException {
@@ -68,6 +85,7 @@ public class AdminUserManager {
 					.encodeToString(user.getImageFile().getBytes(1, (int) user.getImageFile().length())));
 		}
 		model.addAttribute("user", user);
+		model.addAttribute("adminUsersEdit", true);
 		return "edit-other-profiles";
 	}
 
@@ -111,20 +129,6 @@ public class AdminUserManager {
 		model.addAttribute("currentPage", pageable.getPageNumber() + 1);
 		model.addAttribute("searched", email);
 		return "instructor-edit-profile";
-	}
-
-	@ModelAttribute
-	public void addAttributes(Model model, HttpServletRequest request) {
-		Principal principal = request.getUserPrincipal();
-		if (principal != null) {
-			model.addAttribute("logged", true);
-			model.addAttribute("userName", principal.getName());
-			model.addAttribute("admin", request.isUserInRole("ADMIN"));
-			model.addAttribute("user", request.isUserInRole("USER"));
-			model.addAttribute("adminUsers", true);
-		} else {
-			model.addAttribute("logged", false);
-		}
 	}
 
 }

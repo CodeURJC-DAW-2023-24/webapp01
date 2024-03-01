@@ -33,16 +33,19 @@
 										</div>
 										<div class="profile-share d-flex align-items-center justify-content-center">
 											{{#image}}
-										
-												<button onclick="deletePhoto('{{id}}')" class="btn btn-danger"> Eliminar </button>
-										
+											<form action="/admin/user/deleteImage" method="post">
+												<input type="hidden" name="_csrf" value="{{token}}"/>
+												<input type="hidden" value="{{id}}" name="id">
+												<input class="btn btn-danger" type="submit" value="Eliminar">
+											</form>
 											{{/image}}
 										</div>
 									</div>
 									<div class="checkout-form personal-address add-course-info ">
-										<form action="/admin/user/profile" method="post" enctype="multipart/form-data">
+										<form action="/admin/user/profile" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+										<input type="hidden" name="_csrf" value="{{token}}"/>
+										<input type="hidden" value="{{id}}" name="id">
 										<div class="input-block">
-											<input type="hidden" value="{{id}}" name="id">
 											<label class="add-course-label">Seleccione una foto de perfil</label>
 											<div class="relative-form">
 												<span id="filesImages-choosen">No se seleccionó archivo</span>

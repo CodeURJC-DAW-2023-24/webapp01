@@ -63,6 +63,7 @@
 							</div>
 							<h1>Crear cuenta</h1>
 							<form action="/signup" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="_csrf" value="{{token}}"/>
 								<div class="input-block">
 									<label class="form-control-label">Nombre</label>
 									<input name="name" type="text" class="form-control" placeholder="Introduzca el nombre" required>

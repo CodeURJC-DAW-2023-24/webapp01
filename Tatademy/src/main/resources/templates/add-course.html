@@ -32,6 +32,7 @@
 							</div>
 							<div class="widget-content multistep-form">
 								<form action="/new/course" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="_csrf" value="{{token}}"/>
 								<fieldset id="first">
 									<div class="add-course-info">
 										<div class="add-course-inner-header">

@@ -60,10 +60,15 @@
 										</div>
 										<div class="profile-share d-flex align-items-center justify-content-center">
 											<form action="/admin/update" method="post">
+												<input type="hidden" name="_csrf" value="{{token}}"/>
 												<input type="hidden" value="{{id}}" name="userId">
 											<input class="btn btn-success" type="submit" value="Actualizar">
 											</form>
-											<button onclick="deleteUser('{{id}}')" class="btn btn-danger">Eliminar</button>
+											<form action="/admin/delete" method="post">
+												<input type="hidden" name="_csrf" value="{{token}}"/>
+												<input type="hidden" value="{{id}}" name="userId">
+											<input class="btn btn-danger" type="submit" value="Eliminar">
+											</form>
 										</div>
 									</div>
 									{{/users}}
@@ -85,5 +90,3 @@
 			<!-- /Dashbord Student -->
 			
 {{>footer}}
-
-<script src="/js/src/deleteUser.js"></script>

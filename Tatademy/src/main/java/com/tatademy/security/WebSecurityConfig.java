@@ -55,7 +55,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/delete/{id}").hasAnyRole("ADMIN")
 				.requestMatchers("/admin/**").hasAnyRole("ADMIN")
 				
-				.anyRequest().anonymous())
+				.anyRequest().authenticated())
 				// LOGIN
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")
@@ -67,8 +67,6 @@ public class WebSecurityConfig {
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")
 						.permitAll());
-
-		http.csrf(csrf -> csrf.disable());
 
 		return http.build();
 	}
