@@ -124,11 +124,9 @@ public class AdminUserManager {
 	public String searchUser(@RequestParam String email, Model model) {
 		int page = 0;
 		Pageable pageable = PageRequest.of(page, 2);
-		Page<User> usersPage = userRepository.findByEmail(pageable, email);
+		Page<User> usersPage = userRepository.findByEmailContains(pageable, email);
 		if (email == "") {
 			usersPage = userRepository.findAll(pageable);
-		} else {
-			usersPage = userRepository.findByEmail(pageable, email);
 		}
 		model.addAttribute("numUsers", usersPage.getNumberOfElements());
 		model.addAttribute("numUsersMax", userRepository.findAll().size());
