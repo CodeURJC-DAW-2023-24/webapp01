@@ -1,6 +1,6 @@
 {{>header}}
 			
-			<!-- Breadcrumb -->
+<!-- Breadcrumb -->
 			<div class="breadcrumb-bar">
 				<div class="container">
 					<div class="row">
@@ -33,21 +33,21 @@
 								<div class="row">
 									<div class="col-lg-8">	
 										<div class="show-filter add-course-info ">
-											<form action="course-search">
+											<form action="course-search" id="search-form">
 												<div class="row gx-2 align-items-center">	
 													<div class="col-md-6 col-item">
 														<div class=" search-group">
 															<i class="feather-search"></i>
-															<input type="text" class="form-control" placeholder="Buscar cursos" name="name">
+															<input type="text" class="form-control" placeholder="Buscar cursos" name="name" value="{{search}}">
 														</div>
 													</div>
 													<div class="col-md-6 col-lg-6 col-item">
 														<div class="input-block select-form mb-0">
-															<select class="form-select select"  name="sellist1">
-															  <option>Publicado recientemente</option>
-															  <option>Valoración</option>
-															  <option>Duración</option>
-															</select>
+																<select class="form-select" name="sellist1" id="options">
+															  		<option {{newest}}>Publicado recientemente</option>
+															  		<option {{valoration}}>Valoración</option>
+															  		<option {{mostReviewed}}>Más veces valorado</option>
+																</select>
 														</div>
 													</div>						
 												</div>
@@ -66,11 +66,11 @@
 										<div class="product">
 											<div class="product-img">
 												<a href="course-details.html">
-													<img class="img-fluid" alt="" src="">
+													<img class="img-fluid" alt="" src="{{2}}">
 												</a>
 											</div>
 											<div class="product-content">
-												<h3 class="title"><a href="course-details.html">{{name}}</a></h3>
+												<h3 class="title"><a href="course-details.html">{{0}}</a></h3>
 												<div class="course-info d-flex align-items-center">
 													<div class="rating-img d-flex align-items-center">
 														<!--<img src="assets/img/icon/icon-01.svg" alt="">
@@ -81,13 +81,12 @@
 														<p>9hr 30min</p>-->
 													</div>
 												</div>
-												<div class="rating">							
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star filled"></i>
-													<i class="fas fa-star"></i>
-													<span class="d-inline-block average-rating"><span>4.0</span> (15)</span>
+												<div class="rating">
+													{{#stars}}
+                            							{{#filled}}<i class="fas fa-star filled"></i>{{/filled}}
+                            							{{^filled}}<i class="fas fa-star"></i>{{/filled}}
+                        							{{/stars}}
+													<span class="d-inline-block average-rating"><span>{{3}}</span> ({{1}})</span>
 												</div>
 												<div class="all-btn all-category d-flex align-items-center">
 													<a href="course-details.html" class="btn btn-primary">Inscribirse</a>

@@ -111,7 +111,7 @@ public class RestControler {
 	// ! CRUD USERS
 */
 	// CRUD Cursos
-	@GetMapping("/courses")
+	/*@GetMapping("/courses")
 	public String getMethodName(Model model) {
 		List<String> filters = cursos.findAllCategories();
 		List<String[]> filterPair = new ArrayList<>();
@@ -182,7 +182,7 @@ public class RestControler {
 		model.addAttribute("coursesHeader", true);
 		model.addAttribute("filters", filterPair);
 		return "course-grid";
-	}
+	}*/
 
 	/*@PostMapping("/admin/{id}/new/course")
 	public ResponseEntity<Course> postMethodName(@PathVariable Integer id, @RequestBody Course course) {
