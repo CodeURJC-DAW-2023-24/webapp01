@@ -172,6 +172,8 @@
 					<!-- /sidebar -->
 						
 						<!-- Profile Details -->
+						{{#user}}
+						{{#logged}}
 						<div class="col-xl-9 col-md-8">	
 							<div class="settings-widget profile-details">
 								<div class="settings-menu p-0">
@@ -185,12 +187,18 @@
 											<p>Si eliminas tu cuenta, perderás acceso a todos tus cursos.</p>
 										</div>
 										<div class="un-subscribe p-0">
-											<a href="#" class="btn btn-danger">Borrar cuenta</a>
+											<form action="/user/delete" method="post">
+												<input type="hidden" name="_csrf" value="{{token}}"/>
+												<input type="hidden" value="{{id}}" name="id">
+												<input class="btn btn-danger" type="submit" value="Borrar Cuenta">
+											</form>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>	
+						</div>
+						{{/user}}
+						{{/logged}}
 						<!-- Profile Details -->
 						
 					</div>
