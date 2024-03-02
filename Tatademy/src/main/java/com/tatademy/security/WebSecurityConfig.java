@@ -18,12 +18,12 @@ public class WebSecurityConfig {
 	public RepositoryUserDetailsService userDetailService;
 
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
+	DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 		authProvider.setUserDetailsService(userDetailService);
 		authProvider.setPasswordEncoder(passwordEncoder());
@@ -31,42 +31,31 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.authenticationProvider(authenticationProvider());
 		http.authorizeHttpRequests(authorize -> authorize
 				// STATIC RESOURCES
-				.requestMatchers("/assets/**", "/css/**", "/js/**", "/img/**", "/scss/**", "/cdn-cgi/**","/cloudflare-static/**").permitAll()
+				.requestMatchers("/assets/**", "/css/**", "/js/**", "/img/**", "/scss/**", "/cdn-cgi/**",
+						"/cloudflare-static/**")
+				.permitAll()
 				// PUBLIC PAGES
-				.requestMatchers("/").permitAll()
-				.requestMatchers("/faq").permitAll()
-				.requestMatchers("/login").permitAll()
-				.requestMatchers("/register").permitAll()
-				.requestMatchers("/forgot-password").permitAll()
-				.requestMatchers("/signup").permitAll()
-				.requestMatchers("/logout").permitAll()
-				.requestMatchers("/error").permitAll()
-				.requestMatchers("/courses").permitAll()
-				.requestMatchers("/course-search").permitAll()
+				.requestMatchers("/").permitAll().requestMatchers("/faq").permitAll().requestMatchers("/login")
+				.permitAll().requestMatchers("/register").permitAll().requestMatchers("/forgot-password").permitAll()
+				.requestMatchers("/signup").permitAll().requestMatchers("/logout").permitAll().requestMatchers("/error")
+				.permitAll().requestMatchers("/courses").permitAll().requestMatchers("/course-search").permitAll()
 				// USER PAGES
-				.requestMatchers("/setting-edit-profile").hasAnyRole("USER")
+				.requestMatchers("/user/**").hasAnyRole("USER")
 				// ADMIN PAGES
-				.requestMatchers("/new/course").hasAnyRole("ADMIN")
-				.requestMatchers("/delete/{id}").hasAnyRole("ADMIN")
+				.requestMatchers("/new/course").hasAnyRole("ADMIN").requestMatchers("/delete/{id}").hasAnyRole("ADMIN")
 				.requestMatchers("/admin/**").hasAnyRole("ADMIN")
-				
+
 				.anyRequest().authenticated())
 				// LOGIN
-				.formLogin(formLogin -> formLogin
-						.loginPage("/login")
-						.failureUrl("/login")
-						.defaultSuccessUrl("/")
+				.formLogin(formLogin -> formLogin.loginPage("/login").failureUrl("/login").defaultSuccessUrl("/")
 						.permitAll())
 				// LOGOUT
-				.logout(logout -> logout
-						.logoutUrl("/logout")
-						.logoutSuccessUrl("/")
-						.permitAll());
+				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll());
 
 		return http.build();
 	}

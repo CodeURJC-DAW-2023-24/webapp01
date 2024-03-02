@@ -19,18 +19,6 @@ public class HomeController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/")
-	public String home(Model model) {
-		model.addAttribute("home", true);
-		return "home";
-	}
-
-	@GetMapping("/faq")
-	public String faq(Model model) {
-		model.addAttribute("faq", true);
-		return "faq";
-	}
-
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
@@ -44,8 +32,19 @@ public class HomeController {
 				String base64Image = Base64.getEncoder().encodeToString(imageBlob);
 				model.addAttribute("userImage", base64Image);
 			}
-		} else {
-			model.addAttribute("logged", false);
 		}
 	}
+
+	@GetMapping("/")
+	public String home(Model model) {
+		model.addAttribute("home", true);
+		return "home";
+	}
+
+	@GetMapping("/faq")
+	public String faq(Model model) {
+		model.addAttribute("faq", true);
+		return "faq";
+	}
+
 }
