@@ -1,0 +1,101 @@
+{{>header}}
+			
+			<!--Dashbord Student -->
+			<div class="page-content">
+				<div class="container">
+					<div class="row">
+						
+					
+						
+						<!-- Profile Details -->
+						{{#user}}
+						<div class="col-md-12">	
+							<div class="settings-widget profile-details">
+								<div class="settings-menu p-0">
+									<div class="profile-heading">
+										<h3>Detalles de perfil</h3>
+										
+									</div>
+									<div class="course-group mb-0 d-flex">
+										<div class="course-group-img d-flex align-items-center">
+											<a href="setting-edit-profile">
+												{{#image}}
+												<img src="{{image}}" alt="">
+												{{/image}}
+												{{^image}}
+												<img src="/assets/img/user/default-user-icon.jpg" alt="">
+												{{/image}}
+											</a>
+											<div class="course-name">
+												<h4><a href="setting-edit-profile">Avatar</a></h4>
+												<p>PNG o JPG máximo 800px ancho y alto.</p>
+											</div>
+										</div>
+										<div class="profile-share d-flex align-items-center justify-content-center">
+											{{#image}}
+											<form action="/admin/user/deleteImage" method="post">
+												<input type="hidden" name="_csrf" value="{{token}}"/>
+												<input type="hidden" value="{{id}}" name="id">
+												<input class="btn btn-danger" type="submit" value="Eliminar">
+											</form>
+											{{/image}}
+										</div>
+									</div>
+									<div class="checkout-form personal-address add-course-info ">
+										<form action="/admin/user/profile" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+										<input type="hidden" name="_csrf" value="{{token}}"/>
+										<input type="hidden" value="{{id}}" name="id">
+										<div class="input-block">
+											<label class="add-course-label">Seleccione una foto de perfil</label>
+											<div class="relative-form">
+												<span id="filesImages-choosen">No se seleccionó archivo</span>
+												<label class="relative-file-upload">
+													Subir archivo <input id="image" name="fileImage" type="file" enctype accept="image/jpeg, image/png">
+												</label>
+											</div>
+										</div>
+										<div class="personal-info-head">
+											<h4>Información personal</h4>
+										</div>
+										
+											<div class="row">
+												<div class="col-lg-6">
+													<div class="input-block">
+														<label class="form-control-label">Nombre</label>
+														<input type="text" name="name" class="form-control" value="{{name}}">
+													</div>
+												</div>
+												
+												<div class="col-lg-6">
+													<div class="input-block">
+														<label class="form-control-label">Apellidos</label>
+														<input type="text" name="surname" class="form-control" value="{{surname}}">
+													</div>
+												</div>
+
+												</div>
+												<div class="col-lg-6">
+													<div class="input-block">
+														<label class="form-control-label">Email</label>
+														<input type="text" name="email" class="form-control" value="{{email}}">
+													</div>
+												</div>
+
+												<div class="update-profile">
+													<button type="submit" class="btn btn-primary">Actualizar Datos</button>
+												</div>
+											</div>
+											
+										
+									</form>
+									</div>
+								</div>
+							</div>
+						</div>	
+						{{/user}}
+						<!-- Profile Details -->
+					</div>
+				</div>
+				<!-- /Dashbord Student -->
+			
+{{>footer}}
