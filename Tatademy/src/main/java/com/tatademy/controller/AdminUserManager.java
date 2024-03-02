@@ -113,8 +113,10 @@ public class AdminUserManager {
 		User user = userRepository.findById(id).orElseThrow();
 		user.setName(name);
 		user.setSurname(surname);
+		if (fileImage.getSize() != 0 ) {
 		user.setImage(null);
 		user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+			}
 		user.setEmail(email);
 		userRepository.save(user);
 		return "redirect:/admin/users";
