@@ -42,7 +42,7 @@
 										<div class="add-course-form">
 												<div class="input-block">
 													<label class="add-course-label">Titulo del curso</label>
-													<input name="title" type="text" class="form-control" placeholder="Titulo del curso">
+													<input name="title" type="text" class="form-control" placeholder="Titulo del curso" required>
 												</div>
 												<div class="input-block">
 													<label class="add-course-label">Categoría</label>
@@ -59,7 +59,7 @@
 												</div>
 												<div class="input-block mb-0">
 													<label class="add-course-label">Descripcion</label>
-													<textarea name="description" style="resize: none;width: 100%" class="ck ck-reset ck-editor ck-rounded-corners" rows="10" cols="137" ></textarea>
+													<textarea name="description" style="resize: none;width: 100%" class="ck ck-reset ck-editor ck-rounded-corners" rows="10" cols="137" required></textarea>
 												</div>
 
 										</div>
@@ -80,7 +80,7 @@
 												<div class="relative-form">
 													<span id="filesImages-choosen">No se seleccionó archivo</span>
 													<label class="relative-file-upload">
-														Subir archivo <input id="image" name="fileImage" type="file" enctype accept="image/jpeg, image/png">
+														Subir archivo <input id="image" name="fileImage" type="file" enctype accept="image/jpeg, image/png" required>
 													</label>
 												</div>
 											</div>
@@ -98,7 +98,7 @@
 														<div class="relative-form">
 															<span id="courseContent">No se seleccionó archivo</span>
 															<label class="relative-file-upload">
-																Subir archivo <input name="courseContentInputFiles"id="courseContentInput" type="file"  multiple>
+																Subir archivo <input name="courseContentInputFiles"id="courseContentInput" type="file"  multiple required>
 															</label>
 														</div>
 													</div>
@@ -115,12 +115,12 @@
 								<fieldset class="field-card">
 									<div class="add-course-info">
 										<div class="add-course-inner-header">
-											<h4>Completado</h4>
+											<h4 id="tituloCompletado">Error</h4>
 										</div>
 										<div class="add-course-form">
 
 											<div class="input-block">
-												<label class="add-course-label">El curso se ha creado correctamente</label>
+												<label class="add-course-label" id="textModified">Error al crear los cursos, recuerda rellenar todos los campos</label>
 							
 											</div>
 

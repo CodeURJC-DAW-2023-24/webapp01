@@ -39,7 +39,8 @@ function actualizarContenido() {
 document.getElementById('courseSubmit').addEventListener('submit', function(event) {
     event.preventDefault(); // Evitar que el formulario se envíe automáticamente
 
-    // Aquí puedes agregar lógica adicional, como validar los campos del formulario
+    document.getElementById('textModified').innerHTML = "El curso se ha creado correctamente";
+    document.getElementById('tituloCompletado').innerHTML = "Completado";
 
     // Obtener los datos del formulario
     var formData = new FormData(this);

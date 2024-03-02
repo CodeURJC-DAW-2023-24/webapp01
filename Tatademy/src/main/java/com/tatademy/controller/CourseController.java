@@ -87,7 +87,7 @@ public class CourseController {
 			materialRepository.save(material);
 			course.getMaterial().add(material);
 		}
-		return "redirect:/new/course"; // MODIFY THIS AT SOME POINT TO REDIRECT TO COURSES
+		return "redirect:/courses";
 	}
 
 	@GetMapping("/courses")
