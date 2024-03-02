@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tatademy.model.User;
+import com.tatademy.service.EmailService;
+import com.tatademy.service.PasswordGeneratorService;
 import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +30,9 @@ public class UserController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private EmailService emailService;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -48,6 +53,20 @@ public class UserController {
 	@GetMapping("/forgot-password")
 	public String forgotPassword() {
 		return "forgot-password";
+	}
+
+	@PostMapping("/forgot-password")
+	public String forgotPassword(User user) {
+		if (userService.existsByEmail(user.getEmail())) {
+			User realUser = userService.findByEmail(user.getEmail());
+			String password = PasswordGeneratorService.generateRandomPassword();
+			emailService.sendEmail(realUser, password);
+			realUser.setPassword(passwordEncoder.encode(password));
+			userService.save(realUser);
+			return "redirect:/login";
+		} else {
+			return "redirect:/forgot-password";
+		}
 	}
 
 	@PostMapping("/signup")

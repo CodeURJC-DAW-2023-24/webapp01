@@ -1,7 +1,6 @@
 package com.tatademy.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,7 +36,7 @@ public class UserService {
 		return repository.findByEmailContains(pageable, email);
 	}
 
-	public Optional<User> findByEmail(String email) {
+	public User findByEmail(String email) {
 		return repository.findByEmail(email);
 	}
 
