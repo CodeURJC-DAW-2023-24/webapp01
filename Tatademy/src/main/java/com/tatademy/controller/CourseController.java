@@ -16,13 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tatademy.model.Course;
 import com.tatademy.model.Material;
-import com.tatademy.repository.CursoRepository;
+import com.tatademy.repository.CourseRepository;
 
 @Controller
 public class CourseController {
 
 	@Autowired
-	private CursoRepository courses;
+	private CourseRepository courses;
 
 	@GetMapping("/create/course")
 	public String getMethodName() {

@@ -1,55 +1,72 @@
 package com.tatademy.controller;
 
-import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
-
-import java.net.URI;
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tatademy.model.Course;
-import com.tatademy.model.Review;
 import com.tatademy.model.User;
-import com.tatademy.repository.CursoRepository;
-import com.tatademy.repository.ReviewRepository;
+import com.tatademy.repository.CourseRepository;
 import com.tatademy.repository.UserRepository;
+import com.tatademy.service.UserService;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class RestControler {
 
 	@Autowired
-	private CursoRepository cursos;
+	private CourseRepository cursos;
 
 	// @Autowired
 	// private MaterialRepositoy materiales;
-	@Autowired
-	private ReviewRepository reviews;
+	
+	// @Autowired
+	// private ReviewRepository reviews;
 
 	@Autowired
 	private UserRepository users;
+	
+	@Autowired
+	private UserService userService;
 
 	// CRUD USERS
 	@GetMapping("/users")
 	public List<User> getAllUsers() {
 		return users.findAll();
 	}
+	
+	@ModelAttribute
+	public void addAttributes(Model model, HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		if (principal != null) {
+			model.addAttribute("logged", true);
+			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			model.addAttribute("user", request.isUserInRole("USER"));
+			model.addAttribute("userName", userService.findNameByEmail(principal.getName()));
+			byte[] imageBlob = userService.findImageByEmail(principal.getName());
+			if (imageBlob != null) {
+				String base64Image = Base64.getEncoder().encodeToString(imageBlob);
+				model.addAttribute("userImage", base64Image);
+			}
+		} else {
+			model.addAttribute("logged", false);
+		}
+		CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+		model.addAttribute("token", token.getToken());
+	}
 
-	@GetMapping("/user/{id}")
+	/*@GetMapping("/user/{id}")
 	public ResponseEntity<User> getUser(@PathVariable int id) {
 		try {
 			User user = users.getReferenceById(id);
@@ -92,9 +109,9 @@ public class RestControler {
 		}
 	}
 	// ! CRUD USERS
-
+*/
 	// CRUD Cursos
-	@GetMapping("/courses")
+	/*@GetMapping("/courses")
 	public String getMethodName(Model model) {
 		List<String> filters = cursos.findAllCategories();
 		List<String[]> filterPair = new ArrayList<>();
@@ -104,6 +121,7 @@ public class RestControler {
 			aux[1] = "";
 			filterPair.add(aux);
 		}
+		model.addAttribute("coursesHeader", true);
 		model.addAttribute("courses", cursos.findAll());
 		model.addAttribute("filters", filterPair);
 		return "course-grid";
@@ -121,6 +139,7 @@ public class RestControler {
 			aux[1] = "";
 			filterPair.add(aux);
 		}
+		model.addAttribute("coursesHeader", true);
 		model.addAttribute("filters", filterPair);
 		model.addAttribute("courses", courses);
 		return "course-grid";
@@ -160,11 +179,12 @@ public class RestControler {
 			}
 			filterPair.add(aux);
 		}
+		model.addAttribute("coursesHeader", true);
 		model.addAttribute("filters", filterPair);
 		return "course-grid";
-	}
+	}*/
 
-	@PostMapping("/admin/{id}/new/course")
+	/*@PostMapping("/admin/{id}/new/course")
 	public ResponseEntity<Course> postMethodName(@PathVariable Integer id, @RequestBody Course course) {
 		User usuario = users.findById(id).orElseThrow();
 		usuario.getCourses().add(course);
@@ -183,12 +203,12 @@ public class RestControler {
 		Course curso = cursos.findById(courseId).orElseThrow();
 		cursos.deleteById(curso.getId());
 		return ResponseEntity.ok(curso);
-	}
-
+	}*/
+}
 	// !CRUD Cursos
 
 	// CRUD REVIEWS
-	@GetMapping("/reviews")
+	/*@GetMapping("/reviews")
 	public List<Review> getReviews() {
 		return reviews.findAll();
 	}
@@ -209,3 +229,4 @@ public class RestControler {
 	// !CRUD REVIEWS
 
 }
+*/
