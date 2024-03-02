@@ -180,9 +180,9 @@ public class CourseController {
 			        	val2 += c2.getReviews().get(j).getStarsValue();
 			        }
 			        val2 = val2 / c2.getReviews().size();
-			        if (val1 < val2) {
+			        if (val1 > val2) {
 			            return -1;
-			        } else if (val1 > val2) {
+			        } else if (val1 < val2) {
 			            return 1;
 			        } else {
 			            return 0;
