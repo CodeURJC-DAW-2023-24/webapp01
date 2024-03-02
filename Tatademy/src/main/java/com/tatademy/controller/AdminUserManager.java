@@ -109,7 +109,7 @@ public class AdminUserManager {
 
 	@PostMapping("/admin/user/profile")
 	public String postMethodName(@RequestParam Long id, @RequestParam("fileImage") MultipartFile fileImage,
-			@RequestParam String name, @RequestParam String surname, @RequestParam String email) throws IOException {
+			@RequestParam String name, @RequestParam String surname) throws IOException {
 		User user = userRepository.findById(id).orElseThrow();
 		user.setName(name);
 		user.setSurname(surname);
@@ -117,7 +117,6 @@ public class AdminUserManager {
 		user.setImage(null);
 		user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
 			}
-		user.setEmail(email);
 		userRepository.save(user);
 		return "redirect:/admin/users";
 	}
