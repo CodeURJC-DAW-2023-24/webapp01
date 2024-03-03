@@ -1,7 +1,9 @@
 package com.tatademy.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -14,6 +16,10 @@ import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -555,7 +561,27 @@ public class CourseController {
 	private boolean isJoined(Course course, User user) {
 		return user.getCourses().contains(course);
 	}
+	
+	@GetMapping("/download/{fileId}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long fileId) throws SQLException, IOException {
+        // Obtener el archivo Blob desde el servicio
+        Material material = materialService.findById(fileId).orElseThrow();
 
+        // Obtener el Blob del archivo
+        Blob fileBlob = material.getFile();
+
+        // Convertir el Blob a un array de bytes
+        byte[] fileBytes = fileBlob.getBytes(1, (int) fileBlob.length());
+
+        // Configurar las cabeceras HTTP
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", material.getFilename()+".pdf"); // Cambia "filename.pdf" según tu lógica
+
+        // Retornar la respuesta HTTP con el archivo
+        return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
+    }
+	
 	@GetMapping("/course-details/{courseName}")
 	public String courseDetails(Model model, HttpServletRequest request, @PathVariable Long courseName)
 			throws SQLException {
