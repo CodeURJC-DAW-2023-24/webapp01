@@ -5,7 +5,7 @@
 			<div class="row">
 				
 				<!-- Sidebar -->
-				<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+				<!--<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
 					<div class="settings-widget dash-profile">
 						<div class="settings-menu p-0">
 							<div class="profile-bg">
@@ -70,8 +70,92 @@
 							</ul>
 						</div>
 					</div>					
-				</div>
+				</div>-->
 				<!-- /Sidebar -->
+
+
+
+
+
+
+
+
+
+
+
+												<!-- sidebar -->
+												<div class="col-xl-3 col-md-4 theiaStickySidebar">
+													<div class="settings-widget dash-profile mb-3">
+														<div class="settings-menu p-0">
+															<div class="profile-bg">
+																<img src="/assets/img/profile-bg.jpg" alt="">
+																<div class="profile-img">
+																	{{#userImage}}
+																	<img src="data:image/jpeg;base64,{{userImage}}" alt="{{userName}}">
+																	{{/userImage}}
+																	{{^userImage}}
+																	<img src="/assets/img/user/default-user-icon.jpg" alt="{{userName}}">
+																	{{/userImage}}
+																</div>
+															</div>
+															<div class="profile-group">
+																<div class="profile-name text-center">
+																	<h4><a href="#"></a>{{name}}</h4>
+																	<p>Estudiante registrado</p>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="settings-widget account-settings">
+														<div class="settings-menu">
+															<h3>Ajustes Generales</h3>
+															<ul>
+																<li class="nav-item active">
+																	<a href="#" class="nav-link">
+																		<i class="feather-settings"></i> Editar Perfil
+																	</a>
+																</li>
+																<li class="nav-item">
+																	<a href="/user/setting-student-security" class="nav-link">
+																		<i class="feather-lock"></i> Cambiar contraseña
+																	</a>
+																</li>
+																<li class="nav-item">
+																	<a href="/user/setting-student-delete-profile" class="nav-link">
+																		<i class="feather-trash-2"></i> Borrar Perfil
+																	</a>
+																</li>
+																
+																<li class="nav-item">
+																	<a href="/user/logout" class="nav-link">
+																		<i class="feather-power"></i> Cerrar Sesión
+																	</a>
+																</li>
+															</ul>
+														</div>
+													</div>					
+												</div>
+												<!-- /sidebar -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				
 				<!-- Instructor Dashboard -->
 				<div class="col-xl-9 col-lg-8 col-md-12">	
@@ -250,4 +334,4 @@
 		<script src="/assets/js/script.js"></script>
 		
 	</body>
-</html>
+</html>}}
