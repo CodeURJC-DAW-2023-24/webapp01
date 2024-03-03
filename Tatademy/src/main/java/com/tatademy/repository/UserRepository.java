@@ -39,6 +39,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT u FROM User u JOIN u.courses c WHERE c.id = :idCourse")
 	List<User> findAllUserEnrollByIdCourse(Long  idCourse);
 
+	@Query("SELECT u FROM User u WHERE EXISTS (SELECT 1 FROM u.courses)")
+    List<User> findUsersEnrolledInAtLeastOneCourse();
+
 
 
 
