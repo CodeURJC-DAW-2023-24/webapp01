@@ -38,19 +38,19 @@ function actualizarContenido() {
 }
 document.getElementById('courseSubmit').addEventListener('submit', function(event) {
     
-    event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+    event.preventDefault(); 
     document.getElementById('textModified').innerHTML = "Todo correcto";
     document.getElementById('tituloCompletado').innerHTML = "Completado";
 
-    // Obtener los datos del formulario
+
     var formData = new FormData(this);
-    //Modificar FormData
+
    formData.delete('courseContentInput')
     
     formData.append('courseContentInput',Array.from(archivosList)); 
     
 
-    // Realizar una solicitud POST al servidor
+
     fetch("/admin/new/course", {
         method: 'POST',
         body: formData
@@ -59,7 +59,7 @@ document.getElementById('courseSubmit').addEventListener('submit', function(even
 }); 
 
 function cargarPagina() {
-    // Cambiar la URL por la página que deseas cargar
+
     location.reload();
 }
 

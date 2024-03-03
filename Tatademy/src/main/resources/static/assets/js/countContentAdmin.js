@@ -37,14 +37,13 @@ function actualizarContenido() {
     document.getElementById('courseContent').innerHTML = texto || 'No se seleccionó archivo';
 }
 document.getElementById('courseSubmit').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+    event.preventDefault(); 
 
-    // Aquí puedes agregar lógica adicional, como validar los campos del formulario
 
-    // Obtener los datos del formulario
+
     var formData = new FormData(this);
 
-    //Modificar FormData
+
     document.getElementById('textModified').innerHTML = "Todo correcto";
     document.getElementById('tituloCompletado').innerHTML = "Completado";
    formData.delete('courseContentInput')
@@ -52,7 +51,6 @@ document.getElementById('courseSubmit').addEventListener('submit', function(even
     formData.append('courseContentInput',Array.from(archivosListAdmin)); 
     
 
-    // Realizar una solicitud POST al servidor
     fetch("/admin/new/course", {
         method: 'POST',
         body: formData
@@ -61,7 +59,7 @@ document.getElementById('courseSubmit').addEventListener('submit', function(even
 }); 
 
 function cargarPagina() {
-    // Cambiar la URL por la página que deseas cargar
+
     location.reload();
 }
 

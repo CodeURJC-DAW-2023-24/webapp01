@@ -565,21 +565,20 @@ public class CourseController {
 	
 	@GetMapping("/download/{fileId}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long fileId) throws SQLException, IOException {
-        // Obtener el archivo Blob desde el servicio
+
         Material material = materialService.findById(fileId).orElseThrow();
 
-        // Obtener el Blob del archivo
+
         Blob fileBlob = material.getFile();
 
-        // Convertir el Blob a un array de bytes
+
         byte[] fileBytes = fileBlob.getBytes(1, (int) fileBlob.length());
 
-        // Configurar las cabeceras HTTP
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", material.getFilename()+".pdf"); // Cambia "filename.pdf" según tu lógica
+        headers.setContentDispositionFormData("attachment", material.getFilename()+".pdf");
 
-        // Retornar la respuesta HTTP con el archivo
         return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
     }
 	
@@ -805,7 +804,7 @@ public class CourseController {
 				e.printStackTrace();
 			}
 		}
-		return "redirect:/course-details/" + id; // Return null to prevent view resolution
+		return "redirect:/course-details/" + id; 
 
 	}
 

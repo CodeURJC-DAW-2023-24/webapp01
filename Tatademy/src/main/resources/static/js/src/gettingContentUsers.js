@@ -4,17 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadMoreBtn.addEventListener('click', () => {
         fetch(`/admin/users?page=${page}`)
-            .then(response => response.text()) // Convertir la respuesta a texto
+            .then(response => response.text()) 
             .then(html => {
-                document.getElementById('projects-container').innerHTML += html; // Insertar el HTML en el contenedor
-                 // Incrementar el número de página para la próxima carga
+                document.getElementById('projects-container').innerHTML += html; 
+
                 fetch(`/admin/users?page=${++page}`)
                 
-            .then(response => response.text()) // Convertir la respuesta a texto
+            .then(response => response.text()) 
             .then(html => {
-             // Incrementar el número de página para la próxima carga
+
                 if (html.trim() === '') {
-                    // Si no hay más páginas, eliminar el botón
+
                     loadMoreBtn.remove();
                 }
             })
