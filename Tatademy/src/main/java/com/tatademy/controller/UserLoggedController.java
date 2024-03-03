@@ -56,8 +56,6 @@ public class UserLoggedController {
 		Principal principal = request.getUserPrincipal();
 		User user = userRepository.findByEmail(principal.getName());
 		model.addAttribute("surname", user.getSurname());
-		model.addAttribute("image", user.getImage());
-		model.addAttribute("image_file", user.getImageFile());
 		model.addAttribute("id", user.getId());
 		model.addAttribute("email", user.getEmail());
 		return "setting-edit-profile";
