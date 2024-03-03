@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.tatademy.model.Course;
 import com.tatademy.model.Material;
 import com.tatademy.model.Review;
+import com.tatademy.model.User;
 import com.tatademy.repository.CourseRepository;
 import com.tatademy.repository.MaterialRepository;
 import com.tatademy.service.UserService;
@@ -523,5 +525,34 @@ public class CourseController {
 			model.addAttribute("filters", filterPair);
 			model.addAttribute("delete", false);
 			return "redirect:/courses-panel";
+	}
+
+	private boolean isJoined(Course course, User user){
+		return user.getCourses().contains(course);
+	}
+
+
+@GetMapping("/course-details/{courseName}")
+	public String courseDetails(Model model, HttpServletRequest request,@PathVariable String courseName){
+		Principal principal = request.getUserPrincipal();
+		User user = userService.findByEmail(principal.getName());
+		Course course = courses.findByName(courseName);
+		model.addAttribute("joined", isJoined(course, user));
+		model.addAttribute("courseName", course.getName());
+		model.addAttribute("courseDescription", course.getDescription());
+		model.addAttribute("courseCategory", course.getCategory());
+		return "course-details";
+	}
+
+	@GetMapping("/joinCourse/{courseName}")
+	public String courseInscription(Model model, HttpServletRequest request, @PathVariable String courseName){
+		Principal principal = request.getUserPrincipal();
+		User user = userService.findByEmail(principal.getName());
+		List<Course> currentCurses = user.getCourses();
+		currentCurses.add(courses.findByName(courseName));
+		user.setCourses(currentCurses);
+		userService.save(user);
+		//model.addAttribute("joined", true);
+		return "redirect:/";
 	}
 }

@@ -10,6 +10,8 @@ import com.tatademy.model.Course;
 public interface CourseRepository extends JpaRepository<Course, Long> {
 	List<Course> findByNameContains(String name);
 
+	Course findByName(String name);
+
 	@Query("SELECT DISTINCT c.category FROM Course c")
 	List<String> findAllCategories();
 
