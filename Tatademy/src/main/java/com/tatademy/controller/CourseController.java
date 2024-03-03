@@ -131,7 +131,7 @@ public class CourseController {
 			aux[1] = String.valueOf(reviews.size());
 			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 			aux[3] = coursesList.get(i).getId().toString();
-			aux[5] = String.valueOf(coursesList.get(i).getId());
+			aux[4] = String.valueOf(coursesList.get(i).getId());
 			courseInfo.add(aux);
 		}
 		for (String[] aux : courseInfo) {
@@ -149,7 +149,7 @@ public class CourseController {
 		    courseData.put("3", String.valueOf(valoration));
 		    courseData.put("stars", stars);
 		    courseData.put("id", aux[3]);
-			courseData.put("5", aux[5]);
+			courseData.put("5", aux[4]);
 		    coursesModel.add(courseData);
 		}
 		model.addAttribute("newest", "selected");
