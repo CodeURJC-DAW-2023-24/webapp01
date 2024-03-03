@@ -30,6 +30,7 @@ import com.tatademy.model.User;
 
 import com.tatademy.repository.CourseRepository;
 import com.tatademy.repository.MaterialRepository;
+import com.tatademy.repository.ReviewRepository;
 import com.tatademy.repository.UserRepository;
 import com.tatademy.service.UserService;
 
@@ -43,6 +44,10 @@ public class CourseController {
 
 	@Autowired
 	private MaterialRepository materialRepository;
+	@Autowired
+	private ReviewRepository reviewRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private UserService userService;
@@ -560,7 +565,36 @@ public class CourseController {
 		model.addAttribute("courseDescription", course.getDescription());
 		model.addAttribute("courseCategory", course.getCategory());
 
-		//ALGORITHM
+
+		// Materials
+		List<Material> materialsFromCourse = courses.findMaterialsByIdCourse(course.getId());
+		model.addAttribute("materialsFromCourse", materialsFromCourse);		
+
+		//INFORMATION RELATED TO REVIEWS
+		List<Review> reviewsFromCourse = reviewRepository.findReviewsByIdCourse(course.getId());
+		model.addAttribute("reviewsFromCourse", reviewsFromCourse);
+
+		Integer numReviews =  reviewsFromCourse.size();
+		model.addAttribute("numReviews", numReviews);
+		Integer starAverage = 0;
+
+		for (Review review : reviewsFromCourse) {
+			starAverage = review.getStarsValue();
+		}	
+		model.addAttribute("starAverage", starAverage/numReviews);
+
+		//ABOUT THE COURSE
+		List<User> studentsEnroll = userRepository.findAllUserEnrollByIdCourse(course.getId());
+		Integer numStudentsEnroll = studentsEnroll.size();
+		model.addAttribute("numStudentsEnroll", numStudentsEnroll);
+		model.addAttribute("numMaterialsCourse", materialsFromCourse.size());
+
+
+
+		//-----------------------------------------
+
+
+		// ALGORITHM
 		List<Map<String, Object>> coursesModelAlgorithm = new ArrayList<>();
 		List<String[]> courseInfoAlgorithm = new ArrayList<>();
 		Double valorationAlgorithm = 0.0;
@@ -614,14 +648,48 @@ public class CourseController {
 	}
 
 	@GetMapping("/joinCourse/{courseName}")
-	public String courseInscription(Model model, HttpServletRequest request, @PathVariable Long courseName){
+	public String courseInscription(Model model, HttpServletRequest request, @PathVariable String courseName){
 		Principal principal = request.getUserPrincipal();
 		User user = userService.findByEmail(principal.getName());
 		List<Course> currentCurses = user.getCourses();
-		currentCurses.add(courses.findById(courseName).orElseThrow());
+		currentCurses.add(courses.findByName(courseName));
 		user.setCourses(currentCurses);
 		userService.save(user);
 		//model.addAttribute("joined", true);
 		return "redirect:/";
 	}
+
+
+	@GetMapping("/saveReview/{courseName}")
+	public String saveReview(Model model, @PathVariable String courseName, HttpServletRequest request, @RequestParam String userNameReview, @RequestParam String userSurnameReview, @RequestParam int rateReview, @RequestParam String descriptionReview) {
+    // Ask for user:
+    Principal principal = request.getUserPrincipal();
+    User user = userService.findByEmail(principal.getName());
+    // Create the new review:
+    Review newReview = new Review();
+    newReview.setStarsValue(rateReview);
+    newReview.setDescription(descriptionReview);
+	newReview.setCourse(courses.findByName(courseName));
+    newReview.setUser(user);
+    // Save the review
+	reviewRepository.save(newReview);
+    return "redirect:/";
+	}
+
+	/*
+	FILES BBDD TO CHECK
+	@GetMapping("/{id}/DownloadFile") 
+	public ResponseEntity<Object> downloadImage(@PathVariable Integer id) throws SQLException {
+		Material material = materialRepository.findById(id).orElseThrow();
+		if (material.getFile() != null) {
+			InputStreamResource file = new InputStreamResource(material.getFile().getBinaryStream());
+			return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_TYPE, "file")
+				.contentLength(material.getFile().length())
+				.body(file);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	} */
+
 }
