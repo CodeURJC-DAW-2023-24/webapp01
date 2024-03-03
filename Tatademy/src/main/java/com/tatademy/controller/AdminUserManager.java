@@ -139,7 +139,7 @@ public class AdminUserManager {
 		return "redirect:/admin/all/users";
 	}
 
-	@GetMapping("/admin/search-user")
+	@GetMapping("/admin/all/search-user")
 	public String searchUser(@RequestParam String email, Model model) {
 		int page = 0;
 		Pageable pageable = PageRequest.of(page, 2);
