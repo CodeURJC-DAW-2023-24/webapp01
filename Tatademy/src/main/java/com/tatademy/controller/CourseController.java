@@ -698,7 +698,7 @@ public class CourseController {
     public String generatePdf( @RequestParam long id,  HttpServletRequest request, HttpServletResponse response) {
         Principal principal = request.getUserPrincipal();
 		User Iam = userService.findByEmail(principal.getName());
-		if (Iam.getCourses().contains(courses.findById(id).orElseThrow())) {
+		if (Iam.getCourses().contains(courseService.findById(id).orElseThrow())) {
 		try {
             // Set content type and headers for PDF response
             response.setContentType("application/pdf");
@@ -719,7 +719,7 @@ public class CourseController {
 			Paragraph desc = new Paragraph("Has conseguido el diploma de", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
 			desc.setAlignment(Paragraph.ALIGN_CENTER);
 			document.add(desc);
-			Paragraph subject = new Paragraph(courses.findById(id).orElseThrow().getName(), FontFactory.getFont(FontFactory.HELVETICA,20,Font.BOLD));
+			Paragraph subject = new Paragraph(courseService.findById(id).orElseThrow().getName(), FontFactory.getFont(FontFactory.HELVETICA,20,Font.BOLD));
 			subject.setAlignment(Paragraph.ALIGN_CENTER);
 			document.add(subject);
 			Paragraph desc2 = new Paragraph("Por haber completados todo el contenido del curso", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));

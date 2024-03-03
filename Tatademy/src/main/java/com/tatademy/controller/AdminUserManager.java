@@ -71,7 +71,7 @@ public class AdminUserManager {
 			}
 		}
 		model.addAttribute("numUsers", usersPage.getNumberOfElements() * (1+page));
-		model.addAttribute("numUsersMax", userRepository.findAll().size());
+		model.addAttribute("numUsersMax", userService.findAll().size());
 		model.addAttribute("users", usersPage);
 		model.addAttribute("hasNext", usersPage.hasNext());
 		model.addAttribute("currentPage", pageable.getPageNumber() + 1);
