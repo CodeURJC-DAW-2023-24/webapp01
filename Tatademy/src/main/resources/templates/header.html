@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Tatademy</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.svg">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/assets/plugins/fontawesome/css/all.min.css">
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
+
+    <!-- Slick CSS -->
+    <link rel="stylesheet" href="/assets/plugins/slick/slick.css">
+    <link rel="stylesheet" href="/assets/plugins/slick/slick-theme.css">
+
+    <!-- Select2 CSS -->
+    <link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css">
+
+    <!-- Aos CSS -->
+    <link rel="stylesheet" href="/assets/plugins/aos/aos.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/feather.css">
+
+</head>
+
+<body>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+
+        <!-- Header -->
+        {{#home}}<header class="header">{{/home}}
+        {{^home}}<header class="header header-page">{{/home}}
+            <div class="header-fixed">
+                <nav class="navbar navbar-expand-lg header-nav scroll-sticky">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a id="mobile_btn" href="javascript:void(0);">
+									<span class="bar-icon">
+										<span></span>
+										<span></span>
+										<span></span>
+									</span>
+								</a>
+                            <a href="/" class="navbar-brand logo">
+									<img src="/assets/img/logo.svg" class="img-fluid" alt="Logo">
+								</a>
+                        </div>
+                        <div class="main-menu-wrapper">
+                            <div class="menu-header">
+                                <a href="/" class="menu-logo">
+                                        <img src="/assets/img/logo.svg" class="img-fluid" alt="Logo">
+                                    </a>
+                                <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                            </div>
+                            <ul class="main-nav">
+                                {{#home}}<li class="active">{{/home}}
+                                {{^home}}<li class="has-submenu">{{/home}}
+                                    <a class="" href="/">Inicio</a>
+                                </li>
+                                {{#coursesHeader}}<li class="active">{{/coursesHeader}}
+                                {{^coursesHeader}}<li>{{/coursesHeader}}
+                                    <a class="" href="/courses">Cursos</a>
+                                </li>
+                                {{#admin}}
+                                <li class="has-submenu">
+                                    <a href="">Administrador<i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu">
+                                        <li><a href="/admin/new/course">Crear Curso</a></li>
+                                        <li><a href="/courses-panel">Gestionar Cursos</a></li>
+                                        <li><a href="/admin/all/users">Gestionar Usuarios</a></li>
+                                        <li><a href="/TatademyStadict">Estadísticas</a></li>
+                                    </ul>
+                                </li>
+                                {{/admin}}
+                                {{#user}}
+                                {{#userProfileArea}}
+                                <li class="has-submenu active">
+                                {{/userProfileArea}}
+                                {{^userProfileArea}}
+                                <li class="has-submenu">
+                                {{/userProfileArea}}
+                                    <a href="">Estudiante<i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu first-submenu">
+                                        <li><a href="/user/setting-edit-profile">Perfil</a></li>
+                                        <li><a href="/user/my-course-list">Mis Cursos</a></li>
+                                        <li><a href="/user/my-reviews-list">Mis Reviews</a></li>
+                                        <li><a href="/user/setting-student-security">Seguridad Cuenta</a></li>
+                                    </ul>
+                                </li>
+                                {{/user}}
+                                {{#faq}}<li class="active">{{/faq}}
+                                {{^faq}}<li>{{/faq}}
+                                    <a href="/faq">FAQ</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {{^logged}}
+                        <ul class="nav header-navbar-rht">
+                            <li class="nav-item">
+                                <a class="nav-link header-sign" href="/login">Iniciar sesión</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link header-login" href="/register">Crear cuenta</a>
+                            </li>
+                        </ul>
+                        {{/logged}} 
+                        {{#logged}}
+                        <ul class="nav header-navbar-rht">
+							<li class="nav-item user-nav">
+								<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+									<span class="user-img">
+										{{#userImage}}
+										<img src="data:image/jpeg;base64,{{userImage}}" alt="{{userName}}" class="img-fluid">
+										{{/userImage}}
+										{{^userImage}}
+										<img src="/assets/img/user/default-user-icon.jpg" alt="{{userName}}">
+										{{/userImage}}
+										<span class="status online"></span>
+									</span>
+								</a>
+								<div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end">
+									<div class="user-header">
+										<div class="avatar avatar-sm">
+											{{#userImage}}
+											<img src="data:image/jpeg;base64,{{userImage}}" alt="{{userName}}" class="img-fluid" class="avatar-img rounded-circle">
+											{{/userImage}}
+											{{^userImage}}
+											<img src="/assets/img/user/default-user-icon.jpg" alt="{{userName}}" class="avatar-img rounded-circle">
+											{{/userImage}}
+										</div>
+										<div class="user-text">
+											<h6>{{userName}}</h6>
+											{{#admin}}
+											<p class="text-muted mb-0">Administrador</p>
+											{{/admin}}
+											{{^admin}}
+											<p class="text-muted mb-0">Estudiante</p>
+											{{/admin}}
+										</div>
+									</div>
+									<a class="dropdown-item" href="/user/setting-edit-profile"><i class="feather-user me-1"></i>Perfil</a>
+									<a class="dropdown-item" href="/user/my-course-list"><i class="feather-book me-1"></i>Mis cursos</a>
+									<a class="dropdown-item" href="/user/my-reviews-list"><i class="feather-star me-1"></i>Mis Reviews</a>
+									<a class="dropdown-item" href="/user/logout"><i class="feather-log-out me-1"></i>Cerrar Sesión</a>
+								</div>
+							</li>
+						</ul>
+						{{/logged}}
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- /Header -->

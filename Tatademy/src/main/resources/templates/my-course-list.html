@@ -1,0 +1,150 @@
+{{>header}}
+			
+<!-- Breadcrumb -->
+			<div class="breadcrumb-bar">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 col-12">
+							<div class="breadcrumb-list">
+								<nav aria-label="breadcrumb" class="page-breadcrumb">
+									<ol class="breadcrumb">
+										<li class="breadcrumb-item"><a href="/">Inicio</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Buscar cursos</li>
+									</ol>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Breadcrumb -->
+			
+			
+
+
+			<!-- Course -->
+			<section class="course-content">
+				<div class="container">
+				{{#courses}}
+					<div class="row">
+						<div class="col-lg-9">
+						
+							<!-- Filter -->
+							<div class="showing-list">
+								<div class="row">
+									<div class="col-lg-8">	
+										<div class="show-filter add-course-info ">
+											<form action="course-search" id="search-form" accept-charset="utf-8">
+												<div class="row gx-2 align-items-center">	
+													<div class="col-md-6 col-item">
+														<div class=" search-group">
+															<i class="feather-search"></i>
+															<input type="text" class="form-control" placeholder="Buscar cursos" name="name" value="{{search}}">
+														</div>
+													</div>
+													<div class="col-md-6 col-lg-6 col-item">
+														<div class="input-block select-form mb-0">
+																<select class="form-select" name="sellist1" id="options">
+															  		<option {{newest}}>Publicado recientemente</option>
+															  		<option {{valoration}}>Valoración</option>
+															  		<option {{mostReviewed}}>Más veces valorado</option>
+																</select>
+														</div>
+													</div>						
+												</div>
+											</form>
+										</div>	
+									</div>
+									
+								</div>
+							</div>
+							<!-- /Filter -->
+							
+							<div class="row">
+								<div class="col-lg-4 col-md-6 d-flex">
+									<div class="course-box course-design d-flex " >
+										<div class="product">
+											<div class="product-img">
+												<a href="/course-details/{{5}}">
+													<img class="img-fluid" alt="" src="{{2}}">
+												</a>
+											</div>
+											<div class="product-content">
+												<h3 class="title"><a href="/course-details/{{5}}">{{0}}</a></h3>
+												<div class="course-info d-flex align-items-center">
+													<div class="rating-img d-flex align-items-center">
+													</div>
+													<div class="course-view d-flex align-items-center">
+													</div>
+												</div>
+												<div class="rating">
+													{{#stars}}
+                            							{{#filled}}<i class="fas fa-star filled"></i>{{/filled}}
+                            							{{^filled}}<i class="fas fa-star"></i>{{/filled}}
+                        							{{/stars}}
+													<span class="d-inline-block average-rating"><span>{{3}}</span> ({{1}})</span>
+												</div>
+												<div class="all-btn all-category d-flex align-items-center">
+													{{#delete}}
+													<a href="/admin/edit/course/{{id}}" class="btn btn-primary">Editar curso</a>
+													<a href="delete-course?id={{id}}" class="btn btn-primary">Eliminar curso</a>
+													{{/delete}}
+													{{^delete}}
+													<a href="/course-details/{{5}}" class="btn btn-primary">Ver curso</a>
+													{{/delete}}
+												</div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 theiaStickySidebar">
+							<div class="filter-clear">
+								<div class="clear-filter d-flex align-items-center">
+									<h4><i class="feather-filter"></i>Filtrar</h4>
+								</div>
+								
+								<!-- Search Filter -->
+								<div class="card search-filter">
+									<div class="card-body">
+										<div class="filter-widget mb-0">
+											<div class="categories-head d-flex align-items-center">
+												<h4>Categorías de cursos</h4>
+												<i class="fas fa-angle-down"></i>
+											</div>
+											<form action="course-filter" accept-charset="utf-8">
+												{{#filters}}
+												<div>
+													<label class="custom_check">
+														<input type="checkbox" name="{{0}}" {{1}}>
+														<span class="checkmark"></span> {{0}}
+													</label>
+												</div>
+												{{/filters}}
+												<button type="submit" class="btn btn-primary">Filtrar</button>
+											</form>
+										</div>
+									</div>
+								</div>
+								<!-- /Search Filter -->
+								{{#delete}}
+								<form action="new/course">
+									<button class="btn btn-primary">Añadir curso</button>
+								</form>
+								{{/delete}}
+								
+							</div>
+						</div>
+					</div>
+					{{/courses}}
+					
+					{{^courses}}
+					<p>No estás apuntado a ningún curso</p>
+					{{/courses}}
+				</div>
+			</section>
+			<!-- /Course -->
+			<script src="assets/js/course-script.js"></script>
+{{>footer}}
