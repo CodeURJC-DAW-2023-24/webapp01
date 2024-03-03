@@ -114,10 +114,15 @@
 						<div class="instructor-wrap">
 							<div class="about-instructor">
 								<div class="abt-instructor-img">
-									<a href="instructor-profile.html"><img src="/assets/img/user/user1.jpg" alt="img" class="img-fluid"></a>
+									{{#reviewDataList}}
+									<img src="data:image/jpeg;base64,{{base64EncodedImage}}" alt="img" class="img-fluid">
+									{{/reviewDataList}}
+									{{^reviewDataList}}
+									<img src="/assets/img/user/default-user-icon.jpg" alt="{{user.name}} {{user.surname}} ">
+									{{/reviewDataList}}
 								</div>
 								<div class="instructor-detail">
-									<h5><a href="instructor-profile.html">{{user.name}}  {{user.surname}} </a></h5>
+									<h5>{{user.name}}  {{user.surname}}</h5>
 									
 								</div>
 							</div>
@@ -156,9 +161,9 @@
 				<div class="card comment-sec">
 					<div class="card-body">
 						<h5 class="subs-title">Escribe tu reseña</h5>
-						<form action="/saveReview/{{courseId}}">
+						<form id="reviewForm" action="/saveReview/{{courseId}}">
 							<div class="input-block">
-								<input type="integer" class="form-control" placeholder="Estrellas del 1-5" name="rateReview" id="rateReview" min="1" max="5">
+								<input type="number" class="form-control" placeholder="Estrellas del 1-5" name="rateReview" id="rateReview" min="1" max="5">
 							</div>
 							<div class="input-block">
 								<textarea rows="4" class="form-control" placeholder="Tus comentarios" name="descriptionReview" id="descriptionReview"></textarea>
@@ -168,7 +173,8 @@
 							</div>
 						</form>
 					</div>
-				</div>				
+				</div>			
+					
 				<!-- /Comment -->
 			</div>	
 			

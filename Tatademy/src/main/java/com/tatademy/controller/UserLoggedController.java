@@ -113,6 +113,7 @@ public class UserLoggedController {
 			if (passwordEncoder.matches(currentpassword, password)) {
 				user.setPassword(passwordEncoder.encode(pass1));
 				userService.save(user);
+				redirectAttrs.addFlashAttribute("Correcto", "Has cambiado la contraseña. !No te olvides¡");
 			} else {
 				redirectAttrs.addFlashAttribute("error", "La contraseña introducida no coincide con la del usuario");
 			}

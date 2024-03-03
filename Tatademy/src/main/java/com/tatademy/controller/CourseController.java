@@ -2,6 +2,7 @@ package com.tatademy.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
@@ -595,6 +597,25 @@ public class CourseController {
 		} else {
 			model.addAttribute("starAverage", numReviews);
 		}
+		List<Map<String, Object>> reviewDataList = new ArrayList<>();
+		for (Review review : reviewsFromCourse) {
+			Map<String, Object> reviewData = new HashMap<>();
+			Blob imageBlob = review.getUser().getImageFile();
+			if (imageBlob != null) {
+				try {
+					byte[] imageData = imageBlob.getBytes(1, (int) imageBlob.length());
+					String base64EncodedImage = Base64.getEncoder().encodeToString(imageData);
+					reviewData.put("review", review);
+					reviewData.put("base64EncodedImage", base64EncodedImage);
+					reviewDataList.add(reviewData);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if (!reviewDataList.isEmpty()) {
+			model.addAttribute("reviewDataList", reviewDataList);
+		}
 
 		// ABOUT THE COURSE
 		List<User> studentsEnroll = userService.findAllUserEnrollByIdCourse(course.getId());
@@ -672,20 +693,25 @@ public class CourseController {
 	}
 
 	@GetMapping("/saveReview/{courseId}")
-	public String saveReview(Model model, @PathVariable Long courseId, HttpServletRequest request,
-			@RequestParam int rateReview, @RequestParam String descriptionReview) {
-		// Ask for user:
-		Principal principal = request.getUserPrincipal();
-		User user = userService.findByEmail(principal.getName());
-		// Create the new review:
-		Review newReview = new Review();
-		newReview.setStarsValue(rateReview);
-		newReview.setDescription(descriptionReview);
-		newReview.setCourse(courseService.findById(courseId).orElseThrow());
-		newReview.setUser(user);
-		// Save the review
-		reviewService.save(newReview);
-		return "redirect:/";
+	public String saveReview(Model model, RedirectAttributes redirectAttrs, @PathVariable Long courseId,
+			HttpServletRequest request, @RequestParam int rateReview, @RequestParam String descriptionReview) {
+		if (rateReview > 5 || rateReview < 1) {
+			redirectAttrs.addFlashAttribute("error", "Las estrellas de la review tienen que estar entre 1 y 5.");
+		} else {
+			// Ask for user:
+			Principal principal = request.getUserPrincipal();
+			User user = userService.findByEmail(principal.getName());
+			// Create the new review:
+			Review newReview = new Review();
+			newReview.setStarsValue(rateReview);
+			newReview.setDescription(descriptionReview);
+			newReview.setCourse(courseService.findById(courseId).orElseThrow());
+			newReview.setUser(user);
+			// Save the review
+			reviewService.save(newReview);
+		}
+
+		return "redirect:/course-details/" + courseId;
 	}
 
 	@GetMapping("/generate-pdf")

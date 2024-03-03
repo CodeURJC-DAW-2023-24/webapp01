@@ -150,7 +150,7 @@
     {{/userEditProfile}}
 
     {{#adminUsersList}}
-    <script src="/js/src/gettingContentUsers.js"></script>
+    <script src="/js/src/gettingContentUsers.js" charset="utf-8"></script>
     {{/adminUsersList}}
 	<!-- Feature JS -->
 	<script src="/assets/plugins/feather/feather.min.js"></script>
@@ -158,7 +158,12 @@
 	<!-- Validation-->
 	<script src="/assets/js/validation.js" charset="utf-8"></script>	
 	
-
+	{{#error}}
+	<script>
+	// Display flash message as a popup
+	alert("{{error}}");
+	</script>
+	{{/error}}
 </body>
 
 </html>
