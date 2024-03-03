@@ -30,5 +30,10 @@ public class ReviewService {
 	public List<Review> findReviewsByIdCourse(Long idCourse) {
 		return repository.findReviewsByIdCourse(idCourse);
 	}
+	
+	public List<Review> findAll() {
+		return repository.findAll();
+	}
+
 
 }

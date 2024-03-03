@@ -9,8 +9,8 @@
 
 
 						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
-							<li class="breadcrumb-item"><a href="course-grid.html">Buscar cursos</a></li>
+							<li class="breadcrumb-item"><a href="/index">Inicio</a></li>
+							<li class="breadcrumb-item"><a href="/courses">Buscar cursos</a></li>
 							<li class="breadcrumb-item" aria-current="page" style="margin-right: 200px">{{courseName}}</li>
 						</ol>
 
@@ -156,21 +156,9 @@
 				<div class="card comment-sec">
 					<div class="card-body">
 						<h5 class="subs-title">Escribe tu reseña</h5>
-						<form action="/saveReview/{{courseName}}">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="input-block">
-										<input type="text" class="form-control" placeholder="Nombre" name="userNameReview" id="userNameReview">
-									</div>									
-								</div>
-								<div class="col-md-6">
-									<div class="input-block">
-										<input type="text" class="form-control" placeholder="Apellidos" name="userSurnameReview" id="userSurnameReview">
-									</div>
-								</div>
-							</div>
+						<form action="/saveReview/{{courseId}}">
 							<div class="input-block">
-								<input type="integer" class="form-control" placeholder="Valoración del 0-5" name="rateReview" id="rateReview" min="1" max="5">
+								<input type="integer" class="form-control" placeholder="Estrellas del 1-5" name="rateReview" id="rateReview" min="1" max="5">
 							</div>
 							<div class="input-block">
 								<textarea rows="4" class="form-control" placeholder="Tus comentarios" name="descriptionReview" id="descriptionReview"></textarea>
@@ -190,20 +178,20 @@
 					<!-- Video -->
 					<div class="video-sec vid-bg">
 						<div class="card">
-							<div class="card-body">					
+							<div class="card-body">	
+								<img class="img-fluid" alt="" src="{{courseImage}}">				
 								<div class="video-details">
 									<div class="course-fee">
-									<h2>Gratuito</h2>
+									{{#joined}}
+									<h2>Inscrito</h2>
+									{{/joined}}
 									</div>
 									<!-- Inscription -->
-									{{#joined}}
-										<button class="btn btn-enroll w-100" subclass="active"> Inscrito </button>
-										{{/joined}}
 										{{^joined}}
 										<form action="/joinCourse/{{courseId}}">
 											<input class="btn btn-enroll w-100" type="submit" value="Inscribirse">
 										</form>
-									{{/joined}}
+										{{/joined}}
 									<!-- /Inscription -->
 								</div>
 							</div>
@@ -260,8 +248,9 @@
 			</div>
 		</div>	
 	</div>
+	
+	{{>recommendedCourses}}
 </section>
 
 
-	{{>recommendedCourses}}
 {{>footer}}

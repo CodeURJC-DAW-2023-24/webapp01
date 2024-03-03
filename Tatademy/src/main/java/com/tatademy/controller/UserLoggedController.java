@@ -2,9 +2,14 @@ package com.tatademy.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +29,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tatademy.model.Course;
 import com.tatademy.model.Review;
 import com.tatademy.model.User;
-import com.tatademy.repository.CourseRepository;
-import com.tatademy.repository.ReviewRepository;
-import com.tatademy.repository.UserRepository;
+import com.tatademy.service.CourseService;
+import com.tatademy.service.ReviewService;
 import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,20 +43,13 @@ public class UserLoggedController {
 	private UserService userService;
 
 	@Autowired
+	private ReviewService reviewService;
+
+	@Autowired
+	private CourseService courseService;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	@Autowired
-	private ReviewRepository reviewRepository;
-    @Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private CourseRepository courseRepository;
-
-
-
-
-
-
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -151,61 +148,154 @@ public class UserLoggedController {
 		return "redirect:/";
 	}
 
+	@GetMapping("/user/my-course-list")
+	public String myCourseList(Model model, HttpServletRequest request, HttpSession session) {
+		List<String> filters = courseService.findAllCategories();
+		List<Course> coursesList = new ArrayList<>();
+		List<String[]> filterPair = new ArrayList<>();
+		List<String[]> courseInfo = new ArrayList<>();
+		List<Map<String, Object>> coursesModel = new ArrayList<>();
+		Double valoration = 0.0;
+		for (int i = 0; i < filters.size(); ++i) {
+			String[] aux = new String[2];
+			aux[0] = filters.get(i);
+			aux[1] = "";
+			filterPair.add(aux);
+		}
+		coursesList = userService.findByEmail(request.getUserPrincipal().getName()).getCourses();
+		if (!coursesList.isEmpty()) {
+			for (int i = 0; i < coursesList.size(); ++i) {
+				String[] aux = new String[6];
+				List<Review> reviews = new ArrayList<>();
+				reviews = coursesList.get(i).getReviews();
+				valoration = 0.0;
+				if (reviews.size() > 0) {
+					for (int j = 0; j < reviews.size(); ++j) {
+						valoration += reviews.get(j).getStarsValue();
+					}
+					valoration = valoration / reviews.size();
+				}
+				aux[0] = coursesList.get(i).getName();
+				aux[1] = String.valueOf(reviews.size());
+				try {
+					aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i)
+							.getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				aux[3] = String.valueOf(valoration);
+				aux[4] = "";
+				aux[5] = String.valueOf(coursesList.get(i).getId());
+				courseInfo.add(aux);
+			}
+			for (String[] aux : courseInfo) {
+				Map<String, Object> courseData = new HashMap<>();
+				valoration = Double.parseDouble(aux[3]);
+				List<Map<String, Object>> stars = new ArrayList<>();
+				for (int i = 0; i < 5; i++) {
+					Map<String, Object> star = new HashMap<>();
+					star.put("filled", i < valoration);
+					stars.add(star);
+				}
+				courseData.put("0", aux[0]);
+				courseData.put("1", aux[1]);
+				courseData.put("2", aux[2]);
+				courseData.put("3", String.format("%.2f", valoration));
+				courseData.put("5", aux[5]);
+				courseData.put("stars", stars);
+				coursesModel.add(courseData);
+			}
+		}
+		model.addAttribute("newest", "selected");
+		model.addAttribute("valoration", "");
+		model.addAttribute("mostReviewed", "");
+		model.addAttribute("search", "");
+		model.addAttribute("courses", coursesModel);
+		model.addAttribute("filters", filterPair);
+		model.addAttribute("delete", false);
 
+		return "my-course-list";
+	}
 
+	@GetMapping("/user/my-reviews-list")
+	public String myReviewsList(Model model, HttpServletRequest request) {
+		User user = userService.findByEmail(request.getUserPrincipal().getName());
+		List<Review> allReviews = user.getReviews();
 
+		// Prepare a list to hold processed review data
+		List<Map<String, Object>> reviewDataList = new ArrayList<>();
 
+		// Fetch the course image for each review and convert to Base64
+		for (Review review : allReviews) {
+			Map<String, Object> reviewData = new HashMap<>();
+			Blob imageBlob = review.getCourse().getImageFile();
+			try {
+				byte[] imageData = imageBlob.getBytes(1, (int) imageBlob.length());
+				String base64EncodedImage = Base64.getEncoder().encodeToString(imageData);
+				reviewData.put("review", review);
+				reviewData.put("base64EncodedImage", base64EncodedImage);
+				reviewDataList.add(reviewData);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 
-	@GetMapping("/TatademyStadict") 
+		model.addAttribute("reviews", allReviews);
+		model.addAttribute("reviewDataList", reviewDataList);
+
+		return "my-reviews-list";
+	}
+
+	@GetMapping("/TatademyStadict")
 	public String tatadyStadistic(Model model) {
 
-		//total reviews and stars average
-		model.addAttribute("usersEnroll", userRepository.findUsersEnrolledInAtLeastOneCourse().size());
-		List<Review> allReviews = reviewRepository.findAll();
+		// total reviews and stars average
+		model.addAttribute("usersEnroll", userService.findUsersEnrolledInAtLeastOneCourse().size());
+		List<Review> allReviews = reviewService.findAll();
 		Double starAverage = 0.0;
 		for (Review review : allReviews) {
 			starAverage += review.getStarsValue();
 		}
 		model.addAttribute("TotalReviews", allReviews.size());
-		model.addAttribute("starsAverage", starAverage/(allReviews.size()));
-		
-		return "instructor-dashboard";
-    }
+		model.addAttribute("starsAverage", starAverage / (allReviews.size()));
 
+		return "instructor-dashboard";
+	}
 
 	@GetMapping("/cursesMonth")
-    @ResponseBody
-    public Integer[] CursesMonthUntilOct() {
-        List<Course> allCourses = courseRepository.findAll();
-		Integer[] coursesByMonth = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	@ResponseBody
+	public Integer[] CursesMonthUntilOct() {
+		List<Course> allCourses = courseService.findAll();
+		Integer[] coursesByMonth = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 		for (Course course : allCourses) {
 			Calendar creationDate = course.getCreationDate();
 			int month = creationDate.get(Calendar.MONTH);
-			
-			if (month >= 0 && month <= 9){
+
+			if (month >= 0 && month <= 9) {
 				coursesByMonth[month]++;
-			}			
+			}
 		}
-	
+
 		for (int i = 0; i < coursesByMonth.length; i++) {
 			int cantidadCursos = coursesByMonth[i];
 			System.out.println("/cursesMonth  -> Month " + (i + 1) + ": " + cantidadCursos + " courses created");
 		}
-		
+
 		return coursesByMonth;
-    }
+	}
 
 	@GetMapping("/reviewsMonth")
-    @ResponseBody
-    public Integer[] ReviewsMonthUntilSept() {
-        List<Review> allreviews = reviewRepository.findAll();
-		Integer[] reviewsByMonth = {0, 0, 0, 0, 0, 0, 0, 0, 0}; 
+	@ResponseBody
+	public Integer[] ReviewsMonthUntilSept() {
+		List<Review> allreviews = reviewService.findAll();
+		Integer[] reviewsByMonth = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 		for (Review review : allreviews) {
 			Calendar creationDate = review.getCreationDate();
 			int month = creationDate.get(Calendar.MONTH);
-			if (month >= 0 && month <= 8){
+			if (month >= 0 && month <= 8) {
 				reviewsByMonth[month]++;
 			}
 		}
@@ -214,10 +304,6 @@ public class UserLoggedController {
 			System.out.println("/reviewsMonth  -> Month " + (i + 1) + ": " + cantidadReview + " reviews created");
 		}
 		return reviewsByMonth;
-    }	
-
-
-
-
+	}
 
 }
