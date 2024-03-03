@@ -668,7 +668,7 @@ public class CourseController {
 		user.setCourses(currentCurses);
 		userService.save(user);
 		// model.addAttribute("joined", true);
-		return "redirect:/";
+		return "redirect:/course-details/"+courseId;
 	}
 
 	@GetMapping("/saveReview/{courseId}")
