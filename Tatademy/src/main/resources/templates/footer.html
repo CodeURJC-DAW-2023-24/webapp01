@@ -2,12 +2,12 @@
         <footer class="footer">
 
             <!-- Footer Top -->
-            {{#adminUsers}}
+            {{#footerWithoutAOS}}
             <div class="footer-top">
-            {{/adminUsers}}
-            {{^adminUsers}}
+            {{/footerWithoutAOS}}
+            {{^footerWithoutAOS}}
             <div class="footer-top aos" data-aos="fade-up">
-            {{/adminUsers}}
+            {{/footerWithoutAOS}}
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6 col-md-8">
@@ -138,7 +138,7 @@
 	<script src="/assets/js/contadorImages.js"></script>
 	{{/adminUsersEdit}}
     {{#materialInput}}
-    <script src="/asstes/js/src/puttingContent.js"></script>
+    <script src="/assets/js/src/puttingContent.js"></script>
     {{/materialInput}}
     {{#isEditingCourse}}
     <script src="/assets/js/contadorImages.js"></script>
@@ -148,10 +148,10 @@
     <script src="/assets/js/contadorImages.js"></script>
     {{/userEditProfile}}
 	<!-- Feature JS -->
-	<script src="assets/plugins/feather/feather.min.js"></script>
+	<script src="/assets/plugins/feather/feather.min.js"></script>
 	
 	<!-- Validation-->
-	<script src="assets/js/validation.js"></script>	
+	<script src="/assets/js/validation.js" charset="utf-8"></script>	
 	
 </body>
 

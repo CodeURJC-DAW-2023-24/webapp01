@@ -17,7 +17,19 @@
   
 	let whitespaceRegExp = /^$|\s+/;
  
+	document.addEventListener("DOMContentLoaded", function() {
+	    const form = document.querySelector("form");
 	
+	    form.addEventListener("submit", function(event) {
+	        const pass1 = document.querySelector("input[name='pass1']").value;
+	        const pass2 = document.querySelector("input[name='pass2']").value;
+	
+	        if (pass1 !== pass2) {
+	            event.preventDefault();
+	            alert("Las contraseñas no coinciden");
+	        }
+	    });
+	});
 
     passwordInput.oninput= function(){
    
@@ -65,7 +77,7 @@
 			   passwordStrength.classList.remove("heavy-active");
 			   passwordInfo.style.display = "block";
 			   passwordInfo.style.color = "#FF0000";
-			   passwordInfo.innerHTML  = '<img src="assets/img/icon/angry.svg" class="me-2">' + "Debe contener al menos 8 caracteres";
+			   passwordInfo.innerHTML  = '<img src="/assets/img/icon/angry.svg" class="me-2">' + "Debe contener al menos 8 caracteres";
 				  
 			}
 		}
@@ -80,7 +92,7 @@
 			   passwordStrength.classList.remove("heavy-active");
 			   passwordInfo.style.display = "block";
 			   passwordInfo.style.color = "#FFB54A";
-			   passwordInfo.innerHTML = '<img src="assets/img/icon/anguish.svg" class="me-2">' + "Debe contener al menos una letra o un número";
+			   passwordInfo.innerHTML = '<img src="/assets/img/icon/anguish.svg" class="me-2">' + "Debe contener al menos una letra o un número";
 				  
 			}else{
 			 weak.classList.remove("active");
@@ -96,7 +108,7 @@
 			 passwordStrength.classList.remove("poor-active");
 			 passwordStrength.classList.add("strong-active");
 			 passwordStrength.classList.remove("heavy-active");
-			 passwordInfo.innerHTML = '<img src="assets/img/icon/smile.svg" class="me-2">' + "Falta un caracter especial Ej: .-*!";
+			 passwordInfo.innerHTML = '<img src="/assets/img/icon/smile.svg" class="me-2">' + "Debe contener al menos un caracter especial";
 			 passwordInfo.style.color = "#1D9CFD";
 		   
 		   }else{
@@ -114,7 +126,7 @@
 			 passwordStrength.classList.remove("strong-active");
 			 passwordStrength.classList.add("heavy-active");
 			 passcheck.classList.add("active");
-			 passwordInfo.innerHTML = '<img src="assets/img/icon/smile.svg" class="me-2">' + "Contraseña segura";
+			 passwordInfo.innerHTML = '<img src="/assets/img/icon/smile.svg" class="me-2">' + "Contraseña segura";
 			 passwordInfo.style.color = "#159F46";
 		   }else{
 			 heavy.classList.remove("active");
@@ -190,7 +202,7 @@
 			   passwordStrength1.classList.remove("heavy-active");
 			   passwordInfos.style.display = "block";
 			   passwordInfos.style.color = "#FF0000";
-			   passwordInfos.innerHTML  = '<img src="assets/img/icon/angry.svg" class="me-2">' + "Debe contener al menos 8 caracteres";
+			   passwordInfos.innerHTML  = '<img src="/assets/img/icon/angry.svg" class="me-2">' + "Debe contener al menos 8 caracteres";
 				  
 			}
 		}
@@ -205,7 +217,7 @@
 			   passwordStrength1.classList.remove("heavy-active");
 			   passwordInfos.style.display = "block";
 			   passwordInfos.style.color = "#FFB54A";
-			   passwordInfos.innerHTML = '<img src="assets/img/icon/anguish.svg" class="me-2">' + "Debe contener al menos una letra o un número";
+			   passwordInfos.innerHTML = '<img src="/assets/img/icon/anguish.svg" class="me-2">' + "Debe contener al menos una letra o un número";
 				  
 			}else{
 			 weak1.classList.remove("active");
@@ -221,7 +233,7 @@
 			 passwordStrength1.classList.remove("poor-active");
 			 passwordStrength1.classList.add("strong-active");
 			 passwordStrength1.classList.remove("heavy-active");
-			 passwordInfos.innerHTML = '<img src="assets/img/icon/smile.svg" class="me-2">' + "Debe contener un símbolo especial";
+			 passwordInfos.innerHTML = '<img src="/assets/img/icon/smile.svg" class="me-2">' + "Debe contener un símbolo especial";
 			 passwordInfos.style.color = "#1D9CFD";
 		   
 		   }else{
@@ -239,7 +251,7 @@
 			 passwordStrength1.classList.remove("strong-active");
 			 passwordStrength1.classList.add("heavy-active");
 			 passcheck1.classList.add("active");
-			 passwordInfos.innerHTML = '<img src="assets/img/icon/smile.svg" class="me-2">' + "Contraseña segura";
+			 passwordInfos.innerHTML = '<img src="/assets/img/icon/smile.svg" class="me-2">' + "Contraseña segura";
 			 passwordInfos.style.color = "#159F46";
 		   }else{
 			 heavy1.classList.remove("active");

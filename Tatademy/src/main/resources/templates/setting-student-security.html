@@ -76,15 +76,16 @@
 										</div>
 										<div class="row">
 											<div class="col-lg-6">
-												<form action="#">
+												<form action="/user/update-password" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+												<input type="hidden" name="_csrf" value="{{token}}"/>
 													<div class="input-block">
 														<label class="form-control-label">Contraseña actual</label>
-														<input type="password" class="form-control" >
+														<input name="currentpassword" type="password" class="form-control" >
 													</div>
 													<div class="input-block">
 														<label class="form-control-label">Nueva contraseña</label>
 														<div class="pass-group" id="passwordInput">																	
-															<input type="password" class="form-control pass-input" placeholder="********">
+															<input name="pass1" type="password" class="form-control pass-input" placeholder="********">
 														</div>
 														<div  class="password-strength" id="passwordStrength">
 															<span id="poor"></span>
@@ -96,10 +97,10 @@
 													</div>
 													<div class="input-block">
 														<label class="form-control-label">Confirmar contraseña</label>
-														<input type="password" class="form-control" placeholder="********">
+														<input name="pass2" type="password" class="form-control" placeholder="********">
 													</div>
 													<div class="update-profile save-password">
-														<button type="button" class="btn btn-primary">Guardar contraseña</button>
+														<button class="btn btn-primary" type="submit">Guardar contraseña</button>
 													</div>
 												</form>
 											</div>

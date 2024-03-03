@@ -1,7 +1,6 @@
 package com.tatademy.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,14 +15,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	boolean existsByEmail(String email);
 
 	Page<User> findByEmailContains(Pageable pageable, String email);
-	
+
 	Page<User> findByEmail(Pageable pageable, String email);
 
 	User findByEmail(String email);
-	
+
 	@Query("SELECT u.name FROM User u WHERE u.email = :email")
-    String findNameByEmail(String email);
-	
+	String findNameByEmail(String email);
+
+	@Query("SELECT u.surname FROM User u WHERE u.email = :email")
+	String findSurnameByEmail(String email);
+
 	@Query("SELECT u.imageFile FROM User u WHERE u.email = :email")
 	byte[] findImageByEmail(String email);
 
@@ -37,12 +39,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	List<Course> findTop5CoursesByFrequency(@Param("users") List<User> users);
 
 	@Query("SELECT u FROM User u JOIN u.courses c WHERE c.id = :idCourse")
-	List<User> findAllUserEnrollByIdCourse(Long  idCourse);
+	List<User> findAllUserEnrollByIdCourse(Long idCourse);
 
 	@Query("SELECT u FROM User u WHERE EXISTS (SELECT 1 FROM u.courses)")
-    List<User> findUsersEnrolledInAtLeastOneCourse();
-
-
-
+	List<User> findUsersEnrolledInAtLeastOneCourse();
 
 }

@@ -44,6 +44,10 @@ public class UserService {
 		return repository.findNameByEmail(email);
 	}
 
+	public String findSurnameByEmail(String email) {
+		return repository.findSurnameByEmail(email);
+	}
+
 	public byte[] findImageByEmail(String email) {
 		return repository.findImageByEmail(email);
 	}

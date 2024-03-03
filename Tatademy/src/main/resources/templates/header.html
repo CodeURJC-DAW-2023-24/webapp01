@@ -70,12 +70,12 @@
                                     </a>
                             </div>
                             <ul class="main-nav">
-                                {{#home}}<li class="has-submenu active">{{/home}}
+                                {{#home}}<li class="active">{{/home}}
                                 {{^home}}<li class="has-submenu">{{/home}}
                                     <a class="" href="/">Inicio</a>
                                 </li>
-                                {{#coursesHeader}}<li class="has-submenu active">{{/coursesHeader}}
-                                {{^coursesHeader}}<li class="has-submenu">{{/coursesHeader}}
+                                {{#coursesHeader}}<li class="active">{{/coursesHeader}}
+                                {{^coursesHeader}}<li>{{/coursesHeader}}
                                     <a class="" href="/courses">Cursos</a>
                                 </li>
                                 {{#admin}}
@@ -104,8 +104,8 @@
                                     </ul>
                                 </li>
                                 {{/user}}
-                                {{#faq}}<li class="has-submenu active">{{/faq}}
-                                {{^faq}}<li class="has-submenu">{{/faq}}
+                                {{#faq}}<li class="active">{{/faq}}
+                                {{^faq}}<li>{{/faq}}
                                     <a href="/faq">FAQ</a>
                                 </li>
                             </ul>

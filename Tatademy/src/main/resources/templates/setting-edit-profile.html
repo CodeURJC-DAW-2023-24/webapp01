@@ -82,13 +82,13 @@
 														</div>
 													</div>
 													<div class="profile-share d-flex align-items-center justify-content-center">
-														
+														{{#userImage}}
 														<form action="/user/delete-image" method="post">
 															<input type="hidden" name="_csrf" value="{{token}}"/>
 															<input type="hidden" value="{{id}}" name="id">
 															<input class="btn btn-danger" type="submit" value="Eliminar">
 														</form>
-														
+														{{/userImage}}
 													</div>
 												</div>
 												<div class="checkout-form personal-address add-course-info ">
