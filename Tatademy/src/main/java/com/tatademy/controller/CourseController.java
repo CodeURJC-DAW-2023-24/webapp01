@@ -571,6 +571,7 @@ public class CourseController {
 		Principal principal = request.getUserPrincipal();
 		User user = userService.findByEmail(principal.getName());
 		Course course = courses.findById(courseName).orElseThrow();
+		model.addAttribute("name", principal);
 		model.addAttribute("joined", isJoined(course, user));
 		model.addAttribute("courseName", courseName);
 		model.addAttribute("courseDescription", course.getDescription());
@@ -687,4 +688,71 @@ public class CourseController {
 	reviewRepository.save(newReview);
     return "redirect:/";
 	}
+	@GetMapping("/generate-pdf")
+    public String generatePdf( @RequestParam long id,  HttpServletRequest request, HttpServletResponse response) {
+        Principal principal = request.getUserPrincipal();
+		User Iam = userService.findByEmail(principal.getName());
+		if (Iam.getCourses().contains(courses.findById(id).orElseThrow())) {
+		try {
+            // Set content type and headers for PDF response
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=Certificado.pdf");
+
+            // Create a new PDF document
+            Document document = new Document();
+            PdfWriter.getInstance(document, response.getOutputStream());
+
+            // Open the document
+            document.open();
+			Paragraph blank = new Paragraph(" ", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			blank.setAlignment(Paragraph.ALIGN_CENTER);
+            // Add content to the PDF
+			Paragraph title = new Paragraph("¡FELICIDADES!", FontFactory.getFont(FontFactory.HELVETICA,20,Font.BOLD));
+			title.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(title);
+			Paragraph desc = new Paragraph("Has conseguido el diploma de", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			desc.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(desc);
+			Paragraph subject = new Paragraph(courses.findById(id).orElseThrow().getName(), FontFactory.getFont(FontFactory.HELVETICA,20,Font.BOLD));
+			subject.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(subject);
+			Paragraph desc2 = new Paragraph("Por haber completados todo el contenido del curso", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			desc2.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(desc2);
+
+			document.add(blank);
+			document.add(blank);
+			document.add(blank);
+			document.add(blank);
+			document.add(blank);
+			Paragraph desc3 = new Paragraph("Este diploma se entrega a:", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			desc2.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(desc3);	
+			
+			Paragraph desc4 = new Paragraph(Iam.getName() + " "+ Iam.getSurname(), FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			desc2.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(desc4);
+
+			Paragraph brandName = new Paragraph("Tatademy", FontFactory.getFont(FontFactory.TIMES_ROMAN,40,Font.BOLD));
+			brandName.setAlignment(Paragraph.ALIGN_RIGHT);
+			document.add(brandName);
+
+
+				// Close the document
+				document.close();
+
+				// Flush the response
+				response.flushBuffer();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+        return "redirect:/course-details/"+id ; // Return null to prevent view resolution
+		
+    }
+
+	
+
+
 }
+

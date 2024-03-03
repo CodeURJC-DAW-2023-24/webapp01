@@ -47,6 +47,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/course-filter").permitAll()
 				// USER PAGES
 				.requestMatchers("/user/**").hasAnyRole("USER")
+				.requestMatchers("/generate-pdf").hasAnyRole("USER")
 				// ADMIN PAGES
 				.requestMatchers("/courses-panel").hasAnyRole("ADMIN").requestMatchers("/delete-course").hasAnyRole("ADMIN")
 				.requestMatchers("/new/course").hasAnyRole("ADMIN").requestMatchers("/delete/{id}").hasAnyRole("ADMIN")
