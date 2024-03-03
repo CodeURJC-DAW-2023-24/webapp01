@@ -1,10 +1,15 @@
 package com.tatademy.repository;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import com.tatademy.model.Course;
 import com.tatademy.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -21,4 +26,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query("SELECT u.imageFile FROM User u WHERE u.email = :email")
 	byte[] findImageByEmail(String email);
+
+	@Query("SELECT u FROM User u JOIN u.courses c where c.id = :courseId ")
+	List<User> findAllUsersContainingCourseId(@Param("courseId") Long courseId);
+
+	@Query("SELECT c FROM User u JOIN u.courses c WHERE u IN :users")
+	List<Course> findAllCoursesContainingUserId(@Param("users") List<User> users);
+
+	@Query("SELECT c FROM User u JOIN u.courses c WHERE u IN :users GROUP BY c ORDER BY COUNT(c) DESC LIMIT 6")
+	List<Course> findTop5CoursesByFrequency(@Param("users") List<User> users);
+
+
+
+
 }

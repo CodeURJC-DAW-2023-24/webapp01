@@ -27,8 +27,10 @@ import com.tatademy.model.Course;
 import com.tatademy.model.Material;
 import com.tatademy.model.Review;
 import com.tatademy.model.User;
+
 import com.tatademy.repository.CourseRepository;
 import com.tatademy.repository.MaterialRepository;
+import com.tatademy.repository.UserRepository;
 import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,6 +46,8 @@ public class CourseController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRepository users;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -209,6 +213,47 @@ public class CourseController {
 		model.addAttribute("delete", false);
 		return "course-grid";
 	}
+
+	/*BORRAR */
+	@GetMapping("/admin/prueba")
+	public String prueba(Model model) {
+		User user = users.findById((long)1).orElseThrow();
+		Course course = courses.findById((long)2).orElseThrow();
+		user.getCourses().add(course);
+
+		course = courses.findById((long)3).orElseThrow();
+		user.getCourses().add(course);
+		users.save(user);
+
+		user = users.findById((long)2).orElseThrow();
+		course = courses.findById((long)2).orElseThrow();
+		user.getCourses().add(course);
+		users.save(user);
+
+		course = courses.findById((long)1).orElseThrow();
+		user.getCourses().add(course);
+		users.save(user);
+
+		user = users.findById((long)2).orElseThrow();
+		course = courses.findById((long)2).orElseThrow();
+		user.getCourses().add(course);
+		users.save(user);
+
+		course = courses.findById((long)3).orElseThrow();
+		user.getCourses().add(course);
+		users.save(user);
+
+		/*PARTE IMPORTANTE */
+		List<User> courses = users.findAllUsersContainingCourseId((long) 2);
+		List<Course> coursesFinal = users.findTop5CoursesByFrequency(courses);
+		coursesFinal.remove(0);
+		/*PARTE IMPORTANTE */
+		model.addAttribute("courses", coursesFinal);
+		return "prueba";
+	}
+	
+	/*BORRAR */
+	
 	@GetMapping("/course-search")
 	public String courseSearch(Model model, @RequestParam String name, @RequestParam String sellist1) throws SQLException {
 		List<Course> coursesList = new ArrayList<>();

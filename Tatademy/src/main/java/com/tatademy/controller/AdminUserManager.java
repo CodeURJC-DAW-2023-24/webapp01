@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.List;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tatademy.model.Course;
+import com.tatademy.model.Material;
 import com.tatademy.model.User;
+import com.tatademy.repository.CourseRepository;
+import com.tatademy.repository.MaterialRepository;
 import com.tatademy.repository.UserRepository;
 import com.tatademy.service.UserService;
 
@@ -33,6 +39,11 @@ public class AdminUserManager {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired 
+	CourseRepository courses;
+	@Autowired 
+	MaterialRepository materials;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -137,5 +148,56 @@ public class AdminUserManager {
 		model.addAttribute("searched", email);
 		return "instructor-edit-profile";
 	}
+	@GetMapping("/admin/edit/course/{id}")
+	public String getMethodName(Model model, @PathVariable Long id) {
+		Course course = courses.findById(id).orElseThrow();
+		model.addAttribute("idEdit", course.getId());
+		model.addAttribute("titleEdit", course.getName());
+		//Get Category:
+		String category = course.getCategory().replaceAll("[í]", "i");
+		category = category.replaceAll("[ó]", "o");
+		category = category.replaceAll("[ú]", "u");
+		category = category.replaceAll("[á]", "a");
+		category = category.replaceAll("[é]", "e");
+		category = "is"+category+"Selected";
+		model.addAttribute("prueba", category);
+		model.addAttribute(category, true);
+		model.addAttribute("categoryInput", course.getCategory());
+		model.addAttribute("isTherePhotoCourse", course.getImageFile());
+		model.addAttribute("isEditingCourse", true);
 
+		return "add-course";
+	}
+	@PostMapping("/admin/edit/course")
+	public String getMethodName(Model model, @RequestParam Long idEdit, @RequestParam String title, @RequestParam String subject,
+			@RequestParam String description, @RequestParam("fileImage") MultipartFile fileImage,
+			@RequestParam("courseContentInputFiles") List<MultipartFile> courseContentInputFiles) throws IOException {
+	Course course = courses.findById(idEdit).orElseThrow();
+		course.setName(title);
+		course.setCategory(subject);
+		course.setDescription(description);
+		if (fileImage != null) {
+		if (fileImage.getSize() != 0) {
+			course.setimageString(fileImage.getOriginalFilename());
+		course.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+		}
+		}
+		if (courseContentInputFiles != null) {
+		if (courseContentInputFiles.size() != 0) {
+			for (int i = 0; i < courseContentInputFiles.size(); i++) {
+				Material material = new Material();
+				material.setFilename(courseContentInputFiles.get(i).getOriginalFilename());
+				material.setFile(BlobProxy.generateProxy(courseContentInputFiles.get(i).getInputStream(),
+						courseContentInputFiles.get(i).getSize()));
+				material.setCourse(course);
+				course.getMaterial().add(material);
+			}
+		
+
+	}
+}
+	courses.save(course);
+	return "redirect:/courses";
+
+}
 }

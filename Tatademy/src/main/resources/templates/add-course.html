@@ -31,8 +31,17 @@
 								</ul>
 							</div>
 							<div class="widget-content multistep-form">
-								<form action="/new/course" method="post" enctype="multipart/form-data">
+								
+									{{^isEditingCourse}}
+									<form action="/new/course" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+								{{/isEditingCourse}}
+								{{#isEditingCourse}}
+									<form action="/admin/edit/course" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+								{{/isEditingCourse}}
 								<input type="hidden" name="_csrf" value="{{token}}"/>
+								{{#isEditingCourse}}
+								<input type="hidden" name="idEdit" value="{{idEdit}}">
+								{{/isEditingCourse}}
 								<fieldset id="first">
 									<div class="add-course-info">
 										<div class="add-course-inner-header">
@@ -42,24 +51,72 @@
 										<div class="add-course-form">
 												<div class="input-block">
 													<label class="add-course-label">Titulo del curso</label>
-													<input name="title" type="text" class="form-control" placeholder="Titulo del curso" required>
+													<input name="title" type="text" class="form-control" placeholder="Titulo del curso" value="{{#titleEdit}}{{titleEdit}}{{/titleEdit}}" required>
 												</div>
 												<div class="input-block">
 													<label class="add-course-label">Categoría</label>
 													<select name="subject" class="form-control select">
-														<option>Software</option>
-														<option>Historia</option>
-														<option>Química</option>
-														<option>Física</option>
-														<option>Literatura</option>
-														<option>Ciudadanía</option>
-														<option>Matemáticas</option>
-														<option>Biología</option>
+														{{#isSoftwareSelected}}
+    <option selected>Software</option>
+{{/isSoftwareSelected}}
+{{^isSoftwareSelected}}
+    <option>Software</option>
+{{/isSoftwareSelected}}
+
+{{#isHistoriaSelected}}
+    <option selected>Historia</option>
+{{/isHistoriaSelected}}
+{{^isHistoriaSelected}}
+    <option>Historia</option>
+{{/isHistoriaSelected}}
+
+{{#isQuimicaSelected}}
+    <option selected>Química</option>
+{{/isQuimicaSelected}}
+{{^isQuimicaSelected}}
+    <option>Química</option>
+{{/isQuimicaSelected}}
+
+{{#isFisicaSelected}}
+    <option selected>Física</option>
+{{/isFisicaSelected}}
+{{^isFisicaSelected}}
+    <option>Física</option>
+{{/isFisicaSelected}}
+
+{{#isLiteraturaSelected}}
+    <option selected>Literatura</option>
+{{/isLiteraturaSelected}}
+{{^isLiteraturaSelected}}
+    <option>Literatura</option>
+{{/isLiteraturaSelected}}
+
+{{#isCiudadaniaSelected}}
+    <option selected>Ciudadanía</option>
+{{/isCiudadaniaSelected}}
+{{^isCiudadaniaSelected}}
+    <option>Ciudadanía</option>
+{{/isCiudadaniaSelected}}
+
+{{#isMatematicasSelected}}
+    <option selected>Matemáticas</option>
+{{/isMatematicasSelected}}
+{{^isMatematicasSelected}}
+    <option>Matemáticas</option>
+{{/isMatematicasSelected}}
+
+{{#isBiologiaSelected}}
+    <option selected>Biología</option>
+{{/isBiologiaSelected}}
+{{^isBiologiaSelected}}
+    <option>Biología</option>
+{{/isBiologiaSelected}}
+
 													</select>
 												</div>
 												<div class="input-block mb-0">
 													<label class="add-course-label">Descripcion</label>
-													<textarea name="description" style="resize: none;width: 100%" class="ck ck-reset ck-editor ck-rounded-corners" rows="10" cols="137" required></textarea>
+													<textarea value="{{#descriptionInput}}{{descriptionInput}}{{/descriptionInput}}" name="description" style="resize: none;width: 100%" class="ck ck-reset ck-editor ck-rounded-corners" rows="10" cols="137" required></textarea>
 												</div>
 
 										</div>
@@ -78,14 +135,22 @@
 											<div class="input-block">
 												<label class="add-course-label">Seleccione una foto de portada para el curso</label>
 												<div class="relative-form">
+													{{^isTherePhotoCourse}}
 													<span id="filesImages-choosen">No se seleccionó archivo</span>
+													{{/isTherePhotoCourse}}
+													{{#isTherePhotoCourse}}
+													<span id="filesImages-choosen">¿Deseas reemplazar la imagen existente?</span>
+													{{/isTherePhotoCourse}}
+													
 													<label class="relative-file-upload">
 														Subir archivo <input id="image" name="fileImage" type="file" enctype accept="image/jpeg, image/png" required>
 													</label>
+													
 												</div>
 											</div>
 
 										</div>
+										
 										<div class="add-course-inner-header">
 											<h4>Contenido del curso</h4>
 										</div>
@@ -96,7 +161,12 @@
 													<div class="input-block">
 														<label class="add-course-label">Seleccione los contenidos del curso</label>
 														<div class="relative-form">
+															{{^isEditingCourse}}
 															<span id="courseContent">No se seleccionó archivo</span>
+															{{/isEditingCourse}}
+															{{#isEditingCourse}}
+															<span id="courseContent">¿Quieres agregar más archivos?</span>
+															{{/isEditingCourse}}
 															<label class="relative-file-upload">
 																Subir archivo <input name="courseContentInputFiles"id="courseContentInput" type="file"  multiple required>
 															</label>
@@ -120,7 +190,12 @@
 										<div class="add-course-form">
 
 											<div class="input-block">
-												<label class="add-course-label" id="textModified">Error al crear los cursos, recuerda rellenar todos los campos</label>
+												{{^isEditingCourse}}
+												<label class="add-course-label" id="textModified">Error, recuerda rellenar todos los campos</label>
+												{{/isEditingCourse}}
+												{{#isEditingCourse}}
+												<label class="add-course-label" id="textModified">El curso se ha editado correctamente</label>
+												{{/isEditingCourse}}
 							
 											</div>
 
