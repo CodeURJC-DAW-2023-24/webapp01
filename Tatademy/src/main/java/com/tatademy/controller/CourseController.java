@@ -77,11 +77,7 @@ public class CourseController {
 		model.addAttribute("token", token.getToken());
 	}
 
-	@GetMapping("/admin/new/course")
-	public String getMethodName(Model model) {
-		model.addAttribute("adminNewCourset", true);
-		return "add-course";
-	}
+	
 
 	@PostMapping("/admin/new/course")
 	public String postMethodName(@RequestParam String title, @RequestParam String subject,
