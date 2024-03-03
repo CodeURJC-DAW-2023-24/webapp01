@@ -1,0 +1,229 @@
+{{>header}}
+
+	<!-- New Course -->
+	<section class="page-content course-sec">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-12">
+					<div class="add-course-header">
+						<h2>Añadir nuevo curso</h2>
+
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+
+						<!-- Course Wizard -->
+						<div class="widget-set">
+							<div class="widget-setcount">
+								<ul id="progressbar">
+									<li class="progress-active">
+										<p><span></span> Informacion basica</p>
+									</li>
+									<li>
+										<p><span></span> Contenido del curso</p>
+									</li>
+									<li>
+										<p><span></span> Completado</p>
+									</li>
+								</ul>
+							</div>
+							<div class="widget-content multistep-form">
+								
+									{{^isEditingCourse}}
+									<form action="/admin/new/course" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+								{{/isEditingCourse}}
+								{{#isEditingCourse}}
+									<form action="/admin/edit/course" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+								{{/isEditingCourse}}
+								<input type="hidden" name="_csrf" value="{{token}}"/>
+								{{#isEditingCourse}}
+								<input type="hidden" name="idEdit" value="{{idEdit}}">
+								{{/isEditingCourse}}
+								<fieldset id="first">
+									<div class="add-course-info">
+										<div class="add-course-inner-header">
+											<h4>Informacion basica</h4>
+										</div>
+
+										<div class="add-course-form">
+												<div class="input-block">
+													<label class="add-course-label">Titulo del curso</label>
+													<input name="title" type="text" class="form-control" placeholder="Titulo del curso" value="{{#titleEdit}}{{titleEdit}}{{/titleEdit}}" required>
+												</div>
+												<div class="input-block">
+													<label class="add-course-label">Categoría</label>
+													<select name="subject" class="form-control select">
+														{{#isSoftwareSelected}}
+    <option selected>Software</option>
+{{/isSoftwareSelected}}
+{{^isSoftwareSelected}}
+    <option>Software</option>
+{{/isSoftwareSelected}}
+
+{{#isHistoriaSelected}}
+    <option selected>Historia</option>
+{{/isHistoriaSelected}}
+{{^isHistoriaSelected}}
+    <option>Historia</option>
+{{/isHistoriaSelected}}
+
+{{#isQuimicaSelected}}
+    <option selected>Química</option>
+{{/isQuimicaSelected}}
+{{^isQuimicaSelected}}
+    <option>Química</option>
+{{/isQuimicaSelected}}
+
+{{#isFisicaSelected}}
+    <option selected>Física</option>
+{{/isFisicaSelected}}
+{{^isFisicaSelected}}
+    <option>Física</option>
+{{/isFisicaSelected}}
+
+{{#isLiteraturaSelected}}
+    <option selected>Literatura</option>
+{{/isLiteraturaSelected}}
+{{^isLiteraturaSelected}}
+    <option>Literatura</option>
+{{/isLiteraturaSelected}}
+
+{{#isCiudadaniaSelected}}
+    <option selected>Ciudadanía</option>
+{{/isCiudadaniaSelected}}
+{{^isCiudadaniaSelected}}
+    <option>Ciudadanía</option>
+{{/isCiudadaniaSelected}}
+
+{{#isMatematicasSelected}}
+    <option selected>Matemáticas</option>
+{{/isMatematicasSelected}}
+{{^isMatematicasSelected}}
+    <option>Matemáticas</option>
+{{/isMatematicasSelected}}
+
+{{#isBiologiaSelected}}
+    <option selected>Biología</option>
+{{/isBiologiaSelected}}
+{{^isBiologiaSelected}}
+    <option>Biología</option>
+{{/isBiologiaSelected}}
+
+													</select>
+												</div>
+												<div class="input-block mb-0">
+													<label class="add-course-label">Descripcion</label>
+													<textarea name="description" style="resize: none;width: 100%" class="ck ck-reset ck-editor ck-rounded-corners" rows="10" cols="137" required>{{#descriptionInput}}{{descriptionInput}}{{/descriptionInput}}</textarea>
+												</div>
+
+										</div>
+										<div class="widget-btn">
+											<a class="btn btn-info-light next_btn">Siguiente</a>
+										</div>
+									</div>
+								</fieldset>
+								<fieldset class="field-card">
+									<div class="add-course-info">
+										<div class="add-course-inner-header">
+											<h4>Foto de curso</h4>
+										</div>
+										<div class="add-course-form">
+
+											<div class="input-block">
+												<label class="add-course-label">Seleccione una foto de portada para el curso</label>
+												<div class="relative-form">
+													{{^isTherePhotoCourse}}
+													<span id="filesImages-choosen">No se seleccionó archivo</span>
+													{{/isTherePhotoCourse}}
+													{{#isTherePhotoCourse}}
+													<span id="filesImages-choosen">¿Deseas reemplazar la imagen existente?</span>
+													{{/isTherePhotoCourse}}
+													
+													<label class="relative-file-upload">
+														
+														Subir archivo 
+														{{^isEditingCourse}}
+														<input id="image" name="fileImage" type="file" enctype accept="image/jpeg, image/png" required>
+																{{/isEditingCourse}}
+																{{#isEditingCourse}}
+														<input id="image" name="fileImage" type="file" enctype accept="image/jpeg, image/png">
+																{{/isEditingCourse}}
+														
+													</label>
+													
+												</div>
+											</div>
+
+										</div>
+										
+										<div class="add-course-inner-header">
+											<h4>Contenido del curso</h4>
+										</div>
+										<div class="add-course-form">
+											<div class="curriculum-grid">
+
+												<div class="curriculum-info">
+													<div class="input-block">
+														<label class="add-course-label">Seleccione los contenidos del curso</label>
+														<div class="relative-form">
+															{{^isEditingCourse}}
+															<span id="courseContent">No se seleccionó archivo</span>
+															{{/isEditingCourse}}
+															{{#isEditingCourse}}
+															<span id="courseContent">¿Quieres agregar más archivos?</span>
+															{{/isEditingCourse}}
+															<label class="relative-file-upload">
+																Subir archivo 
+																{{^isEditingCourse}}
+																<input name="courseContentInputFiles"id="courseContentInput" type="file"  multiple required>
+																{{/isEditingCourse}}
+																{{#isEditingCourse}}
+																<input name="courseContentInputFiles"id="courseContentInput" type="file"  multiple>
+																{{/isEditingCourse}}
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="widget-btn">
+											<a class="btn btn-black prev_btn">Atrás</a>
+											<input style="background-color:green" class="btn btn-info-light next_btn" id="courseSubmit" type="submit" value="Guardar">
+										</div>
+									</div>
+
+								</fieldset>
+								<fieldset class="field-card">
+									<div class="add-course-info">
+										<div class="add-course-form">
+
+											<div class="input-block">
+												<label class="add-course-label" id="textModified">¿Has comprobado que todos los campos estuviesen rellenos?</label>
+
+							
+											</div>
+											<button class="btn btn-danger" onclick="cargarPagina()">Volver</button>
+
+										</div>
+									
+										
+									</div>
+
+								</fieldset>
+								</form>
+
+							</div>
+						</div>
+						<!-- /Course Wizard -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- /New Course -->
+
+{{>footer}}

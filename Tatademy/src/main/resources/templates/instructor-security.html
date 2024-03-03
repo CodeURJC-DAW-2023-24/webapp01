@@ -1,0 +1,368 @@
+<!DOCTYPE html> 
+<html lang="en">
+	<head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		<title>Tatademy</title>
+		
+		<!-- Favicon -->
+		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.svg">
+		
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="assets/plugins/fontawesome/css/all.min.css">
+		
+		<!-- Feather CSS -->
+		<link rel="stylesheet" href="assets/css/feather.css">
+
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="assets/css/style.css">
+	
+	</head>
+	<body>
+
+		<!-- Main Wrapper -->
+		<div class="main-wrapper">
+		
+			<!-- Header -->
+			<header class="header header-page">
+				<div class="header-fixed">
+					<nav class="navbar navbar-expand-lg header-nav scroll-sticky">
+						<div class="container ">
+							<div class="navbar-header">
+								<a id="mobile_btn" href="javascript:void(0);">
+									<span class="bar-icon">
+										<span></span>
+										<span></span>
+										<span></span>
+									</span>
+								</a>
+								<a href="index.html" class="navbar-brand logo">
+									<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+								</a>
+							</div>
+							<div class="main-menu-wrapper">
+								<div class="menu-header">
+									<a href="index.html" class="menu-logo">
+											<img src="assets/img/logo.svg" class="img-fluid" alt="Logo">
+										</a>
+									<a id="menu_close" class="menu-close" href="javascript:void(0);">
+											<i class="fas fa-times"></i>
+										</a>
+								</div>
+								<ul class="main-nav">
+									<li class="has-submenu">
+										<a class="" href="index.html">Inicio</a>
+									</li>
+									<li class="has-submenu">
+										<a class="" href="course-grid.html">Cursos</a>
+									</li>
+									<li class="has-submenu active">
+										<a href="">Administrador<i class="fas fa-chevron-down"></i></a>
+										<ul class="submenu">
+											<li><a href="instructor-manager.html">Perfil</a></li>
+											<li><a href="add-course.html">Crear Curso</a></li>
+											<li><a href="instructor-edit-profile.html">Gestionar Usuarios</a></li>
+											<li><a href="instructor-dashboard.html">Estadísticas</a></li>
+											<li><a href="instructor-security.html">Seguridad Cuenta</a></li>
+										</ul>
+									</li>
+									<li class="has-submenu">
+										<a href="">Estudiante<i class="fas fa-chevron-down"></i></a>
+										<ul class="submenu first-submenu">
+											<li><a href="setting-edit-profile.html">Perfil</a></li>
+											<li><a href="my-course-list.html">Mis Cursos</a></li>
+											<li><a href="setting-student-security.html">Seguridad Cuenta</a></li>
+										</ul>
+									</li>
+									<li class="has-submenu">
+										<a href="faq.html">FAQ</a>
+									</li>
+								</ul>
+							</div>
+							<ul class="nav header-navbar-rht">
+								<li class="nav-item user-nav">
+									<a>Mi perfil</a>
+								</li>
+								<li class="nav-item user-nav">
+									<a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+										<span class="user-img">
+											<img src="assets/img/instructor/profile-avatar.jpg" alt="">
+											<span class="status online"></span>
+										</span>
+									</a>
+									<div class="users dropdown-menu dropdown-menu-right" data-popper-placement="bottom-end" >
+										<div class="user-header">
+											<div class="avatar avatar-sm">
+												<img src="assets/img/instructor/profile-avatar.jpg" alt="User Image" class="avatar-img rounded-circle">
+											</div>
+											<div class="user-text">
+												<h6>Jenny Wilson</h6>
+												<p class="text-muted mb-0">Administrador</p>
+											</div>
+										</div>
+										<a class="dropdown-item" href="instructor-manager.html"><i class="feather-home me-1"></i> Panel de control</a>
+										<a class="dropdown-item" href="instructor-edit-profile2.html"><i class="feather-star me-1"></i> Editar perfil</a>
+										<a class="dropdown-item" href="index.html"><i class="feather-log-out me-1"></i> Cerrar sesión</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+			</header>
+			<!-- /Header -->
+			
+			<!--Dashbord Student -->
+			<div class="page-content">
+				<div class="container">
+					<div class="row">
+						
+						<!-- Sidebar -->
+						<div class="col-xl-3 col-lg-4 col-md-12 theiaStickySidebar">
+							<div class="settings-widget dash-profile">
+								<div class="settings-menu p-0">
+									<div class="profile-bg">
+										<img src="assets/img/instructor-profile-bg.jpg" alt="">
+										<div class="profile-img">
+											<img src="assets/img/user/user15.jpg" alt="">
+										</div>
+									</div>
+									<div class="profile-group">
+										<div class="profile-name text-center">
+											<h4>Jenny Wilson</h4>
+											<p>Cuenta de administrador</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="settings-widget account-settings">
+								<div class="settings-menu">
+									<h3>Panel de control</h3>
+									<ul>
+										<li class="nav-item">
+											<a href="instructor-manager.html" class="nav-link">
+												<i class="feather-home"></i>Gestión global
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="add-course.html" class="nav-link">
+												<i class="feather-book"></i>Crear curso
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-edit-profile.html" class="nav-link">
+												<i class="feather-users"></i>Gestionar estudiantes
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="instructor-dashboard.html" class="nav-link">
+												<i class="feather-pie-chart"></i>Estadísticas
+											</a>
+										</li>
+									</ul>
+									<div class="instructor-title">
+										<h3>Configuración de la cuenta</h3>
+									</div>
+									<ul>
+										<li class="nav-item">
+											<a href="instructor-edit-profile2.html" class="nav-link ">
+												<i class="feather-settings"></i>Editar perfil
+											</a>
+										</li>
+										<li class="nav-item active">
+											<a href="instructor-security.html" class="nav-link">
+												<i class="feather-user"></i>Seguridad
+											</a>
+										</li>
+										<li class="nav-item">
+											<a href="index.html" class="nav-link">
+												<i class="feather-power"></i>Cerrar sesión
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>					
+						</div>
+						<!-- /Sidebar -->
+						
+						<!-- Student Security -->
+						<div class="col-xl-9 col-md-8">	
+							<div class="settings-widget profile-details">
+								<div class="settings-menu p-0">
+									<div class="profile-heading">
+										<h3>Cambiar contraseña</h3>
+										</div>
+				
+									<div class="checkout-form personal-address">
+										<div class="personal-info-head">
+											<p>Introduce tu antigua contraseña y despues escribe dos veces tu nueva contraseña.</p>
+										</div>
+										<div class="row">
+											<div class="col-lg-6">
+												<form action="#">
+													<div class="input-block">
+														<label class="form-control-label">Contraseña actual</label>
+														<input type="password" class="form-control" >
+													</div>
+													<div class="input-block">
+														<label class="form-control-label">Nueva contraseña</label>
+														<div class="pass-group" id="passwordInput">																	
+															<input type="password" class="form-control pass-input" placeholder="********">
+														</div>
+														<div  class="password-strength" id="passwordStrength">
+															<span id="poor"></span>
+															<span id="weak"></span>
+															<span id="strong"></span>
+															<span id="heavy"></span>
+														</div>
+														<div id="passwordInfo"></div>	
+													</div>
+													<div class="input-block">
+														<label class="form-control-label">Confirmar contraseña</label>
+														<input type="password" class="form-control" placeholder="********">
+													</div>
+													<div class="update-profile save-password">
+														<button type="button" class="btn btn-primary">Guardar contraseña</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	
+						<!-- Student Security -->
+						
+					</div>
+				</div>
+			</div>	
+			<!-- /Dashbord Student -->
+			
+			<!-- Footer -->
+			<footer class="footer">
+
+				<!-- Footer Top -->
+				<div class="footer-top aos" data-aos="fade-up">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6 col-md-8">
+	
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-about">
+									<div class="footer-logo">
+										<img src="assets/img/logo.svg" alt="logo">
+									</div>
+									<div class="">
+										<p>
+											Descubre cursos gratuitos en Tatademy. Aprende a tu propio ritmo, desde cualquier lugar. ¡Únete a nuestra comunidad hoy!
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+	
+							</div>
+	
+							<div class="col-lg-2 col-md-6">
+	
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<h2 class="footer-title">Enlace útiles</h2>
+									<ul>
+										<li><a href="course-grid.html">Cursos</a></li>
+										<li><a href="login.html">Iniciar sesión</a></li>
+										<li><a href="register.html">Registrarse</a></li>
+									</ul>
+								</div>
+								<!-- /Footer Widget -->
+	
+							</div>
+	
+							<div class="col-lg-4 col-md-6">
+	
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-contact">
+									<h2 class="footer-title">Contacto</h2>
+									<div class="footer-contact-info">
+										<div class="footer-address">
+											<img src="assets/img/icon/icon-20.svg" alt="" class="img-fluid">
+											<p> C. Tulipán, s/n, Móstoles<br> Madrid, 28933</p>
+										</div>
+										<p>
+											<img src="assets/img/icon/icon-19.svg" alt="" class="img-fluid">
+											<a href="mailto:tatademy@gmail.com">tatademy@gmail.com</a>
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+	
+							</div>
+	
+						</div>
+					</div>
+				</div>
+				<!-- /Footer Top -->
+	
+				<!-- Footer Bottom -->
+				<div class="footer-bottom">
+					<div class="container">
+	
+						<!-- Copyright -->
+						<div class="copyright">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="privacy-policy">
+										<ul>
+											<li><a href="term-condition.html">Terminos y condiciones</a></li>
+											<li><a href="privacy-policy.html">Política de privacidad</a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="copyright-text">
+										<p class="mb-0">&copy; 2024 DAW G1. Todos los derechos reservados.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /Copyright -->
+	
+					</div>
+				</div>
+				<!-- /Footer Bottom -->
+	
+			</footer>
+			<!-- /Footer -->
+		   
+		</div>
+	   <!-- /Main Wrapper -->
+	  
+		<!-- jQuery -->
+		<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/jquery-3.7.1.min.js"></script>
+		
+		<!-- Bootstrap Core JS -->
+		<script src="assets/js/bootstrap.bundle.min.js"></script>
+		
+		<!-- counterup JS -->
+		<script src="assets/js/jquery.waypoints.js"></script>
+		<script src="assets/js/jquery.counterup.min.js"></script>
+		
+		<!-- Feature JS -->
+		<script src="assets/plugins/feather/feather.min.js"></script>
+
+		<!-- Sticky Sidebar JS -->
+        <script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script>
+        <script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script>
+		
+		<!-- Validation-->
+		<script src="assets/js/validation.js"></script>	
+		
+		<!-- Custom JS -->
+		<script src="assets/js/script.js"></script>
+		
+	</body>
+</html>

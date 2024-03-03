@@ -1,0 +1,256 @@
+{{>header}}				
+<!-- Breadcrumb -->
+<div class="breadcrumb-bar">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-12">
+				<div class="breadcrumb-list" style="text-align: center">
+					<nav aria-label="breadcrumb" class="page-breadcrumb">
+
+
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="/index">Inicio</a></li>
+							<li class="breadcrumb-item"><a href="/courses">Buscar cursos</a></li>
+							<li class="breadcrumb-item" aria-current="page" style="margin-right: 200px">{{courseName}}</li>
+						</ol>
+
+						
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Breadcrumb -->
+
+<!-- Inner Banner -->
+<div class="inner-banner">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="instructor-wrap border-bottom-0 m-0">
+					
+					<span class="web-badge mb-3">{{courseCategory}}</span>
+				</div>
+				<h2>{{courseName}}</h2>							
+					<!--Fill or not the star depending on the starAverage -->
+					<div class="rating" data-stars="{{starAverage}}">
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<i class="fas fa-star"></i>
+						<span class="d-inline-block average-rating">{{starAverage}}<span>    </span>   ({{numReviews}})</span></span>
+					</div>
+					
+					<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+					<script>
+					$(document).ready(function() {
+						$('.rating').each(function() {
+							var stars = $(this).data('stars');
+							$(this).find('.fa-star').slice(0, stars).addClass('filled');
+						});
+					});
+					</script>
+					<!-- End of fill stars-->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /Inner Banner -->
+
+<!-- Course Content -->
+<section class="page-content course-sec">
+	<div class="container">
+	
+		<div class="row">
+			<div class="col-lg-8">
+			
+				<!-- Overview -->
+				<div class="card overview-sec">
+					<div class="card-body">
+						<h5 class="subs-title">Descripción del curso</h5>
+						<p>{{courseDescription}}</p>
+					</div>
+				</div>
+				<!-- /Overview -->
+				
+				<!-- Course Content -->
+				<div class="card content-sec">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-6">
+								<h5 class="subs-title">Contenido del curso</h5>
+							</div>
+						</div>									
+						<div class="course-card">
+							<h6 class="cou-title">
+								<a class="collapsed" data-bs-toggle="collapse" href="#collapseOne" aria-expanded="false">Material del curso</a>
+							</h6>
+							<div id="collapseOne" class="card-collapse collapse">
+								<ul>
+									{{#materialsFromCourse}}
+									<li>
+										<p><img src="/assets/img/icon/play.svg" alt="" class="me-2">{{filename}}</p>
+										<div>
+											<a href="javascript:void(0);">Preview</a> <!--<a href="/{{id}}/DownloadFile">Preview</a>-->
+										</div>
+										<!--<form action="#?" method="get">
+											<button type="submit">Descargar</button>
+										</form>-->
+									</li>
+									{{/materialsFromCourse}}
+								</ul>
+							</div>
+						</div> 
+					</div>
+				</div>
+				<!-- /Course Content -->
+				
+				<!-- Reviews -->
+				{{#reviewsFromCourse}}
+				<div class="card review-sec">
+					<div class="card-body">
+						<div class="instructor-wrap">
+							<div class="about-instructor">
+								<div class="abt-instructor-img">
+									<a href="instructor-profile.html"><img src="/assets/img/user/user1.jpg" alt="img" class="img-fluid"></a>
+								</div>
+								<div class="instructor-detail">
+									<h5><a href="instructor-profile.html">{{user.name}}  {{user.surname}} </a></h5>
+									
+								</div>
+							</div>
+							<!-- Fill or not the star depending on the {{starsValue}} -->
+							<div class="rating" data-stars="{{starsValue}}">
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<i class="fas fa-star"></i>
+								<span class="d-inline-block average-rating">{{starsValue}}</span>
+							</div>
+							
+							<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+							<script>
+							$(document).ready(function() {
+								$('.rating').each(function() {
+									var stars = $(this).data('stars');
+									$(this).find('.fa-star').slice(0, stars).addClass('filled');
+								});
+							});
+							</script>
+							<!-- End of fill stars-->
+						</div>
+						<p class="rev-info">{{description}}</p>
+						
+					</div>
+				</div>
+				{{/reviewsFromCourse}}
+
+
+
+				<!-- /Reviews -->
+
+				<!-- Comment -->
+				<div class="card comment-sec">
+					<div class="card-body">
+						<h5 class="subs-title">Escribe tu reseña</h5>
+						<form action="/saveReview/{{courseId}}">
+							<div class="input-block">
+								<input type="integer" class="form-control" placeholder="Estrellas del 1-5" name="rateReview" id="rateReview" min="1" max="5">
+							</div>
+							<div class="input-block">
+								<textarea rows="4" class="form-control" placeholder="Tus comentarios" name="descriptionReview" id="descriptionReview"></textarea>
+							</div>
+							<div class="submit-section">
+								<button class="btn submit-btn" type="submit">Enviar</button>
+							</div>
+						</form>
+					</div>
+				</div>				
+				<!-- /Comment -->
+			</div>	
+			
+			<div class="col-lg-4">
+				<div class="sidebar-sec">
+				
+					<!-- Video -->
+					<div class="video-sec vid-bg">
+						<div class="card">
+							<div class="card-body">	
+								<img class="img-fluid" alt="" src="{{courseImage}}">				
+								<div class="video-details">
+									<div class="course-fee">
+									{{#joined}}
+									<h2>Inscrito</h2>
+									{{/joined}}
+									</div>
+									<!-- Inscription -->
+										{{^joined}}
+										<form action="/joinCourse/{{courseId}}">
+											<input class="btn btn-enroll w-100" type="submit" value="Inscribirse">
+										</form>
+										{{/joined}}
+									<!-- /Inscription -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Video -->
+					
+					<!-- Include -->
+					<div class="card include-sec">
+						<div class="card-body">
+							<div class="cat-title">
+								<h4>Este curso contiene</h4>
+							</div>
+							<ul>
+								<li><img src="/assets/img/icon/import.svg" class="me-2" alt=""> Incluye ficheros descargables </li>
+								<li><img src="/assets/img/icon/play.svg" class="me-2" alt=""> Valorado por los usuarios: <span>{{starAverage}} sobre 5</span></li>
+								<li><img src="/assets/img/icon/key.svg" class="me-2" alt=""> Acceso a tiempo completo</li>
+								<li><img src="/assets/img/icon/mobile.svg" class="me-2" alt=""> Accesible desde el movil y PC</li>
+								<li><img src="/assets/img/icon/cloud.svg" class="me-2" alt=""> Tareas</li>
+								<li><img src="/assets/img/icon/teacher.svg" class="me-2" alt=""> Incluye diploma</li>
+							</ul>
+						</div>
+					</div>
+					<!-- /Include -->
+					
+					<!-- Features -->
+					<div class="card feature-sec">
+						<div class="card-body">
+							<div class="cat-title">
+								<h4>Acerca del curso</h4>
+							</div>
+							<ul>
+								<li><img src="/assets/img/icon/chapter.svg" class="me-2" alt=""> Categoría: <span>{{courseCategory}}</span></li>
+								<li><img src="/assets/img/icon/users.svg" class="me-2" alt=""> Matriculados: <span>{{numStudentsEnroll}} usuarios</span></li>
+								<li><img src="/assets/img/icon/timer.svg" class="me-2" alt=""> Número de materiales: <span>{{numMaterialsCourse}}</span></li>
+								<li><img src="/assets/img/icon/chart.svg" class="me-2" alt=""> Número de reseñas: <span>{{numReviews}}</span></li>
+								{{#isAdmin}}
+								<li>
+									<a class="btn btn-enroll w-100" href="/admin/edit/course/{{courseName}}">Editar Curso</a>
+									</li>
+									{{/isAdmin}}
+									{{#joined}}<li>
+										<a class="btn btn-enroll w-100" href="/generate-pdf?id={{courseId}}">Descargar Certificado</a>
+										</li>
+										{{/joined}}
+							</ul>
+							
+						</div>
+					</div>
+					<!-- /Features -->
+					
+					
+				</div>
+			</div>
+		</div>	
+	</div>
+	
+	{{>recommendedCourses}}
+</section>
+
+
+{{>footer}}

@@ -1,0 +1,54 @@
+<div class="container card content-sec">
+    <div class="card-body">
+        <div class="row">
+    <div class="col-sm-6">
+        <h5 class="subs-title">Cursos recomendados</h5>
+    </div>
+</div>
+    {{^isRecommendedCoursesAvailable}}
+    <h6 class="cou-title mb-0">No hay cursos recomendados para mostrar</h6>
+    {{/isRecommendedCoursesAvailable}}
+    {{#isRecommendedCoursesAvailable}}
+    <div class="row">
+        {{#courses}}
+        <div class="col-lg-4 col-md-6 d-flex">
+            <div class="course-box course-design d-flex " >
+                <div class="product">
+                    <div class="product-img">
+                        <a href="/course-details/{{0}}">
+                            <img class="img-fluid" alt="" src="{{2}}">
+                        </a>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="title"><a href="/course-details/{{0}}">{{0}}</a></h3>
+                        <div class="course-info d-flex align-items-center">
+                            <div class="rating-img d-flex align-items-center">
+                            </div>
+                            <div class="course-view d-flex align-items-center">
+                            </div>
+                        </div>
+                        <div class="rating">
+                            {{#stars}}
+                                {{#filled}}<i class="fas fa-star filled"></i>{{/filled}}
+                                {{^filled}}<i class="fas fa-star"></i>{{/filled}}
+                            {{/stars}}
+                            <span class="d-inline-block average-rating"><span>{{3}}</span> ({{1}})</span>
+                        </div>
+                        <div class="all-btn all-category d-flex align-items-center">
+                            {{#delete}}
+                            <a href="delete-course?id={{id}}" class="btn btn-primary">Eliminar curso</a>
+                            {{/delete}}
+                            {{^delete}}
+                            <a href="/course-details/{{0}}" class="btn btn-primary">Inscribirse</a>
+                            {{/delete}}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        {{/courses}}
+    </div>
+    {{/isRecommendedCoursesAvailable}}
+</div>
+</div>
