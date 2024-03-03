@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,9 @@ import com.tatademy.model.Course;
 import com.tatademy.model.Material;
 import com.tatademy.model.Review;
 import com.tatademy.model.User;
-
-import com.tatademy.repository.CourseRepository;
-import com.tatademy.repository.MaterialRepository;
-import com.tatademy.repository.ReviewRepository;
-import com.tatademy.repository.UserRepository;
+import com.tatademy.service.CourseService;
+import com.tatademy.service.MaterialService;
+import com.tatademy.service.ReviewService;
 import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,19 +39,16 @@ import jakarta.servlet.http.HttpServletRequest;
 public class CourseController {
 
 	@Autowired
-	private CourseRepository courses;
+	private CourseService courseService;
 
 	@Autowired
-	private MaterialRepository materialRepository;
+	private ReviewService reviewService;
+
 	@Autowired
-	private ReviewRepository reviewRepository;
-	@Autowired
-	private UserRepository userRepository;
+	private MaterialService materialService;
 
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private UserRepository users;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -88,22 +84,22 @@ public class CourseController {
 		Course course = new Course(title, subject, description);
 		course.setimageString(fileImage.getOriginalFilename());
 		course.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
-		courses.save(course);
+		courseService.save(course);
 		for (int i = 0; i < courseContentInputFiles.size(); i++) {
 			Material material = new Material();
 			material.setFilename(courseContentInputFiles.get(i).getOriginalFilename());
 			material.setFile(BlobProxy.generateProxy(courseContentInputFiles.get(i).getInputStream(),
 					courseContentInputFiles.get(i).getSize()));
 			material.setCourse(course);
-			materialRepository.save(material);
+			materialService.save(material);
 			course.getMaterial().add(material);
 		}
 		return "redirect:/courses";
 	}
-	
+
 	@GetMapping("/courses-panel")
 	public String coursesPanel(Model model) throws SQLException {
-		List<String> filters = courses.findAllCategories();
+		List<String> filters = courseService.findAllCategories();
 		List<Course> coursesList = new ArrayList<>();
 		List<String[]> filterPair = new ArrayList<>();
 		List<String[]> courseInfo = new ArrayList<>();
@@ -115,7 +111,7 @@ public class CourseController {
 			aux[1] = "";
 			filterPair.add(aux);
 		}
-		coursesList = courses.findAll();
+		coursesList = courseService.findAll();
 		for (int i = 0; i < coursesList.size(); ++i) {
 			String[] aux = new String[5];
 			List<Review> reviews = new ArrayList<>();
@@ -129,28 +125,29 @@ public class CourseController {
 			}
 			aux[0] = coursesList.get(i).getName();
 			aux[1] = String.valueOf(reviews.size());
-			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(
+					coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 			aux[3] = coursesList.get(i).getId().toString();
 			aux[4] = String.valueOf(coursesList.get(i).getId());
 			courseInfo.add(aux);
 		}
 		for (String[] aux : courseInfo) {
-		    Map<String, Object> courseData = new HashMap<>();
-		    valoration = Double.parseDouble(aux[3]);
-		    List<Map<String, Object>> stars = new ArrayList<>();
-		    for (int i = 0; i < 5; i++) {
-		        Map<String, Object> star = new HashMap<>();
-		        star.put("filled", i < valoration);
-		        stars.add(star);
-		    }
-		    courseData.put("0", aux[0]);
-		    courseData.put("1", aux[1]);
-		    courseData.put("2", aux[2]);
-		    courseData.put("3", String.valueOf(valoration));
-		    courseData.put("stars", stars);
-		    courseData.put("id", aux[3]);
+			Map<String, Object> courseData = new HashMap<>();
+			valoration = Double.parseDouble(aux[3]);
+			List<Map<String, Object>> stars = new ArrayList<>();
+			for (int i = 0; i < 5; i++) {
+				Map<String, Object> star = new HashMap<>();
+				star.put("filled", i < valoration);
+				stars.add(star);
+			}
+			courseData.put("0", aux[0]);
+			courseData.put("1", aux[1]);
+			courseData.put("2", aux[2]);
+			courseData.put("3", String.valueOf(valoration));
+			courseData.put("stars", stars);
+			courseData.put("id", aux[3]);
 			courseData.put("5", aux[4]);
-		    coursesModel.add(courseData);
+			coursesModel.add(courseData);
 		}
 		model.addAttribute("newest", "selected");
 		model.addAttribute("valoration", "");
@@ -164,7 +161,7 @@ public class CourseController {
 
 	@GetMapping("/courses")
 	public String courses(Model model) throws SQLException {
-		List<String> filters = courses.findAllCategories();
+		List<String> filters = courseService.findAllCategories();
 		List<Course> coursesList = new ArrayList<>();
 		List<String[]> filterPair = new ArrayList<>();
 		List<String[]> courseInfo = new ArrayList<>();
@@ -176,7 +173,7 @@ public class CourseController {
 			aux[1] = "";
 			filterPair.add(aux);
 		}
-		coursesList = courses.findAll();
+		coursesList = courseService.findAll();
 		for (int i = 0; i < coursesList.size(); ++i) {
 			String[] aux = new String[6];
 			List<Review> reviews = new ArrayList<>();
@@ -190,28 +187,29 @@ public class CourseController {
 			}
 			aux[0] = coursesList.get(i).getName();
 			aux[1] = String.valueOf(reviews.size());
-			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(
+					coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 			aux[3] = String.valueOf(valoration);
 			aux[4] = "";
 			aux[5] = String.valueOf(coursesList.get(i).getId());
 			courseInfo.add(aux);
 		}
 		for (String[] aux : courseInfo) {
-		    Map<String, Object> courseData = new HashMap<>();
-		    valoration = Double.parseDouble(aux[3]);
-		    List<Map<String, Object>> stars = new ArrayList<>();
-		    for (int i = 0; i < 5; i++) {
-		        Map<String, Object> star = new HashMap<>();
-		        star.put("filled", i < valoration);
-		        stars.add(star);
-		    }
-		    courseData.put("0", aux[0]);
-		    courseData.put("1", aux[1]);
-		    courseData.put("2", aux[2]);
-		    courseData.put("3", String.valueOf(valoration));
+			Map<String, Object> courseData = new HashMap<>();
+			valoration = Double.parseDouble(aux[3]);
+			List<Map<String, Object>> stars = new ArrayList<>();
+			for (int i = 0; i < 5; i++) {
+				Map<String, Object> star = new HashMap<>();
+				star.put("filled", i < valoration);
+				stars.add(star);
+			}
+			courseData.put("0", aux[0]);
+			courseData.put("1", aux[1]);
+			courseData.put("2", aux[2]);
+			courseData.put("3", String.valueOf(valoration));
 			courseData.put("5", aux[5]);
-		    courseData.put("stars", stars);
-		    coursesModel.add(courseData);
+			courseData.put("stars", stars);
+			coursesModel.add(courseData);
 		}
 		model.addAttribute("newest", "selected");
 		model.addAttribute("valoration", "");
@@ -220,15 +218,15 @@ public class CourseController {
 		model.addAttribute("courses", coursesModel);
 		model.addAttribute("filters", filterPair);
 		model.addAttribute("delete", false);
-		
+
 		return "course-grid";
 	}
 
-	
 	@GetMapping("/course-search")
-	public String courseSearch(Model model, @RequestParam String name, @RequestParam String sellist1) throws SQLException {
+	public String courseSearch(Model model, @RequestParam String name, @RequestParam String sellist1)
+			throws SQLException {
 		List<Course> coursesList = new ArrayList<>();
-		List<String> filters = courses.findAllCategories();
+		List<String> filters = courseService.findAllCategories();
 		List<String[]> filterPair = new ArrayList<>();
 		List<String[]> courseInfo = new ArrayList<>();
 		List<Map<String, Object>> coursesModel = new ArrayList<>();
@@ -240,32 +238,32 @@ public class CourseController {
 			aux[1] = "";
 			filterPair.add(aux);
 		}
-		coursesList = courses.findByNameContains(name);
-		switch(sellist1) {
+		coursesList = courseService.findByNameContains(name);
+		switch (sellist1) {
 		case "Valoración":
 			newest = "";
 			valorationtxt = "selected";
 			mostReviewed = "";
 			Collections.sort(coursesList, new Comparator<Course>() {
-			    public int compare(Course c1, Course c2) {
-			        Double val1 = 0.0;
-			        Double val2 = 0.0;
-			        for (int i = 0; i < c1.getReviews().size(); ++i) {
-			        	val1 += c1.getReviews().get(i).getStarsValue();
-			        }
-			        val1 = val1 / c1.getReviews().size();
-			        for (int j = 0; j < c2.getReviews().size(); ++j) {
-			        	val2 += c2.getReviews().get(j).getStarsValue();
-			        }
-			        val2 = val2 / c2.getReviews().size();
-			        if (val1 > val2) {
-			            return -1;
-			        } else if (val1 < val2) {
-			            return 1;
-			        } else {
-			            return 0;
-			        }
-			    }
+				public int compare(Course c1, Course c2) {
+					Double val1 = 0.0;
+					Double val2 = 0.0;
+					for (int i = 0; i < c1.getReviews().size(); ++i) {
+						val1 += c1.getReviews().get(i).getStarsValue();
+					}
+					val1 = val1 / c1.getReviews().size();
+					for (int j = 0; j < c2.getReviews().size(); ++j) {
+						val2 += c2.getReviews().get(j).getStarsValue();
+					}
+					val2 = val2 / c2.getReviews().size();
+					if (val1 > val2) {
+						return -1;
+					} else if (val1 < val2) {
+						return 1;
+					} else {
+						return 0;
+					}
+				}
 			});
 			break;
 		case "Más veces valorado":
@@ -273,18 +271,18 @@ public class CourseController {
 			valorationtxt = "";
 			mostReviewed = "selected";
 			Collections.sort(coursesList, new Comparator<Course>() {
-			    public int compare(Course c1, Course c2) {
-			        int size1 = c1.getReviews().size();
-			        int size2 = c2.getReviews().size();
+				public int compare(Course c1, Course c2) {
+					int size1 = c1.getReviews().size();
+					int size2 = c2.getReviews().size();
 
-			        if (size1 < size2) {
-			            return -1;
-			        } else if (size1 > size2) {
-			            return 1;
-			        } else {
-			            return 0;
-			        }
-			    }
+					if (size1 < size2) {
+						return -1;
+					} else if (size1 > size2) {
+						return 1;
+					} else {
+						return 0;
+					}
+				}
 			});
 			break;
 		default:
@@ -298,7 +296,7 @@ public class CourseController {
 			});
 			break;
 		}
-		
+
 		for (int i = 0; i < coursesList.size(); ++i) {
 			String[] aux = new String[6];
 			List<Review> reviews = new ArrayList<>();
@@ -312,30 +310,31 @@ public class CourseController {
 			}
 			aux[0] = coursesList.get(i).getName();
 			aux[1] = String.valueOf(reviews.size());
-			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(
+					coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 			aux[3] = String.valueOf(valoration);
 			aux[4] = "";
 			aux[5] = String.valueOf(coursesList.get(i).getId());
 			courseInfo.add(aux);
 		}
 		for (String[] aux : courseInfo) {
-		    Map<String, Object> courseData = new HashMap<>();
-		    valoration = Double.parseDouble(aux[3]);
-		    List<Map<String, Object>> stars = new ArrayList<>();
-		    for (int i = 0; i < 5; i++) {
-		        Map<String, Object> star = new HashMap<>();
-		        star.put("filled", i < valoration);
-		        stars.add(star);
-		    }
-		    courseData.put("0", aux[0]);
-		    courseData.put("1", aux[1]);
-		    courseData.put("2", aux[2]);
-		    courseData.put("3", String.valueOf(valoration));
-		    courseData.put("stars", stars);
+			Map<String, Object> courseData = new HashMap<>();
+			valoration = Double.parseDouble(aux[3]);
+			List<Map<String, Object>> stars = new ArrayList<>();
+			for (int i = 0; i < 5; i++) {
+				Map<String, Object> star = new HashMap<>();
+				star.put("filled", i < valoration);
+				stars.add(star);
+			}
+			courseData.put("0", aux[0]);
+			courseData.put("1", aux[1]);
+			courseData.put("2", aux[2]);
+			courseData.put("3", String.valueOf(valoration));
+			courseData.put("stars", stars);
 			courseData.put("5", aux[5]);
-		    coursesModel.add(courseData);
+			coursesModel.add(courseData);
 		}
-		switch(sellist1) {
+		switch (sellist1) {
 		case "Publicado recientemente":
 			newest = "selected";
 			valorationtxt = "";
@@ -370,7 +369,7 @@ public class CourseController {
 	@GetMapping("/course-filter")
 	public String processForm(Model model, HttpServletRequest request) throws SQLException {
 		Map<String, String[]> paramMap = request.getParameterMap();
-		List<String> allFilters = courses.findAllCategories();
+		List<String> allFilters = courseService.findAllCategories();
 		List<String> filters = new ArrayList<>();
 		List<String> filtersMode = new ArrayList<>();
 		List<String> filtersName = new ArrayList<>();
@@ -391,7 +390,7 @@ public class CourseController {
 					}
 				}
 			}
-			coursesList = courses.findByCategoriyIn(filters);
+			coursesList = courseService.findByCategoriyIn(filters);
 			for (int i = 0; i < coursesList.size(); ++i) {
 				String[] aux = new String[6];
 				List<Review> reviews = new ArrayList<>();
@@ -405,32 +404,33 @@ public class CourseController {
 				}
 				aux[0] = coursesList.get(i).getName();
 				aux[1] = String.valueOf(reviews.size());
-				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i)
+						.getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 				aux[3] = String.valueOf(valoration);
 				aux[4] = "";
 				aux[5] = String.valueOf(coursesList.get(i).getId());
 				courseInfo.add(aux);
 			}
 			for (String[] aux : courseInfo) {
-			    Map<String, Object> courseData = new HashMap<>();
-			    valoration = Double.parseDouble(aux[3]);
-			    List<Map<String, Object>> stars = new ArrayList<>();
-			    for (int i = 0; i < 5; i++) {
-			        Map<String, Object> star = new HashMap<>();
-			        star.put("filled", i < valoration);
-			        stars.add(star);
-			    }
-			    courseData.put("0", aux[0]);
-			    courseData.put("1", aux[1]);
-			    courseData.put("2", aux[2]);
-			    courseData.put("3", String.valueOf(valoration));
-			    courseData.put("stars", stars);
-			    courseData.put("5", aux[5]);
-			    coursesModel.add(courseData);
+				Map<String, Object> courseData = new HashMap<>();
+				valoration = Double.parseDouble(aux[3]);
+				List<Map<String, Object>> stars = new ArrayList<>();
+				for (int i = 0; i < 5; i++) {
+					Map<String, Object> star = new HashMap<>();
+					star.put("filled", i < valoration);
+					stars.add(star);
+				}
+				courseData.put("0", aux[0]);
+				courseData.put("1", aux[1]);
+				courseData.put("2", aux[2]);
+				courseData.put("3", String.valueOf(valoration));
+				courseData.put("stars", stars);
+				courseData.put("5", aux[5]);
+				coursesModel.add(courseData);
 			}
 			model.addAttribute("courses", coursesModel);
 		} else {
-			coursesList = courses.findAll();
+			coursesList = courseService.findAll();
 			for (int i = 0; i < coursesList.size(); ++i) {
 				String[] aux = new String[6];
 				List<Review> reviews = new ArrayList<>();
@@ -444,28 +444,29 @@ public class CourseController {
 				}
 				aux[0] = coursesList.get(i).getName();
 				aux[1] = String.valueOf(reviews.size());
-				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i)
+						.getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 				aux[3] = String.valueOf(valoration);
 				aux[4] = "";
 				aux[5] = String.valueOf(coursesList.get(i).getId());
 				courseInfo.add(aux);
 			}
 			for (String[] aux : courseInfo) {
-			    Map<String, Object> courseData = new HashMap<>();
-			    valoration = Double.parseDouble(aux[3]);
-			    List<Map<String, Object>> stars = new ArrayList<>();
-			    for (int i = 0; i < 5; i++) {
-			        Map<String, Object> star = new HashMap<>();
-			        star.put("filled", i < valoration);
-			        stars.add(star);
-			    }
-			    courseData.put("0", aux[0]);
-			    courseData.put("1", aux[1]);
-			    courseData.put("2", aux[2]);
-			    courseData.put("3", String.valueOf(valoration));
-			    courseData.put("stars", stars);
+				Map<String, Object> courseData = new HashMap<>();
+				valoration = Double.parseDouble(aux[3]);
+				List<Map<String, Object>> stars = new ArrayList<>();
+				for (int i = 0; i < 5; i++) {
+					Map<String, Object> star = new HashMap<>();
+					star.put("filled", i < valoration);
+					stars.add(star);
+				}
+				courseData.put("0", aux[0]);
+				courseData.put("1", aux[1]);
+				courseData.put("2", aux[2]);
+				courseData.put("3", String.valueOf(valoration));
+				courseData.put("stars", stars);
 				courseData.put("5", aux[5]);
-			    coursesModel.add(courseData);
+				coursesModel.add(courseData);
 			}
 			model.addAttribute("courses", coursesModel);
 		}
@@ -487,209 +488,210 @@ public class CourseController {
 		model.addAttribute("delete", false);
 		return "course-grid";
 	}
-		
-		@GetMapping("/delete-course")
-		public String deletecourse(Model model, @RequestParam String id) throws SQLException {
-			courses.deleteById(Long.parseLong(id));
-			List<String> filters = courses.findAllCategories();
-			List<Course> coursesList = new ArrayList<>();
-			List<String[]> filterPair = new ArrayList<>();
-			List<String[]> courseInfo = new ArrayList<>();
-			List<Map<String, Object>> coursesModel = new ArrayList<>();
-			Double valoration = 0.0;
-			for (int i = 0; i < filters.size(); ++i) {
-				String[] aux = new String[2];
-				aux[0] = filters.get(i);
-				aux[1] = "";
-				filterPair.add(aux);
-			}
-			coursesList = courses.findAll();
-			for (int i = 0; i < coursesList.size(); ++i) {
-				String[] aux = new String[6];
-				List<Review> reviews = new ArrayList<>();
-				reviews = coursesList.get(i).getReviews();
-				valoration = 0.0;
-				if (reviews.size() > 0) {
-					for (int j = 0; j < reviews.size(); ++j) {
-						valoration += reviews.get(j).getStarsValue();
-					}
-					valoration = valoration / reviews.size();
+
+	@GetMapping("/delete-course")
+	public String deletecourse(Model model, @RequestParam String id) throws SQLException {
+		courseService.deleteById(Long.parseLong(id));
+		List<String> filters = courseService.findAllCategories();
+		List<Course> coursesList = new ArrayList<>();
+		List<String[]> filterPair = new ArrayList<>();
+		List<String[]> courseInfo = new ArrayList<>();
+		List<Map<String, Object>> coursesModel = new ArrayList<>();
+		Double valoration = 0.0;
+		for (int i = 0; i < filters.size(); ++i) {
+			String[] aux = new String[2];
+			aux[0] = filters.get(i);
+			aux[1] = "";
+			filterPair.add(aux);
+		}
+		coursesList = courseService.findAll();
+		for (int i = 0; i < coursesList.size(); ++i) {
+			String[] aux = new String[6];
+			List<Review> reviews = new ArrayList<>();
+			reviews = coursesList.get(i).getReviews();
+			valoration = 0.0;
+			if (reviews.size() > 0) {
+				for (int j = 0; j < reviews.size(); ++j) {
+					valoration += reviews.get(j).getStarsValue();
 				}
-				aux[0] = coursesList.get(i).getName();
-				aux[1] = String.valueOf(reviews.size());
-				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
-				aux[3] = String.valueOf(valoration);
-				aux[4] = "";
-				aux[5] = String.valueOf(coursesList.get(i).getId());
-				courseInfo.add(aux);
+				valoration = valoration / reviews.size();
 			}
-			for (String[] aux : courseInfo) {
-			    Map<String, Object> courseData = new HashMap<>();
-			    valoration = Double.parseDouble(aux[3]);
-			    List<Map<String, Object>> stars = new ArrayList<>();
-			    for (int i = 0; i < 5; i++) {
-			        Map<String, Object> star = new HashMap<>();
-			        star.put("filled", i < valoration);
-			        stars.add(star);
-			    }
-			    courseData.put("0", aux[0]);
-			    courseData.put("1", aux[1]);
-			    courseData.put("2", aux[2]);
-			    courseData.put("3", String.valueOf(valoration));
-			    courseData.put("stars", stars);
-				courseData.put("5", aux[5]);
-			    coursesModel.add(courseData);
+			aux[0] = coursesList.get(i).getName();
+			aux[1] = String.valueOf(reviews.size());
+			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(
+					coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+			aux[3] = String.valueOf(valoration);
+			aux[4] = "";
+			aux[5] = String.valueOf(coursesList.get(i).getId());
+			courseInfo.add(aux);
+		}
+		for (String[] aux : courseInfo) {
+			Map<String, Object> courseData = new HashMap<>();
+			valoration = Double.parseDouble(aux[3]);
+			List<Map<String, Object>> stars = new ArrayList<>();
+			for (int i = 0; i < 5; i++) {
+				Map<String, Object> star = new HashMap<>();
+				star.put("filled", i < valoration);
+				stars.add(star);
 			}
-			model.addAttribute("newest", "selected");
-			model.addAttribute("valoration", "");
-			model.addAttribute("mostReviewed", "");
-			model.addAttribute("search", "");
-			model.addAttribute("courses", coursesModel);
-			model.addAttribute("filters", filterPair);
-			model.addAttribute("delete", false);
-			return "redirect:/courses-panel";
+			courseData.put("0", aux[0]);
+			courseData.put("1", aux[1]);
+			courseData.put("2", aux[2]);
+			courseData.put("3", String.valueOf(valoration));
+			courseData.put("stars", stars);
+			courseData.put("5", aux[5]);
+			coursesModel.add(courseData);
+		}
+		model.addAttribute("newest", "selected");
+		model.addAttribute("valoration", "");
+		model.addAttribute("mostReviewed", "");
+		model.addAttribute("search", "");
+		model.addAttribute("courses", coursesModel);
+		model.addAttribute("filters", filterPair);
+		model.addAttribute("delete", false);
+		return "redirect:/courses-panel";
 	}
 
-	private boolean isJoined(Course course, User user){
+	private boolean isJoined(Course course, User user) {
 		return user.getCourses().contains(course);
 	}
 
-
-@GetMapping("/course-details/{courseName}")
-	public String courseDetails(Model model, HttpServletRequest request,@PathVariable Long courseName) throws SQLException{
+	@GetMapping("/course-details/{courseName}")
+	public String courseDetails(Model model, HttpServletRequest request, @PathVariable Long courseName)
+			throws SQLException {
 		Principal principal = request.getUserPrincipal();
-		User user = userService.findByEmail(principal.getName());
-		Course course = courses.findById(courseName).orElseThrow();
-		model.addAttribute("joined", isJoined(course, user));
+		Course course = courseService.findById(courseName).orElseThrow();
+		if (principal != null) {
+			User user = userService.findByEmail(principal.getName());
+			model.addAttribute("joined", isJoined(course, user));
+		}
+
+		model.addAttribute("courseId", course.getId());
 		model.addAttribute("courseName", course.getName());
 		model.addAttribute("courseDescription", course.getDescription());
 		model.addAttribute("courseCategory", course.getCategory());
 
-
 		// Materials
-		List<Material> materialsFromCourse = courses.findMaterialsByIdCourse(course.getId());
-		model.addAttribute("materialsFromCourse", materialsFromCourse);		
+		List<Material> materialsFromCourse = courseService.findMaterialsByIdCourse(course.getId());
+		model.addAttribute("materialsFromCourse", materialsFromCourse);
 
-		//INFORMATION RELATED TO REVIEWS
-		List<Review> reviewsFromCourse = reviewRepository.findReviewsByIdCourse(course.getId());
+		// INFORMATION RELATED TO REVIEWS
+		List<Review> reviewsFromCourse = reviewService.findReviewsByIdCourse(course.getId());
 		model.addAttribute("reviewsFromCourse", reviewsFromCourse);
 
-		Integer numReviews =  reviewsFromCourse.size();
+		Integer numReviews = reviewsFromCourse.size();
 		model.addAttribute("numReviews", numReviews);
 		Integer starAverage = 0;
 
 		for (Review review : reviewsFromCourse) {
 			starAverage = review.getStarsValue();
-		}	
-		model.addAttribute("starAverage", starAverage/numReviews);
+		}
+		model.addAttribute("starAverage", starAverage / numReviews);
 
-		//ABOUT THE COURSE
-		List<User> studentsEnroll = userRepository.findAllUserEnrollByIdCourse(course.getId());
+		// ABOUT THE COURSE
+		List<User> studentsEnroll = userService.findAllUserEnrollByIdCourse(course.getId());
 		Integer numStudentsEnroll = studentsEnroll.size();
 		model.addAttribute("numStudentsEnroll", numStudentsEnroll);
 		model.addAttribute("numMaterialsCourse", materialsFromCourse.size());
 
-
-
-		//-----------------------------------------
-
+		// -----------------------------------------
 
 		// ALGORITHM
 		List<Map<String, Object>> coursesModelAlgorithm = new ArrayList<>();
 		List<String[]> courseInfoAlgorithm = new ArrayList<>();
 		Double valorationAlgorithm = 0.0;
-		List<User> coursesAlgorithm = users.findAllUsersContainingCourseId(courseName);
-		List<Course> coursesFinalAlgorithm = users.findTop5CoursesByFrequency(coursesAlgorithm);
-		
-		if (coursesFinalAlgorithm.size() != 0 ) {
-		coursesFinalAlgorithm.remove(0);
-		for (int i = 0; i < coursesFinalAlgorithm.size(); ++i) {
-			String[] aux = new String[6];
-			List<Review> reviews = new ArrayList<>();
-			reviews = coursesFinalAlgorithm.get(i).getReviews();
-			valorationAlgorithm = 0.0;
-			if (reviews.size() > 0) {
-				for (int j = 0; j < reviews.size(); ++j) {
-					valorationAlgorithm += reviews.get(j).getStarsValue();
+		List<User> coursesAlgorithm = userService.findAllUsersContainingCourseId(courseName);
+		List<Course> coursesFinalAlgorithm = userService.findTop5CoursesByFrequency(coursesAlgorithm);
+
+		if (coursesFinalAlgorithm.size() != 0) {
+			coursesFinalAlgorithm.remove(0);
+			for (int i = 0; i < coursesFinalAlgorithm.size(); ++i) {
+				String[] aux = new String[6];
+				List<Review> reviews = new ArrayList<>();
+				reviews = coursesFinalAlgorithm.get(i).getReviews();
+				valorationAlgorithm = 0.0;
+				if (reviews.size() > 0) {
+					for (int j = 0; j < reviews.size(); ++j) {
+						valorationAlgorithm += reviews.get(j).getStarsValue();
+					}
+					valorationAlgorithm = valorationAlgorithm / reviews.size();
 				}
-				valorationAlgorithm = valorationAlgorithm / reviews.size();
+				aux[0] = coursesFinalAlgorithm.get(i).getName();
+				aux[1] = String.valueOf(reviews.size());
+				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesFinalAlgorithm.get(i)
+						.getImageFile().getBytes(1, (int) coursesFinalAlgorithm.get(i).getImageFile().length()));
+				aux[3] = String.valueOf(valorationAlgorithm);
+				aux[4] = "";
+				aux[5] = String.valueOf(coursesFinalAlgorithm.get(i).getId());
+				courseInfoAlgorithm.add(aux);
 			}
-			aux[0] = coursesFinalAlgorithm.get(i).getName();
-			aux[1] = String.valueOf(reviews.size());
-			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesFinalAlgorithm.get(i).getImageFile().getBytes(1, (int) coursesFinalAlgorithm.get(i).getImageFile().length()));
-			aux[3] = String.valueOf(valorationAlgorithm);
-			aux[4] = "";
-			aux[5] = String.valueOf(coursesFinalAlgorithm.get(i).getId());
-			courseInfoAlgorithm.add(aux);
+			for (String[] aux : courseInfoAlgorithm) {
+				Map<String, Object> courseData = new HashMap<>();
+				valorationAlgorithm = Double.parseDouble(aux[3]);
+				List<Map<String, Object>> stars = new ArrayList<>();
+				for (int i = 0; i < 5; i++) {
+					Map<String, Object> star = new HashMap<>();
+					star.put("filled", i < valorationAlgorithm);
+					stars.add(star);
+				}
+				courseData.put("0", aux[0]);
+				courseData.put("1", aux[1]);
+				courseData.put("2", aux[2]);
+				courseData.put("3", String.valueOf(valorationAlgorithm));
+				courseData.put("5", aux[5]);
+				courseData.put("stars", stars);
+				coursesModelAlgorithm.add(courseData);
+			}
+			model.addAttribute("isRecommendedCoursesAvailable", true);
+			model.addAttribute("courses", coursesModelAlgorithm);
+		} else {
+			model.addAttribute("isRecommendedCoursesAvailable", false);
 		}
-		for (String[] aux : courseInfoAlgorithm) {
-		    Map<String, Object> courseData = new HashMap<>();
-		    valorationAlgorithm = Double.parseDouble(aux[3]);
-		    List<Map<String, Object>> stars = new ArrayList<>();
-		    for (int i = 0; i < 5; i++) {
-		        Map<String, Object> star = new HashMap<>();
-		        star.put("filled", i < valorationAlgorithm);
-		        stars.add(star);
-		    }
-		    courseData.put("0", aux[0]);
-		    courseData.put("1", aux[1]);
-		    courseData.put("2", aux[2]);
-		    courseData.put("3", String.valueOf(valorationAlgorithm));
-			courseData.put("5", aux[5]);
-		    courseData.put("stars", stars);
-		    coursesModelAlgorithm.add(courseData);
-		}
-		model.addAttribute("isRecommendedCoursesAvailable", true);
-		model.addAttribute("courses", coursesModelAlgorithm);
-	} else {
-		model.addAttribute("isRecommendedCoursesAvailable", false);
-	}
 		return "course-details";
 	}
 
-	@GetMapping("/joinCourse/{courseName}")
-	public String courseInscription(Model model, HttpServletRequest request, @PathVariable String courseName){
+	@GetMapping("/joinCourse/{courseId}")
+	public String courseInscription(Model model, HttpServletRequest request, @PathVariable Long courseId) {
 		Principal principal = request.getUserPrincipal();
 		User user = userService.findByEmail(principal.getName());
 		List<Course> currentCurses = user.getCourses();
-		currentCurses.add(courses.findByName(courseName));
+		Optional<Course> course = courseService.findById(courseId);
+		course.ifPresent(currentCurses::add);
 		user.setCourses(currentCurses);
 		userService.save(user);
-		//model.addAttribute("joined", true);
+		// model.addAttribute("joined", true);
 		return "redirect:/";
 	}
 
-
 	@GetMapping("/saveReview/{courseName}")
-	public String saveReview(Model model, @PathVariable String courseName, HttpServletRequest request, @RequestParam String userNameReview, @RequestParam String userSurnameReview, @RequestParam int rateReview, @RequestParam String descriptionReview) {
-    // Ask for user:
-    Principal principal = request.getUserPrincipal();
-    User user = userService.findByEmail(principal.getName());
-    // Create the new review:
-    Review newReview = new Review();
-    newReview.setStarsValue(rateReview);
-    newReview.setDescription(descriptionReview);
-	newReview.setCourse(courses.findByName(courseName));
-    newReview.setUser(user);
-    // Save the review
-	reviewRepository.save(newReview);
-    return "redirect:/";
+	public String saveReview(Model model, @PathVariable String courseName, HttpServletRequest request,
+			@RequestParam String userNameReview, @RequestParam String userSurnameReview, @RequestParam int rateReview,
+			@RequestParam String descriptionReview) {
+		// Ask for user:
+		Principal principal = request.getUserPrincipal();
+		User user = userService.findByEmail(principal.getName());
+		// Create the new review:
+		Review newReview = new Review();
+		newReview.setStarsValue(rateReview);
+		newReview.setDescription(descriptionReview);
+		newReview.setCourse(courseService.findByName(courseName));
+		newReview.setUser(user);
+		// Save the review
+		reviewService.save(newReview);
+		return "redirect:/";
 	}
 
 	/*
-	FILES BBDD TO CHECK
-	@GetMapping("/{id}/DownloadFile") 
-	public ResponseEntity<Object> downloadImage(@PathVariable Integer id) throws SQLException {
-		Material material = materialRepository.findById(id).orElseThrow();
-		if (material.getFile() != null) {
-			InputStreamResource file = new InputStreamResource(material.getFile().getBinaryStream());
-			return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_TYPE, "file")
-				.contentLength(material.getFile().length())
-				.body(file);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	} */
+	 * FILES BBDD TO CHECK
+	 * 
+	 * @GetMapping("/{id}/DownloadFile") public ResponseEntity<Object>
+	 * downloadImage(@PathVariable Integer id) throws SQLException { Material
+	 * material = materialRepository.findById(id).orElseThrow(); if
+	 * (material.getFile() != null) { InputStreamResource file = new
+	 * InputStreamResource(material.getFile().getBinaryStream()); return
+	 * ResponseEntity.ok() .header(HttpHeaders.CONTENT_TYPE, "file")
+	 * .contentLength(material.getFile().length()) .body(file); } else { return
+	 * ResponseEntity.notFound().build(); } }
+	 */
 
 }

@@ -23,7 +23,7 @@ import com.tatademy.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 
 @Service
-public class DatabaseInitializer {
+public class DatabaseInitializerService {
 
 	@Autowired
 	private UserRepository userRepository;

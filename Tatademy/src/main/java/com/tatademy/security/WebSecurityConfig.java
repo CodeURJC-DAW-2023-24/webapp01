@@ -36,27 +36,41 @@ public class WebSecurityConfig {
 		http.authenticationProvider(authenticationProvider());
 		http.authorizeHttpRequests(authorize -> authorize
 				// STATIC RESOURCES
-				.requestMatchers("/assets/**", "/css/**", "/js/**", "/img/**", "/scss/**", "/cdn-cgi/**",
-						"/cloudflare-static/**")
-				.permitAll()
+				.requestMatchers("/assets/**", "/css/**", "/js/**", "/img/**", "/scss/**", "/cdn-cgi/**", "/cloudflare-static/**").permitAll()
 				// PUBLIC PAGES
-				.requestMatchers("/").permitAll().requestMatchers("/faq").permitAll().requestMatchers("/login")
-				.permitAll().requestMatchers("/register").permitAll().requestMatchers("/forgot-password").permitAll()
-				.requestMatchers("/signup").permitAll().requestMatchers("/logout").permitAll().requestMatchers("/error")
-				.permitAll().requestMatchers("/courses").permitAll().requestMatchers("/course-search").permitAll()
+				.requestMatchers("/").permitAll()
+				.requestMatchers("/faq").permitAll()
+				.requestMatchers("/login").permitAll()
+				.requestMatchers("/register").permitAll()
+				.requestMatchers("/forgot-password").permitAll()
+				.requestMatchers("/signup").permitAll()
+				.requestMatchers("/logout").permitAll()
+				.requestMatchers("/error").permitAll()
+				.requestMatchers("/courses").permitAll()
+				.requestMatchers("/course-search").permitAll()
 				.requestMatchers("/course-filter").permitAll()
+				.requestMatchers("/course-details/**").permitAll()
 				// USER PAGES
 				.requestMatchers("/user/**").hasAnyRole("USER")
 				// ADMIN PAGES
-				.requestMatchers("/courses-panel").hasAnyRole("ADMIN").requestMatchers("/delete-course").hasAnyRole("ADMIN")
-				.requestMatchers("/new/course").hasAnyRole("ADMIN").requestMatchers("/delete/{id}").hasAnyRole("ADMIN")
+				.requestMatchers("/courses-panel").hasAnyRole("ADMIN")
+				.requestMatchers("/delete-course").hasAnyRole("ADMIN")
+				.requestMatchers("/new/course").hasAnyRole("ADMIN")
+				.requestMatchers("/delete/{id}").hasAnyRole("ADMIN")
 				.requestMatchers("/admin/**").hasAnyRole("ADMIN")
 				.anyRequest().authenticated())
+		
 				// LOGIN
-				.formLogin(formLogin -> formLogin.loginPage("/login").failureUrl("/login").defaultSuccessUrl("/")
+				.formLogin(formLogin -> formLogin
+						.loginPage("/login")
+						.failureUrl("/login")
+						.defaultSuccessUrl("/")
 						.permitAll())
 				// LOGOUT
-				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll());
+				.logout(logout -> logout
+						.logoutUrl("/logout")
+						.logoutSuccessUrl("/")
+						.permitAll());
 
 		return http.build();
 	}

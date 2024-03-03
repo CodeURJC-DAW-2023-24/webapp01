@@ -1,12 +1,15 @@
 package com.tatademy.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import com.tatademy.model.Course;
 import com.tatademy.model.User;
 import com.tatademy.repository.UserRepository;
 
@@ -24,8 +27,8 @@ public class UserService {
 		repository.delete(user);
 	}
 
-	public void findById(Long id) {
-		repository.findById(id);
+	public Optional<User> findById(Long id) {
+		return repository.findById(id);
 	}
 
 	public boolean existsByEmail(String email) {
@@ -58,5 +61,25 @@ public class UserService {
 
 	public List<User> findAll() {
 		return repository.findAll();
+	}
+
+	public List<User> findAllUsersContainingCourseId(@Param("courseId") Long courseId) {
+		return repository.findAllUsersContainingCourseId(courseId);
+	}
+
+	public List<Course> findAllCoursesContainingUserId(@Param("users") List<User> users) {
+		return repository.findAllCoursesContainingUserId(users);
+	}
+
+	public List<Course> findTop5CoursesByFrequency(@Param("users") List<User> users) {
+		return repository.findTop5CoursesByFrequency(users);
+	}
+
+	public List<User> findAllUserEnrollByIdCourse(Long idCourse) {
+		return repository.findAllUserEnrollByIdCourse(idCourse);
+	}
+
+	public List<User> findUsersEnrolledInAtLeastOneCourse() {
+		return repository.findUsersEnrolledInAtLeastOneCourse();
 	}
 }

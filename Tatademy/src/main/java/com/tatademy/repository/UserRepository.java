@@ -12,6 +12,7 @@ import com.tatademy.model.Course;
 import com.tatademy.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+
 	boolean existsByEmail(String email);
 
 	Page<User> findByEmailContains(Pageable pageable, String email);

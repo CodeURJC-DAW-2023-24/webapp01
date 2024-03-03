@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tatademy.model.User;
-import com.tatademy.repository.UserRepository;
 import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,9 +32,6 @@ public class UserLoggedController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	@Autowired
-	private UserRepository userRepository;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -58,7 +54,7 @@ public class UserLoggedController {
 	@GetMapping("/user/setting-edit-profile")
 	public String settingEditProfile(Model model, HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
-		User user = userRepository.findByEmail(principal.getName());
+		User user = userService.findByEmail(principal.getName());
 		model.addAttribute("surname", user.getSurname());
 		model.addAttribute("id", user.getId());
 		model.addAttribute("email", user.getEmail());
@@ -70,23 +66,23 @@ public class UserLoggedController {
 	@PostMapping("/user/update-profile")
 	public String updateProfile(@RequestParam Long id, @RequestParam("fileImage") MultipartFile fileImage,
 			@RequestParam String name, @RequestParam String surname) throws IOException {
-		User user = userRepository.findById(id).orElseThrow();
+		User user = userService.findById(id).orElseThrow();
 		user.setName(name);
 		user.setSurname(surname);
 		if (fileImage.getSize() != 0) {
 			user.setImage(null);
 			user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
 		}
-		userRepository.save(user);
+		userService.save(user);
 		return "redirect:/user/setting-edit-profile";
 	}
 
 	@PostMapping("/user/delete-image")
 	public String deleteImage(@RequestParam Long id) {
-		User user = userRepository.findById(id).orElseThrow();
+		User user = userService.findById(id).orElseThrow();
 		user.setImageFile(null);
 		user.setImage(null);
-		userRepository.save(user);
+		userService.save(user);
 		return "redirect:/user/setting-edit-profile";
 	}
 

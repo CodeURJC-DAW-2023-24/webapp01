@@ -24,9 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.tatademy.model.Course;
 import com.tatademy.model.Material;
 import com.tatademy.model.User;
-import com.tatademy.repository.CourseRepository;
-import com.tatademy.repository.MaterialRepository;
-import com.tatademy.repository.UserRepository;
+import com.tatademy.service.CourseService;
 import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,22 +33,17 @@ import jakarta.servlet.http.HttpServletRequest;
 public class AdminUserManager {
 
 	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
 	private UserService userService;
 
-	@Autowired 
-	CourseRepository courses;
-	@Autowired 
-	MaterialRepository materials;
+	@Autowired
+	private CourseService courseService;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
 		if (principal != null) {
 			model.addAttribute("logged", true);
-			model.addAttribute("userName", userRepository.findNameByEmail(principal.getName()));
+			model.addAttribute("userName", userService.findNameByEmail(principal.getName()));
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
 			model.addAttribute("user", request.isUserInRole("USER"));
 			byte[] imageBlob = userService.findImageByEmail(principal.getName());
@@ -68,7 +61,7 @@ public class AdminUserManager {
 	@GetMapping("/admin/users")
 	public String getUsers(@RequestParam(defaultValue = "0") int page, Model model) throws SQLException {
 		Pageable pageable = PageRequest.of(page, 10);
-		Page<User> usersPage = userRepository.findAll(pageable);
+		Page<User> usersPage = userService.findAll(pageable);
 		for (int i = 0; i < usersPage.getNumberOfElements(); i++) {
 			if (usersPage.getContent().get(i).getImageFile() != null) {
 				usersPage.getContent().get(i)
@@ -78,7 +71,7 @@ public class AdminUserManager {
 			}
 		}
 		model.addAttribute("numUsers", usersPage.getNumberOfElements());
-		model.addAttribute("numUsersMax", userRepository.findAll().size());
+		model.addAttribute("numUsersMax", userService.findAll().size());
 		model.addAttribute("users", usersPage);
 		model.addAttribute("hasNext", usersPage.hasNext());
 		model.addAttribute("currentPage", pageable.getPageNumber() + 1);
@@ -88,17 +81,17 @@ public class AdminUserManager {
 
 	@PostMapping("/admin/delete")
 	public String deleteUser(@RequestParam Long userId) {
-		User user = userRepository.findById(userId).orElse(null);
+		User user = userService.findById(userId).orElse(null);
 		if (user != null) {
 			user.getRoles().clear();
-			userRepository.delete(user);
+			userService.delete(user);
 		}
 		return "redirect:/admin/users";
 	}
 
 	@PostMapping("/admin/update")
 	public String userinfo(Model model, @RequestParam Long userId) throws SQLException {
-		User user = userRepository.findById(userId).orElseThrow();
+		User user = userService.findById(userId).orElseThrow();
 		if (user.getImageFile() != null) {
 			user.setImage("data:image/jpeg;base64," + Base64.getEncoder()
 					.encodeToString(user.getImageFile().getBytes(1, (int) user.getImageFile().length())));
@@ -110,10 +103,10 @@ public class AdminUserManager {
 
 	@PostMapping("/admin/user/deleteImage")
 	public String deleteimageProfile(Model model, @RequestParam Long id) {
-		User user = userRepository.findById(id).orElseThrow();
+		User user = userService.findById(id).orElseThrow();
 		user.setImage(null);
 		user.setImageFile(null);
-		userRepository.save(user);
+		userService.save(user);
 		model.addAttribute("user", user);
 		return "edit-other-profiles";
 	}
@@ -121,14 +114,14 @@ public class AdminUserManager {
 	@PostMapping("/admin/user/profile")
 	public String postMethodName(@RequestParam Long id, @RequestParam("fileImage") MultipartFile fileImage,
 			@RequestParam String name, @RequestParam String surname) throws IOException {
-		User user = userRepository.findById(id).orElseThrow();
+		User user = userService.findById(id).orElseThrow();
 		user.setName(name);
 		user.setSurname(surname);
-		if (fileImage.getSize() != 0 ) {
-		user.setImage(null);
-		user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
-			}
-		userRepository.save(user);
+		if (fileImage.getSize() != 0) {
+			user.setImage(null);
+			user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+		}
+		userService.save(user);
 		return "redirect:/admin/users";
 	}
 
@@ -136,30 +129,31 @@ public class AdminUserManager {
 	public String searchUser(@RequestParam String email, Model model) {
 		int page = 0;
 		Pageable pageable = PageRequest.of(page, 2);
-		Page<User> usersPage = userRepository.findByEmailContains(pageable, email);
+		Page<User> usersPage = userService.findByEmailContains(pageable, email);
 		if (email == "") {
-			usersPage = userRepository.findAll(pageable);
+			usersPage = userService.findAll(pageable);
 		}
 		model.addAttribute("numUsers", usersPage.getNumberOfElements());
-		model.addAttribute("numUsersMax", userRepository.findAll().size());
+		model.addAttribute("numUsersMax", userService.findAll().size());
 		model.addAttribute("users", usersPage);
 		model.addAttribute("hasNext", usersPage.hasNext());
 		model.addAttribute("currentPage", pageable.getPageNumber() + 1);
 		model.addAttribute("searched", email);
 		return "instructor-edit-profile";
 	}
+
 	@GetMapping("/admin/edit/course/{id}")
 	public String getMethodName(Model model, @PathVariable Long id) {
-		Course course = courses.findById(id).orElseThrow();
+		Course course = courseService.findById(id).orElseThrow();
 		model.addAttribute("idEdit", course.getId());
 		model.addAttribute("titleEdit", course.getName());
-		//Get Category:
+		// Get Category:
 		String category = course.getCategory().replaceAll("[í]", "i");
 		category = category.replaceAll("[ó]", "o");
 		category = category.replaceAll("[ú]", "u");
 		category = category.replaceAll("[á]", "a");
 		category = category.replaceAll("[é]", "e");
-		category = "is"+category+"Selected";
+		category = "is" + category + "Selected";
 		model.addAttribute("prueba", category);
 		model.addAttribute(category, true);
 		model.addAttribute("categoryInput", course.getCategory());
@@ -168,36 +162,37 @@ public class AdminUserManager {
 
 		return "add-course";
 	}
+
 	@PostMapping("/admin/edit/course")
-	public String getMethodName(Model model, @RequestParam Long idEdit, @RequestParam String title, @RequestParam String subject,
-			@RequestParam String description, @RequestParam("fileImage") MultipartFile fileImage,
+	public String getMethodName(Model model, @RequestParam Long idEdit, @RequestParam String title,
+			@RequestParam String subject, @RequestParam String description,
+			@RequestParam("fileImage") MultipartFile fileImage,
 			@RequestParam("courseContentInputFiles") List<MultipartFile> courseContentInputFiles) throws IOException {
-	Course course = courses.findById(idEdit).orElseThrow();
+		Course course = courseService.findById(idEdit).orElseThrow();
 		course.setName(title);
 		course.setCategory(subject);
 		course.setDescription(description);
 		if (fileImage != null) {
-		if (fileImage.getSize() != 0) {
-			course.setimageString(fileImage.getOriginalFilename());
-		course.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
-		}
+			if (fileImage.getSize() != 0) {
+				course.setimageString(fileImage.getOriginalFilename());
+				course.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
+			}
 		}
 		if (courseContentInputFiles != null) {
-		if (courseContentInputFiles.size() != 0) {
-			for (int i = 0; i < courseContentInputFiles.size(); i++) {
-				Material material = new Material();
-				material.setFilename(courseContentInputFiles.get(i).getOriginalFilename());
-				material.setFile(BlobProxy.generateProxy(courseContentInputFiles.get(i).getInputStream(),
-						courseContentInputFiles.get(i).getSize()));
-				material.setCourse(course);
-				course.getMaterial().add(material);
+			if (courseContentInputFiles.size() != 0) {
+				for (int i = 0; i < courseContentInputFiles.size(); i++) {
+					Material material = new Material();
+					material.setFilename(courseContentInputFiles.get(i).getOriginalFilename());
+					material.setFile(BlobProxy.generateProxy(courseContentInputFiles.get(i).getInputStream(),
+							courseContentInputFiles.get(i).getSize()));
+					material.setCourse(course);
+					course.getMaterial().add(material);
+				}
+
 			}
-		
+		}
+		courseService.save(course);
+		return "redirect:/courses";
 
 	}
-}
-	courses.save(course);
-	return "redirect:/courses";
-
-}
 }
