@@ -33,7 +33,7 @@
 							<div class="widget-content multistep-form">
 								
 									{{^isEditingCourse}}
-									<form action="/new/course" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+									<form action="/admin/new/course" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 								{{/isEditingCourse}}
 								{{#isEditingCourse}}
 									<form action="/admin/edit/course" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
@@ -116,7 +116,7 @@
 												</div>
 												<div class="input-block mb-0">
 													<label class="add-course-label">Descripcion</label>
-													<textarea value="{{#descriptionInput}}{{descriptionInput}}{{/descriptionInput}}" name="description" style="resize: none;width: 100%" class="ck ck-reset ck-editor ck-rounded-corners" rows="10" cols="137" required></textarea>
+													<textarea name="description" style="resize: none;width: 100%" class="ck ck-reset ck-editor ck-rounded-corners" rows="10" cols="137" required>{{#descriptionInput}}{{descriptionInput}}{{/descriptionInput}}</textarea>
 												</div>
 
 										</div>
@@ -143,7 +143,15 @@
 													{{/isTherePhotoCourse}}
 													
 													<label class="relative-file-upload">
-														Subir archivo <input id="image" name="fileImage" type="file" enctype accept="image/jpeg, image/png" required>
+														
+														Subir archivo 
+														{{^isEditingCourse}}
+														<input id="image" name="fileImage" type="file" enctype accept="image/jpeg, image/png" required>
+																{{/isEditingCourse}}
+																{{#isEditingCourse}}
+														<input id="image" name="fileImage" type="file" enctype accept="image/jpeg, image/png">
+																{{/isEditingCourse}}
+														
 													</label>
 													
 												</div>
@@ -168,7 +176,13 @@
 															<span id="courseContent">¿Quieres agregar más archivos?</span>
 															{{/isEditingCourse}}
 															<label class="relative-file-upload">
-																Subir archivo <input name="courseContentInputFiles"id="courseContentInput" type="file"  multiple required>
+																Subir archivo 
+																{{^isEditingCourse}}
+																<input name="courseContentInputFiles"id="courseContentInput" type="file"  multiple required>
+																{{/isEditingCourse}}
+																{{#isEditingCourse}}
+																<input name="courseContentInputFiles"id="courseContentInput" type="file"  multiple>
+																{{/isEditingCourse}}
 															</label>
 														</div>
 													</div>
@@ -184,20 +198,14 @@
 								</fieldset>
 								<fieldset class="field-card">
 									<div class="add-course-info">
-										<div class="add-course-inner-header">
-											<h4 id="tituloCompletado">Error</h4>
-										</div>
 										<div class="add-course-form">
 
 											<div class="input-block">
-												{{^isEditingCourse}}
-												<label class="add-course-label" id="textModified">Error, recuerda rellenar todos los campos</label>
-												{{/isEditingCourse}}
-												{{#isEditingCourse}}
-												<label class="add-course-label" id="textModified">El curso se ha editado correctamente</label>
-												{{/isEditingCourse}}
+												<label class="add-course-label" id="textModified">¿Has comprobado que todos los campos estuviesen rellenos?</label>
+
 							
 											</div>
+											<button class="btn btn-danger" onclick="cargarPagina()">Volver</button>
 
 										</div>
 									

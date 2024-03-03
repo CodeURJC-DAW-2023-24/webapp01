@@ -72,12 +72,20 @@
 										</div>
 									</div>
 									{{/users}}
-									{{#hasNext}}
-									<div class="load-more-button" style="text-align: center;">
-										<a href="/admin/users?page={{currentPage}}" class="btn btn-primary">Cargar más usuarios</a>
-									</div>
-									{{/hasNext}}
 									
+									
+						
+									
+									{{#isTherePages}}
+									<div class="widget-btn">
+										{{#isNotFirst}}
+										<a href="/admin/users?page={{previousPage}}" class="btn btn-black prev_btn">Retroceder</a>
+										{{/isNotFirst}}
+										{{#hasNext}}
+										<a href="/admin/users?page={{currentPage}}" class="btn btn-info-light next_btn">Cargar otros usuarios</a>
+										{{/hasNext}}
+									</div>
+									{{/isTherePages}}
 									
 								</div>
 							</div>

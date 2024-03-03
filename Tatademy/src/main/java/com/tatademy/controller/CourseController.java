@@ -75,7 +75,7 @@ public class CourseController {
 		model.addAttribute("token", token.getToken());
 	}
 
-	@GetMapping("/new/course")
+	@GetMapping("/admin/new/course")
 	public String getMethodName(Model model) {
 		model.addAttribute("adminNewCourset", true);
 		return "add-course";
@@ -561,9 +561,10 @@ public class CourseController {
 		User user = userService.findByEmail(principal.getName());
 		Course course = courses.findById(courseName).orElseThrow();
 		model.addAttribute("joined", isJoined(course, user));
-		model.addAttribute("courseName", course.getName());
+		model.addAttribute("courseName", courseName);
 		model.addAttribute("courseDescription", course.getDescription());
 		model.addAttribute("courseCategory", course.getCategory());
+		model.addAttribute("isAdmin", request.isUserInRole("ADMIN"));
 
 
 		// Materials

@@ -240,7 +240,17 @@
 								<li><img src="assets/img/icon/users.svg" class="me-2" alt=""> Matriculados: <span>{{numStudentsEnroll}} usuarios</span></li>
 								<li><img src="assets/img/icon/timer.svg" class="me-2" alt=""> Número de materiales: <span>{{numMaterialsCourse}}</span></li>
 								<li><img src="assets/img/icon/chart.svg" class="me-2" alt=""> Número de reseñas: <span>{{numReviews}}</span></li>
+								{{#isAdmin}}
+								<li>
+									<a class="btn btn-enroll w-100" href="/admin/edit/course/{{courseName}}">Editar Curso</a>
+									</li>
+									{{/isAdmin}}
+									{{#joined}}<li>
+										<a class="btn btn-enroll w-100" href="/admin/edit/course/{{courseName}}">Descargar Certificado</a>
+										</li>
+										{{/joined}}
 							</ul>
+							
 						</div>
 					</div>
 					<!-- /Features -->

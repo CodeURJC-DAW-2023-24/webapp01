@@ -67,7 +67,7 @@ public class AdminUserManager {
 
 	@GetMapping("/admin/users")
 	public String getUsers(@RequestParam(defaultValue = "0") int page, Model model) throws SQLException {
-		Pageable pageable = PageRequest.of(page, 10);
+		Pageable pageable = PageRequest.of(page, 2);
 		Page<User> usersPage = userRepository.findAll(pageable);
 		for (int i = 0; i < usersPage.getNumberOfElements(); i++) {
 			if (usersPage.getContent().get(i).getImageFile() != null) {
@@ -77,12 +77,15 @@ public class AdminUserManager {
 										.getBytes(1, (int) usersPage.getContent().get(i).getImageFile().length())));
 			}
 		}
-		model.addAttribute("numUsers", usersPage.getNumberOfElements());
+		model.addAttribute("numUsers", usersPage.getNumberOfElements() * (1+page));
 		model.addAttribute("numUsersMax", userRepository.findAll().size());
 		model.addAttribute("users", usersPage);
 		model.addAttribute("hasNext", usersPage.hasNext());
 		model.addAttribute("currentPage", pageable.getPageNumber() + 1);
 		model.addAttribute("searched", "");
+		model.addAttribute("isNotFirst", page!=0);
+		model.addAttribute("previousPage", pageable.getPageNumber() - 1);
+		model.addAttribute("isTherePages", usersPage.getTotalPages() != 1);
 		return "instructor-edit-profile";
 	}
 
@@ -162,6 +165,7 @@ public class AdminUserManager {
 		category = "is"+category+"Selected";
 		model.addAttribute("prueba", category);
 		model.addAttribute(category, true);
+		model.addAttribute("descriptionInput", course.getDescription());
 		model.addAttribute("categoryInput", course.getCategory());
 		model.addAttribute("isTherePhotoCourse", course.getImageFile());
 		model.addAttribute("isEditingCourse", true);

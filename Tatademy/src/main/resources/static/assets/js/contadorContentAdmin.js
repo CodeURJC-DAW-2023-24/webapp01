@@ -45,6 +45,8 @@ document.getElementById('courseSubmit').addEventListener('submit', function(even
     var formData = new FormData(this);
 
     //Modificar FormData
+    document.getElementById('textModified').innerHTML = "Todo correcto";
+    document.getElementById('tituloCompletado').innerHTML = "Completado";
    formData.delete('courseContentInput')
     
     formData.append('courseContentInput',Array.from(archivosListAdmin)); 
@@ -57,4 +59,9 @@ document.getElementById('courseSubmit').addEventListener('submit', function(even
     })
     
 }); 
+
+function cargarPagina() {
+    // Cambiar la URL por la página que deseas cargar
+    location.reload();
+}
 
