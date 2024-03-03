@@ -77,8 +77,6 @@ public class CourseController {
 		model.addAttribute("token", token.getToken());
 	}
 
-	
-
 	@PostMapping("/admin/new/course")
 	public String postMethodName(@RequestParam String title, @RequestParam String subject,
 			@RequestParam String description, @RequestParam("fileImage") MultipartFile fileImage,
@@ -589,11 +587,14 @@ public class CourseController {
 		Integer numReviews = reviewsFromCourse.size();
 		model.addAttribute("numReviews", numReviews);
 		Integer starAverage = 0;
-
-		for (Review review : reviewsFromCourse) {
-			starAverage = review.getStarsValue();
+		if (numReviews != 0) {
+			for (Review review : reviewsFromCourse) {
+				starAverage = review.getStarsValue();
+			}
+			model.addAttribute("starAverage", starAverage / numReviews);
+		} else {
+			model.addAttribute("starAverage", numReviews);
 		}
-		model.addAttribute("starAverage", starAverage / numReviews);
 
 		// ABOUT THE COURSE
 		List<User> studentsEnroll = userService.findAllUserEnrollByIdCourse(course.getId());
