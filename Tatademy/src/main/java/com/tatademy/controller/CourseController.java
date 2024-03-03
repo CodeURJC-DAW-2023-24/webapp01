@@ -1,6 +1,7 @@
 package com.tatademy.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.sql.rowset.serial.SerialBlob;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 import com.tatademy.model.Course;
 import com.tatademy.model.Material;
 import com.tatademy.model.Review;
@@ -35,6 +45,7 @@ import com.tatademy.repository.UserRepository;
 import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CourseController {
@@ -676,21 +687,4 @@ public class CourseController {
 	reviewRepository.save(newReview);
     return "redirect:/";
 	}
-
-	/*
-	FILES BBDD TO CHECK
-	@GetMapping("/{id}/DownloadFile") 
-	public ResponseEntity<Object> downloadImage(@PathVariable Integer id) throws SQLException {
-		Material material = materialRepository.findById(id).orElseThrow();
-		if (material.getFile() != null) {
-			InputStreamResource file = new InputStreamResource(material.getFile().getBinaryStream());
-			return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_TYPE, "file")
-				.contentLength(material.getFile().length())
-				.body(file);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	} */
-
 }
