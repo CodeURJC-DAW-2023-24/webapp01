@@ -73,12 +73,8 @@
 												<h3 class="title"><a href="course-details.html">{{0}}</a></h3>
 												<div class="course-info d-flex align-items-center">
 													<div class="rating-img d-flex align-items-center">
-														<!--<img src="assets/img/icon/icon-01.svg" alt="">
-														<p>12+ Lecciones</p>-->
 													</div>
 													<div class="course-view d-flex align-items-center">
-														<!--<img src="assets/img/icon/icon-02.svg" alt="">
-														<p>9hr 30min</p>-->
 													</div>
 												</div>
 												<div class="rating">
@@ -89,7 +85,12 @@
 													<span class="d-inline-block average-rating"><span>{{3}}</span> ({{1}})</span>
 												</div>
 												<div class="all-btn all-category d-flex align-items-center">
+													{{#delete}}
+													<a href="delete-course?id={{id}}" class="btn btn-primary">Eliminar curso</a>
+													{{/delete}}
+													{{^delete}}
 													<a href="course-details.html" class="btn btn-primary">Inscribirse</a>
+													{{/delete}}
 												</div>
 											</div>
 											
@@ -128,6 +129,11 @@
 									</div>
 								</div>
 								<!-- /Search Filter -->
+								{{#delete}}
+								<form action="new/course">
+									<button class="btn btn-primary">Añadir curso</button>
+								</form>
+								{{/delete}}
 								
 							</div>
 						</div>
