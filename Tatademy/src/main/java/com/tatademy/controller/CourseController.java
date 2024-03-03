@@ -76,7 +76,7 @@ public class CourseController {
 		return "add-course";
 	}
 
-	@PostMapping("/new/course")
+	@PostMapping("/admin/new/course")
 	public String postMethodName(@RequestParam String title, @RequestParam String subject,
 			@RequestParam String description, @RequestParam("fileImage") MultipartFile fileImage,
 			@RequestParam("courseContentInputFiles") List<MultipartFile> courseContentInputFiles) throws IOException {
@@ -126,6 +126,7 @@ public class CourseController {
 			aux[1] = String.valueOf(reviews.size());
 			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 			aux[3] = coursesList.get(i).getId().toString();
+			aux[5] = String.valueOf(coursesList.get(i).getId());
 			courseInfo.add(aux);
 		}
 		for (String[] aux : courseInfo) {
@@ -143,6 +144,7 @@ public class CourseController {
 		    courseData.put("3", String.valueOf(valoration));
 		    courseData.put("stars", stars);
 		    courseData.put("id", aux[3]);
+			courseData.put("5", aux[5]);
 		    coursesModel.add(courseData);
 		}
 		model.addAttribute("newest", "selected");
@@ -171,7 +173,7 @@ public class CourseController {
 		}
 		coursesList = courses.findAll();
 		for (int i = 0; i < coursesList.size(); ++i) {
-			String[] aux = new String[5];
+			String[] aux = new String[6];
 			List<Review> reviews = new ArrayList<>();
 			reviews = coursesList.get(i).getReviews();
 			valoration = 0.0;
@@ -186,6 +188,7 @@ public class CourseController {
 			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 			aux[3] = String.valueOf(valoration);
 			aux[4] = "";
+			aux[5] = String.valueOf(coursesList.get(i).getId());
 			courseInfo.add(aux);
 		}
 		for (String[] aux : courseInfo) {
@@ -201,6 +204,7 @@ public class CourseController {
 		    courseData.put("1", aux[1]);
 		    courseData.put("2", aux[2]);
 		    courseData.put("3", String.valueOf(valoration));
+			courseData.put("5", aux[5]);
 		    courseData.put("stars", stars);
 		    coursesModel.add(courseData);
 		}
@@ -211,48 +215,10 @@ public class CourseController {
 		model.addAttribute("courses", coursesModel);
 		model.addAttribute("filters", filterPair);
 		model.addAttribute("delete", false);
+		
 		return "course-grid";
 	}
 
-	/*BORRAR */
-	@GetMapping("/admin/prueba")
-	public String prueba(Model model) {
-		User user = users.findById((long)1).orElseThrow();
-		Course course = courses.findById((long)2).orElseThrow();
-		user.getCourses().add(course);
-
-		course = courses.findById((long)3).orElseThrow();
-		user.getCourses().add(course);
-		users.save(user);
-
-		user = users.findById((long)2).orElseThrow();
-		course = courses.findById((long)2).orElseThrow();
-		user.getCourses().add(course);
-		users.save(user);
-
-		course = courses.findById((long)1).orElseThrow();
-		user.getCourses().add(course);
-		users.save(user);
-
-		user = users.findById((long)2).orElseThrow();
-		course = courses.findById((long)2).orElseThrow();
-		user.getCourses().add(course);
-		users.save(user);
-
-		course = courses.findById((long)3).orElseThrow();
-		user.getCourses().add(course);
-		users.save(user);
-
-		/*PARTE IMPORTANTE */
-		List<User> courses = users.findAllUsersContainingCourseId((long) 2);
-		List<Course> coursesFinal = users.findTop5CoursesByFrequency(courses);
-		coursesFinal.remove(0);
-		/*PARTE IMPORTANTE */
-		model.addAttribute("courses", coursesFinal);
-		return "prueba";
-	}
-	
-	/*BORRAR */
 	
 	@GetMapping("/course-search")
 	public String courseSearch(Model model, @RequestParam String name, @RequestParam String sellist1) throws SQLException {
@@ -329,7 +295,7 @@ public class CourseController {
 		}
 		
 		for (int i = 0; i < coursesList.size(); ++i) {
-			String[] aux = new String[5];
+			String[] aux = new String[6];
 			List<Review> reviews = new ArrayList<>();
 			reviews = coursesList.get(i).getReviews();
 			valoration = 0.0;
@@ -344,6 +310,7 @@ public class CourseController {
 			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 			aux[3] = String.valueOf(valoration);
 			aux[4] = "";
+			aux[5] = String.valueOf(coursesList.get(i).getId());
 			courseInfo.add(aux);
 		}
 		for (String[] aux : courseInfo) {
@@ -360,6 +327,7 @@ public class CourseController {
 		    courseData.put("2", aux[2]);
 		    courseData.put("3", String.valueOf(valoration));
 		    courseData.put("stars", stars);
+			courseData.put("5", aux[5]);
 		    coursesModel.add(courseData);
 		}
 		switch(sellist1) {
@@ -420,7 +388,7 @@ public class CourseController {
 			}
 			coursesList = courses.findByCategoriyIn(filters);
 			for (int i = 0; i < coursesList.size(); ++i) {
-				String[] aux = new String[5];
+				String[] aux = new String[6];
 				List<Review> reviews = new ArrayList<>();
 				reviews = coursesList.get(i).getReviews();
 				valoration = 0.0;
@@ -435,6 +403,7 @@ public class CourseController {
 				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 				aux[3] = String.valueOf(valoration);
 				aux[4] = "";
+				aux[5] = String.valueOf(coursesList.get(i).getId());
 				courseInfo.add(aux);
 			}
 			for (String[] aux : courseInfo) {
@@ -451,14 +420,14 @@ public class CourseController {
 			    courseData.put("2", aux[2]);
 			    courseData.put("3", String.valueOf(valoration));
 			    courseData.put("stars", stars);
-			    courseData.put("5", "");
+			    courseData.put("5", aux[5]);
 			    coursesModel.add(courseData);
 			}
 			model.addAttribute("courses", coursesModel);
 		} else {
 			coursesList = courses.findAll();
 			for (int i = 0; i < coursesList.size(); ++i) {
-				String[] aux = new String[5];
+				String[] aux = new String[6];
 				List<Review> reviews = new ArrayList<>();
 				reviews = coursesList.get(i).getReviews();
 				valoration = 0.0;
@@ -473,6 +442,7 @@ public class CourseController {
 				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 				aux[3] = String.valueOf(valoration);
 				aux[4] = "";
+				aux[5] = String.valueOf(coursesList.get(i).getId());
 				courseInfo.add(aux);
 			}
 			for (String[] aux : courseInfo) {
@@ -489,6 +459,7 @@ public class CourseController {
 			    courseData.put("2", aux[2]);
 			    courseData.put("3", String.valueOf(valoration));
 			    courseData.put("stars", stars);
+				courseData.put("5", aux[5]);
 			    coursesModel.add(courseData);
 			}
 			model.addAttribute("courses", coursesModel);
@@ -529,7 +500,7 @@ public class CourseController {
 			}
 			coursesList = courses.findAll();
 			for (int i = 0; i < coursesList.size(); ++i) {
-				String[] aux = new String[5];
+				String[] aux = new String[6];
 				List<Review> reviews = new ArrayList<>();
 				reviews = coursesList.get(i).getReviews();
 				valoration = 0.0;
@@ -544,6 +515,7 @@ public class CourseController {
 				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
 				aux[3] = String.valueOf(valoration);
 				aux[4] = "";
+				aux[5] = String.valueOf(coursesList.get(i).getId());
 				courseInfo.add(aux);
 			}
 			for (String[] aux : courseInfo) {
@@ -560,6 +532,7 @@ public class CourseController {
 			    courseData.put("2", aux[2]);
 			    courseData.put("3", String.valueOf(valoration));
 			    courseData.put("stars", stars);
+				courseData.put("5", aux[5]);
 			    coursesModel.add(courseData);
 			}
 			model.addAttribute("newest", "selected");
@@ -578,23 +551,74 @@ public class CourseController {
 
 
 @GetMapping("/course-details/{courseName}")
-	public String courseDetails(Model model, HttpServletRequest request,@PathVariable String courseName){
+	public String courseDetails(Model model, HttpServletRequest request,@PathVariable Long courseName) throws SQLException{
 		Principal principal = request.getUserPrincipal();
 		User user = userService.findByEmail(principal.getName());
-		Course course = courses.findByName(courseName);
+		Course course = courses.findById(courseName).orElseThrow();
 		model.addAttribute("joined", isJoined(course, user));
 		model.addAttribute("courseName", course.getName());
 		model.addAttribute("courseDescription", course.getDescription());
 		model.addAttribute("courseCategory", course.getCategory());
+
+		//ALGORITHM
+		List<Map<String, Object>> coursesModelAlgorithm = new ArrayList<>();
+		List<String[]> courseInfoAlgorithm = new ArrayList<>();
+		Double valorationAlgorithm = 0.0;
+		List<User> coursesAlgorithm = users.findAllUsersContainingCourseId(courseName);
+		List<Course> coursesFinalAlgorithm = users.findTop5CoursesByFrequency(coursesAlgorithm);
+		
+		if (coursesFinalAlgorithm.size() != 0 ) {
+		coursesFinalAlgorithm.remove(0);
+		for (int i = 0; i < coursesFinalAlgorithm.size(); ++i) {
+			String[] aux = new String[6];
+			List<Review> reviews = new ArrayList<>();
+			reviews = coursesFinalAlgorithm.get(i).getReviews();
+			valorationAlgorithm = 0.0;
+			if (reviews.size() > 0) {
+				for (int j = 0; j < reviews.size(); ++j) {
+					valorationAlgorithm += reviews.get(j).getStarsValue();
+				}
+				valorationAlgorithm = valorationAlgorithm / reviews.size();
+			}
+			aux[0] = coursesFinalAlgorithm.get(i).getName();
+			aux[1] = String.valueOf(reviews.size());
+			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesFinalAlgorithm.get(i).getImageFile().getBytes(1, (int) coursesFinalAlgorithm.get(i).getImageFile().length()));
+			aux[3] = String.valueOf(valorationAlgorithm);
+			aux[4] = "";
+			aux[5] = String.valueOf(coursesFinalAlgorithm.get(i).getId());
+			courseInfoAlgorithm.add(aux);
+		}
+		for (String[] aux : courseInfoAlgorithm) {
+		    Map<String, Object> courseData = new HashMap<>();
+		    valorationAlgorithm = Double.parseDouble(aux[3]);
+		    List<Map<String, Object>> stars = new ArrayList<>();
+		    for (int i = 0; i < 5; i++) {
+		        Map<String, Object> star = new HashMap<>();
+		        star.put("filled", i < valorationAlgorithm);
+		        stars.add(star);
+		    }
+		    courseData.put("0", aux[0]);
+		    courseData.put("1", aux[1]);
+		    courseData.put("2", aux[2]);
+		    courseData.put("3", String.valueOf(valorationAlgorithm));
+			courseData.put("5", aux[5]);
+		    courseData.put("stars", stars);
+		    coursesModelAlgorithm.add(courseData);
+		}
+		model.addAttribute("isRecommendedCoursesAvailable", true);
+		model.addAttribute("courses", coursesModelAlgorithm);
+	} else {
+		model.addAttribute("isRecommendedCoursesAvailable", false);
+	}
 		return "course-details";
 	}
 
 	@GetMapping("/joinCourse/{courseName}")
-	public String courseInscription(Model model, HttpServletRequest request, @PathVariable String courseName){
+	public String courseInscription(Model model, HttpServletRequest request, @PathVariable Long courseName){
 		Principal principal = request.getUserPrincipal();
 		User user = userService.findByEmail(principal.getName());
 		List<Course> currentCurses = user.getCourses();
-		currentCurses.add(courses.findByName(courseName));
+		currentCurses.add(courses.findById(courseName).orElseThrow());
 		user.setCourses(currentCurses);
 		userService.save(user);
 		//model.addAttribute("joined", true);
