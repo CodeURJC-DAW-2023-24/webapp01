@@ -33,7 +33,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query("SELECT c FROM User u JOIN u.courses c WHERE u IN :users")
 	List<Course> findAllCoursesContainingUserId(@Param("users") List<User> users);
 
-	@Query("SELECT c FROM User u JOIN u.courses c WHERE u IN :users GROUP BY c ORDER BY COUNT(c) DESC")
+	@Query("SELECT c FROM User u JOIN u.courses c WHERE u IN :users GROUP BY c ORDER BY COUNT(c) DESC LIMIT 6")
 	List<Course> findTop5CoursesByFrequency(@Param("users") List<User> users);
 
 
