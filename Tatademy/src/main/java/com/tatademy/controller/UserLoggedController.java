@@ -58,6 +58,7 @@ public class UserLoggedController {
 		model.addAttribute("surname", user.getSurname());
 		model.addAttribute("id", user.getId());
 		model.addAttribute("email", user.getEmail());
+		model.addAttribute("userEditProfile", true);
 		return "setting-edit-profile";
 	}
 
