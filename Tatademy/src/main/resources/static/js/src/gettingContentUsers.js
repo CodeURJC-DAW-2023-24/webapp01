@@ -7,17 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.text()) // Convertir la respuesta a texto
             .then(html => {
                 document.getElementById('projects-container').innerHTML += html; // Insertar el HTML en el contenedor
-                page++; // Incrementar el número de página para la próxima carga
-                fetch(`/admin/users?page=${page++}`)
+                 // Incrementar el número de página para la próxima carga
+                fetch(`/admin/users?page=${++page}`)
+                
             .then(response => response.text()) // Convertir la respuesta a texto
             .then(html => {
-                page++; // Incrementar el número de página para la próxima carga
+             // Incrementar el número de página para la próxima carga
                 if (html.trim() === '') {
                     // Si no hay más páginas, eliminar el botón
                     loadMoreBtn.remove();
                 }
             })
-            
     });
             })
             .catch(error => {

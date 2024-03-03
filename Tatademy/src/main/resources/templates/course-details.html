@@ -93,11 +93,9 @@
 									<li>
 										<p><img src="/assets/img/icon/play.svg" alt="" class="me-2">{{filename}}</p>
 										<div>
-											<a href="javascript:void(0);">Preview</a> <!--<a href="/{{id}}/DownloadFile">Preview</a>-->
+											<a href="/download/{{id}}">Descargar</a>
 										</div>
-										<!--<form action="#?" method="get">
-											<button type="submit">Descargar</button>
-										</form>-->
+										
 									</li>
 									{{/materialsFromCourse}}
 								</ul>
@@ -240,7 +238,7 @@
 									</li>
 									{{/isAdmin}}
 									{{#joined}}<li>
-										<a class="btn btn-enroll w-100" href="/generate-pdf?id={{courseName}}">Descargar Certificado</a>
+										<a class="btn btn-enroll w-100" href="/generate-pdf?id={{courseId}}">Descargar Certificado</a>
 										</li>
 										{{/joined}}
 							</ul>
