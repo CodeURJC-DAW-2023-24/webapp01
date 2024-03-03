@@ -70,12 +70,15 @@ public class AdminUserManager {
 										.getBytes(1, (int) usersPage.getContent().get(i).getImageFile().length())));
 			}
 		}
-		model.addAttribute("numUsers", usersPage.getNumberOfElements());
-		model.addAttribute("numUsersMax", userService.findAll().size());
+		model.addAttribute("numUsers", usersPage.getNumberOfElements() * (1+page));
+		model.addAttribute("numUsersMax", userRepository.findAll().size());
 		model.addAttribute("users", usersPage);
 		model.addAttribute("hasNext", usersPage.hasNext());
 		model.addAttribute("currentPage", pageable.getPageNumber() + 1);
 		model.addAttribute("searched", "");
+		model.addAttribute("isNotFirst", page!=0);
+		model.addAttribute("previousPage", pageable.getPageNumber() - 1);
+		model.addAttribute("isTherePages", usersPage.getTotalPages() != 1);
 		return "instructor-edit-profile";
 	}
 
@@ -156,6 +159,7 @@ public class AdminUserManager {
 		category = "is" + category + "Selected";
 		model.addAttribute("prueba", category);
 		model.addAttribute(category, true);
+		model.addAttribute("descriptionInput", course.getDescription());
 		model.addAttribute("categoryInput", course.getCategory());
 		model.addAttribute("isTherePhotoCourse", course.getImageFile());
 		model.addAttribute("isEditingCourse", true);

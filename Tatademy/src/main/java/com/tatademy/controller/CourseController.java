@@ -1,6 +1,7 @@
 package com.tatademy.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.sql.rowset.serial.SerialBlob;
 import java.util.Optional;
 
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -23,7 +25,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 import com.tatademy.model.Course;
 import com.tatademy.model.Material;
 import com.tatademy.model.Review;
@@ -34,6 +44,7 @@ import com.tatademy.service.ReviewService;
 import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CourseController {
@@ -71,7 +82,7 @@ public class CourseController {
 		model.addAttribute("token", token.getToken());
 	}
 
-	@GetMapping("/new/course")
+	@GetMapping("/admin/new/course")
 	public String getMethodName(Model model) {
 		model.addAttribute("adminNewCourset", true);
 		return "add-course";
@@ -563,13 +574,16 @@ public class CourseController {
 		Course course = courseService.findById(courseName).orElseThrow();
 		if (principal != null) {
 			User user = userService.findByEmail(principal.getName());
+		model.addAttribute("name", principal);
 			model.addAttribute("joined", isJoined(course, user));
 		}
 
 		model.addAttribute("courseId", course.getId());
-		model.addAttribute("courseName", course.getName());
+		model.addAttribute("courseName", courseName);
 		model.addAttribute("courseDescription", course.getDescription());
 		model.addAttribute("courseCategory", course.getCategory());
+		model.addAttribute("isAdmin", request.isUserInRole("ADMIN"));
+
 
 		// Materials
 		List<Material> materialsFromCourse = courseService.findMaterialsByIdCourse(course.getId());
@@ -680,18 +694,71 @@ public class CourseController {
 		reviewService.save(newReview);
 		return "redirect:/";
 	}
+	@GetMapping("/generate-pdf")
+    public String generatePdf( @RequestParam long id,  HttpServletRequest request, HttpServletResponse response) {
+        Principal principal = request.getUserPrincipal();
+		User Iam = userService.findByEmail(principal.getName());
+		if (Iam.getCourses().contains(courses.findById(id).orElseThrow())) {
+		try {
+            // Set content type and headers for PDF response
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=Certificado.pdf");
 
-	/*
-	 * FILES BBDD TO CHECK
-	 * 
-	 * @GetMapping("/{id}/DownloadFile") public ResponseEntity<Object>
-	 * downloadImage(@PathVariable Integer id) throws SQLException { Material
-	 * material = materialRepository.findById(id).orElseThrow(); if
-	 * (material.getFile() != null) { InputStreamResource file = new
-	 * InputStreamResource(material.getFile().getBinaryStream()); return
-	 * ResponseEntity.ok() .header(HttpHeaders.CONTENT_TYPE, "file")
-	 * .contentLength(material.getFile().length()) .body(file); } else { return
-	 * ResponseEntity.notFound().build(); } }
-	 */
+            // Create a new PDF document
+            Document document = new Document();
+            PdfWriter.getInstance(document, response.getOutputStream());
+
+            // Open the document
+            document.open();
+			Paragraph blank = new Paragraph(" ", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			blank.setAlignment(Paragraph.ALIGN_CENTER);
+            // Add content to the PDF
+			Paragraph title = new Paragraph("¡FELICIDADES!", FontFactory.getFont(FontFactory.HELVETICA,20,Font.BOLD));
+			title.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(title);
+			Paragraph desc = new Paragraph("Has conseguido el diploma de", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			desc.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(desc);
+			Paragraph subject = new Paragraph(courses.findById(id).orElseThrow().getName(), FontFactory.getFont(FontFactory.HELVETICA,20,Font.BOLD));
+			subject.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(subject);
+			Paragraph desc2 = new Paragraph("Por haber completados todo el contenido del curso", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			desc2.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(desc2);
+
+			document.add(blank);
+			document.add(blank);
+			document.add(blank);
+			document.add(blank);
+			document.add(blank);
+			Paragraph desc3 = new Paragraph("Este diploma se entrega a:", FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			desc2.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(desc3);	
+			
+			Paragraph desc4 = new Paragraph(Iam.getName() + " "+ Iam.getSurname(), FontFactory.getFont(FontFactory.HELVETICA,Font.DEFAULTSIZE,Font.NORMAL));
+			desc2.setAlignment(Paragraph.ALIGN_CENTER);
+			document.add(desc4);
+
+			Paragraph brandName = new Paragraph("Tatademy", FontFactory.getFont(FontFactory.TIMES_ROMAN,40,Font.BOLD));
+			brandName.setAlignment(Paragraph.ALIGN_RIGHT);
+			document.add(brandName);
+
+
+				// Close the document
+				document.close();
+
+				// Flush the response
+				response.flushBuffer();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+        return "redirect:/course-details/"+id ; // Return null to prevent view resolution
+		
+    }
+
+	
+
 
 }
+
