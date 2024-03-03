@@ -58,9 +58,11 @@ public class AdminUserManager {
 		model.addAttribute("token", token.getToken());
 	}
 
-	@GetMapping("/admin/users")
-	public String getUsers(@RequestParam(defaultValue = "0") int page, Model model) throws SQLException {
-		Pageable pageable = PageRequest.of(page, 10);
+	@GetMapping("/admin/all/users")
+	public String usersShow( Model model) throws SQLException {
+		model.addAttribute("adminUsersList", true);
+		model.addAttribute("searched", "");
+		Pageable pageable = PageRequest.of(0, 2);
 		Page<User> usersPage = userService.findAll(pageable);
 		for (int i = 0; i < usersPage.getNumberOfElements(); i++) {
 			if (usersPage.getContent().get(i).getImageFile() != null) {
@@ -70,18 +72,27 @@ public class AdminUserManager {
 										.getBytes(1, (int) usersPage.getContent().get(i).getImageFile().length())));
 			}
 		}
-		model.addAttribute("numUsers", usersPage.getNumberOfElements() * (1+page));
-		model.addAttribute("numUsersMax", userService.findAll().size());
+
 		model.addAttribute("users", usersPage);
-		model.addAttribute("hasNext", usersPage.hasNext());
-		model.addAttribute("currentPage", pageable.getPageNumber() + 1);
-		model.addAttribute("searched", "");
-		model.addAttribute("isNotFirst", page!=0);
-		model.addAttribute("previousPage", pageable.getPageNumber() - 1);
-		model.addAttribute("isTherePages", usersPage.getTotalPages() != 1);
 		return "instructor-edit-profile";
 	}
+	
+	@GetMapping("/admin/users")
+	public String getUsers(@RequestParam(name = "page", defaultValue = "0") int page, Model model) throws SQLException {
+		Pageable pageable = PageRequest.of(page, 2);
+		Page<User> usersPage = userService.findAll(pageable);
+		for (int i = 0; i < usersPage.getNumberOfElements(); i++) {
+			if (usersPage.getContent().get(i).getImageFile() != null) {
+				usersPage.getContent().get(i)
+						.setImage("data:image/jpeg;base64,"
+								+ Base64.getEncoder().encodeToString(usersPage.getContent().get(i).getImageFile()
+										.getBytes(1, (int) usersPage.getContent().get(i).getImageFile().length())));
+			}
+		}
 
+		model.addAttribute("users", usersPage);
+		return "usersList";
+	}
 	@PostMapping("/admin/delete")
 	public String deleteUser(@RequestParam Long userId) {
 		User user = userService.findById(userId).orElse(null);
@@ -89,7 +100,7 @@ public class AdminUserManager {
 			user.getRoles().clear();
 			userService.delete(user);
 		}
-		return "redirect:/admin/users";
+		return "redirect:/admin/all/users";
 	}
 
 	@PostMapping("/admin/update")
@@ -125,7 +136,7 @@ public class AdminUserManager {
 			user.setImageFile(BlobProxy.generateProxy(fileImage.getInputStream(), fileImage.getSize()));
 		}
 		userService.save(user);
-		return "redirect:/admin/users";
+		return "redirect:/admin/all/users";
 	}
 
 	@GetMapping("/admin/search-user")
@@ -144,6 +155,7 @@ public class AdminUserManager {
 		model.addAttribute("searched", email);
 		return "instructor-edit-profile";
 	}
+
 
 	@GetMapping("/admin/edit/course/{id}")
 	public String getMethodName(Model model, @PathVariable Long id) {
@@ -198,5 +210,10 @@ public class AdminUserManager {
 		courseService.save(course);
 		return "redirect:/courses";
 
+	}
+	@GetMapping("/admin/new/course")
+	public String getMethodName(Model model) {
+		model.addAttribute("adminNewCourset", true);
+		return "add-course";
 	}
 }
