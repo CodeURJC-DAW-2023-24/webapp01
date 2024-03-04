@@ -341,7 +341,7 @@ Siguiendo estos pasos, podrás descargar, construir y ejecutar la aplicación Sp
   Listado 5 commits más significativos de la fase:
   - [Initialize DB](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/55690ad5bad38896c4af6821c0799dedec710744)
   - [Course creation](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/53a7133a62fdd7a7ccadf9ec42e04107e0ef65ca)
-  - [Admin header & its fonctionalities]([https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/8c2bb34710c215145c945b782fce0e04964d1b69](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/cbc5ea6a03c187a4b37fb8d5ed106703985fa4bb))
+  - [Admin header & its fonctionalities](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/cbc5ea6a03c187a4b37fb8d5ed106703985fa4bb)
   - [Algorithm creation](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/ce46508eaac3d6fa61bcaf01dc269d1c570c3dc3)
   - [PDF generator created](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/284b8343664ae88b562ad33f225cc50893a5bc0d)
 
