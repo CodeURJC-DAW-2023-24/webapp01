@@ -363,11 +363,11 @@ Siguiendo estos pasos, podrás descargar, construir y ejecutar la aplicación Sp
     Se implementaron dos funciones, una para recopilar los datos de la creación de un curso por meses y otra para las reviews. Se adaptó el archivo "chart-data.js" para procesar estos datos y permitir la     creación de gráficos.  Además, se ajustó la plantilla de los gráficos para reflejar estos cambios.
 
   Listado 5 commits más significativos de la fase:
-  - Course-details In Main (reviews & Materials)
-  - Statistics (without changing control panel)
-  - Statistics page (finished)
-  - Correction in the calculation of reviews
-  - Show and interact with course info
+  - [Course-details In Main (reviews & Materials)](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/eb8235451036abb678e74d52ff6e8bb48eaf5052)
+  - [Statistics (without changing control panel)](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/9cca7e3fef44c6646bfb0c6cc597b93472ab2139)
+  - [Statistics page (finished)](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/162b25e82ef6a3bad4858c5396cc508b9ad60279)
+  - [Correction in the calculation of reviews](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/d07ab17f99a459dd267a227175cc1d0e7f476343)
+  - [Show and interact with course info](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/0e00be7d4a9a12e5f9ff34d08624241885d8aa50)
 
   Listado 5 ficheros en los que más haya participado:
   - CourseController.java
