@@ -84,15 +84,19 @@
                         							{{/stars}}
 													<span class="d-inline-block average-rating"><span>{{3}}</span> ({{1}})</span>
 												</div>
+												{{#delete}}
 												<div class="all-btn all-category d-flex align-items-center">
-													{{#delete}}
-													<a href="/admin/edit/course/{{id}}" class="btn btn-primary">Editar curso</a>
-													<a href="delete-course?id={{id}}" class="btn btn-primary">Eliminar curso</a>
-													{{/delete}}
-													{{^delete}}
-													<a href="/course-details/{{5}}" class="btn btn-primary">Inscribirse</a>
-													{{/delete}}
+													<a href="/admin/edit/course/{{5}}" class="btn btn-primary col-12">Editar curso</a>
 												</div>
+												<div class="all-btn all-category d-flex align-items-center pt-1">
+													<a href="/admin/delete-course?id={{5}}" class="btn btn-primary col-12">Eliminar curso</a>
+												</div>
+												{{/delete}}
+												{{^delete}}
+												<div class="all-btn all-category d-flex align-items-center">
+													<a href="/course-details/{{5}}" class="btn btn-primary col-12">Inscribirse</a>
+												</div>
+												{{/delete}}
 											</div>
 											
 										</div>

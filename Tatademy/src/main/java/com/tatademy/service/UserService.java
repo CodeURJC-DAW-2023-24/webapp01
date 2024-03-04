@@ -13,11 +13,18 @@ import com.tatademy.model.Course;
 import com.tatademy.model.User;
 import com.tatademy.repository.UserRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserService {
 
 	@Autowired
 	private UserRepository repository;
+
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	public void save(User user) {
 		repository.save(user);
@@ -81,5 +88,11 @@ public class UserService {
 
 	public List<User> findUsersEnrolledInAtLeastOneCourse() {
 		return repository.findUsersEnrolledInAtLeastOneCourse();
+	}
+
+	@Transactional
+	public void deleteByCourseId(Long courseId) {
+		entityManager.createNativeQuery("DELETE FROM user_courses WHERE courses_id = :courseId")
+				.setParameter("courseId", courseId).executeUpdate();
 	}
 }

@@ -26,10 +26,7 @@ public class Review {
 	@ManyToOne
 	@JsonIgnore
 	private User user;
-
-	private Calendar creationDate; //For the stadistics
-
-	
+	private Calendar creationDate;
 
 	public Review() {
 		super();
@@ -89,7 +86,7 @@ public class Review {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
-	
+
 	public Calendar getCreationDate() {
 		return creationDate;
 	}

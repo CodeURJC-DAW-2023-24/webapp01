@@ -199,9 +199,9 @@ public class CourseController {
 					int size1 = c1.getReviews().size();
 					int size2 = c2.getReviews().size();
 
-					if (size1 < size2) {
+					if (size1 > size2) {
 						return -1;
-					} else if (size1 > size2) {
+					} else if (size1 < size2) {
 						return 1;
 					} else {
 						return 0;
@@ -411,69 +411,6 @@ public class CourseController {
 		model.addAttribute("filters", filterPair);
 		model.addAttribute("delete", false);
 		return "course-grid";
-	}
-
-	@GetMapping("/delete-course")
-	public String deletecourse(Model model, @RequestParam String id) throws SQLException {
-		courseService.deleteById(Long.parseLong(id));
-		List<String> filters = courseService.findAllCategories();
-		List<Course> coursesList = new ArrayList<>();
-		List<String[]> filterPair = new ArrayList<>();
-		List<String[]> courseInfo = new ArrayList<>();
-		List<Map<String, Object>> coursesModel = new ArrayList<>();
-		Double valoration = 0.0;
-		for (int i = 0; i < filters.size(); ++i) {
-			String[] aux = new String[2];
-			aux[0] = filters.get(i);
-			aux[1] = "";
-			filterPair.add(aux);
-		}
-		coursesList = courseService.findAll();
-		for (int i = 0; i < coursesList.size(); ++i) {
-			String[] aux = new String[6];
-			List<Review> reviews = new ArrayList<>();
-			reviews = coursesList.get(i).getReviews();
-			valoration = 0.0;
-			if (reviews.size() > 0) {
-				for (int j = 0; j < reviews.size(); ++j) {
-					valoration += reviews.get(j).getStarsValue();
-				}
-				valoration = valoration / reviews.size();
-			}
-			aux[0] = coursesList.get(i).getName();
-			aux[1] = String.valueOf(reviews.size());
-			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(
-					coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
-			aux[3] = String.valueOf(valoration);
-			aux[4] = "";
-			aux[5] = String.valueOf(coursesList.get(i).getId());
-			courseInfo.add(aux);
-		}
-		for (String[] aux : courseInfo) {
-			Map<String, Object> courseData = new HashMap<>();
-			valoration = Double.parseDouble(aux[3]);
-			List<Map<String, Object>> stars = new ArrayList<>();
-			for (int i = 0; i < 5; i++) {
-				Map<String, Object> star = new HashMap<>();
-				star.put("filled", i < valoration);
-				stars.add(star);
-			}
-			courseData.put("0", aux[0]);
-			courseData.put("1", aux[1]);
-			courseData.put("2", aux[2]);
-			courseData.put("3", String.valueOf(valoration));
-			courseData.put("stars", stars);
-			courseData.put("5", aux[5]);
-			coursesModel.add(courseData);
-		}
-		model.addAttribute("newest", "selected");
-		model.addAttribute("valoration", "");
-		model.addAttribute("mostReviewed", "");
-		model.addAttribute("search", "");
-		model.addAttribute("courses", coursesModel);
-		model.addAttribute("filters", filterPair);
-		model.addAttribute("delete", false);
-		return "redirect:/courses-panel";
 	}
 
 	private boolean isJoined(Course course, User user) {

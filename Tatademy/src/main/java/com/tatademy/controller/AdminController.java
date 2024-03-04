@@ -194,6 +194,29 @@ public class AdminController {
 		return "add-course";
 	}
 
+	@GetMapping("/admin/delete-course")
+	public String deletecourse(Model model, @RequestParam Long id) throws SQLException {
+		Course course = courseService.findById(id).orElseThrow();
+
+		// Dissociate reviews from the course
+		for (Review review : course.getReviews()) {
+			review.setCourse(null);
+			reviewService.save(review);
+		}
+		course.getReviews().clear();
+
+		// Remove course from associated users
+		for (User user : course.getUsers()) {
+			user.getCourses().remove(course);
+			userService.save(user); //
+		}
+		course.getUsers().clear();
+
+		userService.deleteByCourseId(id);
+		courseService.deleteById(id);
+		return "redirect:/courses-panel";
+	}
+
 	@PostMapping("/admin/edit/course")
 	public String getMethodName(Model model, @RequestParam Long idEdit, @RequestParam String title,
 			@RequestParam String subject, @RequestParam String description,
@@ -281,7 +304,7 @@ public class AdminController {
 			aux[1] = String.valueOf(reviews.size());
 			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(
 					coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
-			aux[3] = coursesList.get(i).getId().toString();
+			aux[3] = String.valueOf(valoration);
 			aux[4] = String.valueOf(coursesList.get(i).getId());
 			courseInfo.add(aux);
 		}
@@ -310,6 +333,7 @@ public class AdminController {
 		model.addAttribute("courses", coursesModel);
 		model.addAttribute("filters", filterPair);
 		model.addAttribute("delete", true);
+		model.addAttribute("headerBorder", true);
 		return "course-grid";
 	}
 

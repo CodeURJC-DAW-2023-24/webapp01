@@ -29,6 +29,7 @@ public class User {
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
 	@ManyToMany
+	@JsonIgnore
 	private List<Course> courses;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Review> reviews;
