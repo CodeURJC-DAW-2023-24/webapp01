@@ -6,7 +6,8 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -30,7 +30,6 @@ import com.tatademy.model.Course;
 import com.tatademy.model.Review;
 import com.tatademy.model.User;
 import com.tatademy.service.CourseService;
-import com.tatademy.service.ReviewService;
 import com.tatademy.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,9 +40,6 @@ public class UserLoggedController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private ReviewService reviewService;
 
 	@Autowired
 	private CourseService courseService;
@@ -215,7 +211,7 @@ public class UserLoggedController {
 		model.addAttribute("courses", coursesModel);
 		model.addAttribute("filters", filterPair);
 		model.addAttribute("delete", false);
-
+		model.addAttribute("headerBorder", true);
 		return "my-course-list";
 	}
 
@@ -248,63 +244,31 @@ public class UserLoggedController {
 		return "my-reviews-list";
 	}
 
-	@GetMapping("/TatademyStadict")
-	public String tatadyStadistic(Model model) {
-
+	@GetMapping("/user/dashboard")
+	public String tatadyStadistic(Model model, HttpServletRequest request) {
 		// total reviews and stars average
-		model.addAttribute("usersEnroll", userService.findUsersEnrolledInAtLeastOneCourse().size());
-		List<Review> allReviews = reviewService.findAll();
-		Double starAverage = 0.0;
-		for (Review review : allReviews) {
-			starAverage += review.getStarsValue();
+		List<Course> allCourses = userService.findByEmail(request.getUserPrincipal().getName()).getCourses();
+		if (!allCourses.isEmpty()) {
+			model.addAttribute("coursesEnroll", allCourses.size());
+		} else {
+			model.addAttribute("coursesEnroll", 0);
 		}
-		model.addAttribute("TotalReviews", allReviews.size());
-		model.addAttribute("starsAverage", starAverage / (allReviews.size()));
-
-		return "instructor-dashboard";
-	}
-
-	@GetMapping("/cursesMonth")
-	@ResponseBody
-	public Integer[] CursesMonthUntilOct() {
-		List<Course> allCourses = courseService.findAll();
-		Integer[] coursesByMonth = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-		for (Course course : allCourses) {
-			Calendar creationDate = course.getCreationDate();
-			int month = creationDate.get(Calendar.MONTH);
-
-			if (month >= 0 && month <= 9) {
-				coursesByMonth[month]++;
+		List<Review> allReviews = userService.findByEmail(request.getUserPrincipal().getName()).getReviews();
+		if (!allReviews.isEmpty()) {
+			Double starAverage = 0.0;
+			for (Review review : allReviews) {
+				starAverage += review.getStarsValue();
 			}
+			model.addAttribute("TotalReviews", allReviews.size());
+			model.addAttribute("starsAverage", String.format("%.2f", starAverage / (allReviews.size())));
+		} else {
+			model.addAttribute("TotalReviews", 0);
+			model.addAttribute("starsAverage", 0);
 		}
-
-		for (int i = 0; i < coursesByMonth.length; i++) {
-			int cantidadCursos = coursesByMonth[i];
-			System.out.println("/cursesMonth  -> Month " + (i + 1) + ": " + cantidadCursos + " courses created");
-		}
-
-		return coursesByMonth;
-	}
-
-	@GetMapping("/reviewsMonth")
-	@ResponseBody
-	public Integer[] ReviewsMonthUntilSept() {
-		List<Review> allreviews = reviewService.findAll();
-		Integer[] reviewsByMonth = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-		for (Review review : allreviews) {
-			Calendar creationDate = review.getCreationDate();
-			int month = creationDate.get(Calendar.MONTH);
-			if (month >= 0 && month <= 8) {
-				reviewsByMonth[month]++;
-			}
-		}
-		for (int i = 0; i < reviewsByMonth.length; i++) {
-			int cantidadReview = reviewsByMonth[i];
-			System.out.println("/reviewsMonth  -> Month " + (i + 1) + ": " + cantidadReview + " reviews created");
-		}
-		return reviewsByMonth;
+		model.addAttribute("surname", userService.findSurnameByEmail(request.getUserPrincipal().getName()));
+		model.addAttribute("footerWithoutAOS", true);
+		model.addAttribute("chartsJS", true);
+		return "student-dashboard";
 	}
 
 }

@@ -74,7 +74,7 @@
 					</div>
 				</div>
 				<!-- /Overview -->
-				
+				{{#joined}}
 				<!-- Course Content -->
 				<div class="card content-sec">
 					<div class="card-body">
@@ -106,7 +106,7 @@
 					</div>
 				</div>
 				<!-- /Course Content -->
-				
+				{{/joined}}
 				<!-- Reviews -->
 				{{#reviewsFromCourse}}
 				<div class="card review-sec">
@@ -193,13 +193,22 @@
 									{{/joined}}
 									</div>
 									<!-- Inscription -->
-										{{^joined}}
-										<form action="/joinCourse/{{courseId}}">
-											<input class="btn btn-enroll w-100" type="submit" value="Inscribirse">
-										</form>
-										{{/joined}}
+									{{^joined}}
+									<form action="/joinCourse/{{courseId}}">
+										<input class="btn btn-enroll w-100" type="submit" value="Inscribirse">
+									</form>
+									{{/joined}}
 									<!-- /Inscription -->
 								</div>
+								{{#joined}}
+								<div class="video-details">
+									<div class="course-fee">
+										<form action="/leaveCourse/{{courseId}}">
+											<input class="btn btn-danger" type="submit" value="Desapuntarse">
+										</form>
+									</div>
+								</div>
+								{{/joined}}
 							</div>
 						</div>
 					</div>

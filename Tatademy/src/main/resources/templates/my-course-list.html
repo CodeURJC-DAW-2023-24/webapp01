@@ -9,7 +9,8 @@
 								<nav aria-label="breadcrumb" class="page-breadcrumb">
 									<ol class="breadcrumb">
 										<li class="breadcrumb-item"><a href="/">Inicio</a></li>
-										<li class="breadcrumb-item active" aria-current="page">Buscar cursos</li>
+										<li class="breadcrumb-item"><a href="/courses">Buscar cursos</a></li>
+										<li class="breadcrumb-item active" aria-current="page">Mis cursos</li>
 									</ol>
 								</nav>
 							</div>
@@ -19,13 +20,9 @@
 			</div>
 			<!-- /Breadcrumb -->
 			
-			
-
-
 			<!-- Course -->
 			<section class="course-content">
 				<div class="container">
-				{{#courses}}
 					<div class="row">
 						<div class="col-lg-9">
 						
@@ -34,7 +31,7 @@
 								<div class="row">
 									<div class="col-lg-8">	
 										<div class="show-filter add-course-info ">
-											<form action="course-search" id="search-form" accept-charset="utf-8">
+											<form action="#" accept-charset="utf-8">
 												<div class="row gx-2 align-items-center">	
 													<div class="col-md-6 col-item">
 														<div class=" search-group">
@@ -59,8 +56,8 @@
 								</div>
 							</div>
 							<!-- /Filter -->
-							
 							<div class="row">
+								{{#courses}}
 								<div class="col-lg-4 col-md-6 d-flex">
 									<div class="course-box course-design d-flex " >
 										<div class="product">
@@ -98,7 +95,9 @@
 										</div>
 									</div>
 								</div>
+								{{/courses}}
 							</div>
+							
 						</div>
 						<div class="col-lg-3 theiaStickySidebar">
 							<div class="filter-clear">
@@ -114,7 +113,7 @@
 												<h4>Categorías de cursos</h4>
 												<i class="fas fa-angle-down"></i>
 											</div>
-											<form action="course-filter" accept-charset="utf-8">
+											<form action="#" accept-charset="utf-8">
 												{{#filters}}
 												<div>
 													<label class="custom_check">
@@ -138,7 +137,6 @@
 							</div>
 						</div>
 					</div>
-					{{/courses}}
 					
 					{{^courses}}
 					<p>No estás apuntado a ningún curso</p>

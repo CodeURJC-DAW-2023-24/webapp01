@@ -30,7 +30,7 @@ public class User {
 	private List<String> roles;
 	@ManyToMany
 	private List<Course> courses;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Review> reviews;
 	private String image;
 	@Lob

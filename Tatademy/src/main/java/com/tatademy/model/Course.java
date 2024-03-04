@@ -21,23 +21,15 @@ public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	private List<Material> material = new ArrayList<>();
-	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
 	private List<Review> reviews;
 	private String name;
 	private String category;
 	private String description;
 	private String imageString;
 	private Calendar creationDate;
-	public Calendar getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Calendar creationDate) {
-		this.creationDate = creationDate;
-	}
-
 	@Lob
 	@JsonIgnore
 	private Blob imageFile;
@@ -117,6 +109,14 @@ public class Course {
 
 	public void setImageFile(Blob imageFile) {
 		this.imageFile = imageFile;
+	}
+
+	public Calendar getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Calendar creationDate) {
+		this.creationDate = creationDate;
 	}
 
 }

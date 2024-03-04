@@ -47,7 +47,8 @@
         {{^home}}<header class="header header-page">{{/home}}
             <div class="header-fixed">
                 <nav class="navbar navbar-expand-lg header-nav scroll-sticky">
-                    <div class="container">
+	                	{{^headerBorder}}<div class="container">{{/headerBorder}}
+	        			{{#headerBorder}}<div class="container header-border">{{/headerBorder}}
                         <div class="navbar-header">
                             <a id="mobile_btn" href="javascript:void(0);">
 									<span class="bar-icon">
@@ -79,13 +80,18 @@
                                     <a class="" href="/courses">Cursos</a>
                                 </li>
                                 {{#admin}}
+                                {{#adminArea}}
+                                <li class="has-submenu active">
+                                {{/adminArea}}
+                                {{^adminArea}}
                                 <li class="has-submenu">
+                                {{/adminArea}}
                                     <a href="">Administrador<i class="fas fa-chevron-down"></i></a>
                                     <ul class="submenu">
                                         <li><a href="/admin/new/course">Crear Curso</a></li>
                                         <li><a href="/courses-panel">Gestionar Cursos</a></li>
                                         <li><a href="/admin/all/users">Gestionar Usuarios</a></li>
-                                        <li><a href="/TatademyStadict">Estadísticas</a></li>
+                                        <li><a href="/admin/dashboard">Estadísticas</a></li>
                                     </ul>
                                 </li>
                                 {{/admin}}
@@ -102,6 +108,7 @@
                                         <li><a href="/user/my-course-list">Mis Cursos</a></li>
                                         <li><a href="/user/my-reviews-list">Mis Reviews</a></li>
                                         <li><a href="/user/setting-student-security">Seguridad Cuenta</a></li>
+                                        <li><a href="/user/dashboard">Estadísticas</a></li>
                                     </ul>
                                 </li>
                                 {{/user}}

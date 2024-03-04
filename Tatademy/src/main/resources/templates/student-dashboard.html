@@ -1,0 +1,117 @@
+{{>header}}
+
+<!-- Page Wrapper -->
+<div class="page-content instructor-page-content">
+	<div class="container">
+		<div class="row">
+			<!-- sidebar -->
+			<div class="col-xl-3 col-md-4 theiaStickySidebar">
+				<div class="settings-widget dash-profile mb-3">
+					<div class="settings-menu p-0">
+						<div class="profile-bg">
+							<img src="/assets/img/profile-bg.jpg" alt="">
+							<div class="profile-img">
+								{{#userImage}} <img src="data:image/jpeg;base64,{{userImage}}"
+									alt="{{userName}}"> {{/userImage}} {{^userImage}} <img
+									src="/assets/img/user/default-user-icon.jpg" alt="{{userName}}">
+								{{/userImage}}
+							</div>
+						</div>
+						<div class="profile-group">
+							<div class="profile-name text-center">
+								<h4>{{name}} {{surname}}</h4>
+								<p>Estudiante registrado</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="settings-widget account-settings">
+					<div class="settings-menu">
+						<h3>Ajustes Generales</h3>
+						<ul>
+							<li class="nav-item">
+								<a href="/user/setting-edit-profile" class="nav-link">
+								<i class="feather-settings"></i> Editar Perfil
+							</a></li>
+							<li class="nav-item"><a
+								href="/user/setting-student-security" class="nav-link"> <i
+									class="feather-lock"></i> Cambiar contraseña
+							</a></li>
+							<li class="nav-item active"><a
+								href="/user/dashboard" class="nav-link"> <i
+									class="feather-pie-chart"></i>Estadísticas
+							</a></li>
+							<li class="nav-item"><a
+								href="/user/setting-student-delete-profile" class="nav-link">
+									<i class="feather-trash-2"></i> Borrar Perfil
+							</a></li>
+
+							<li class="nav-item"><a href="/user/logout" class="nav-link">
+									<i class="feather-power"></i> Cerrar Sesión
+							</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- /sidebar -->
+
+			<!-- Instructor Dashboard -->
+			<div class="col-xl-9 col-lg-8 col-md-12">
+				<div class="row">
+					<div class="col-md-6 d-flex">
+						<div class="card instructor-card w-100">
+							<div class="card-body">
+								<div class="instructor-inner">
+									<h6>Cursos matriculados</h6>
+									<h4 class="instructor-text-info">{{coursesEnroll}}</h4>
+									<p>Cifras totales</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 d-flex">
+						<div class="card instructor-card w-100">
+							<div class="card-body">
+								<div class="instructor-inner">
+									<h6>Valoración media</h6>
+									<h4 class="instructor-text-warning">{{starsAverage}}</h4>
+									<p>De todos los cursos, hay un total de {{TotalReviews}}
+										reseñas</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card instructor-card">
+							<div class="card-header">
+								<h4>Alta de las matriculaciones en un curso por mes</h4>
+							</div>
+							<div class="card-body">
+								<div id="instructor_chart"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card instructor-card">
+							<div class="card-header">
+								<h4>Reseñas hechas por mes</h4>
+							</div>
+							<div class="card-body">
+								<div id="order_chart"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Instructor Dashboard -->
+
+		</div>
+	</div>
+</div>
+<!-- /Page Wrapper -->
+
+{{>footer}}

@@ -40,16 +40,16 @@ public class WebSecurityConfig {
 				// PUBLIC PAGES
 				.requestMatchers("/").permitAll()
 				.requestMatchers("/faq").permitAll()
-				.requestMatchers("/login").permitAll()
 				.requestMatchers("/register").permitAll()
 				.requestMatchers("/forgot-password").permitAll()
+				.requestMatchers("/login").permitAll()
 				.requestMatchers("/signup").permitAll()
-				.requestMatchers("/logout").permitAll()
 				.requestMatchers("/error").permitAll()
 				.requestMatchers("/courses").permitAll()
 				.requestMatchers("/course-search").permitAll()
 				.requestMatchers("/course-filter").permitAll()
 				.requestMatchers("/course-details/**").permitAll()
+				
 				// USER PAGES
 				.requestMatchers("/user/**").hasAnyRole("USER")
 				.requestMatchers("/generate-pdf").hasAnyRole("USER")
@@ -72,7 +72,7 @@ public class WebSecurityConfig {
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/")
 						.permitAll());
-
+		
 		return http.build();
 	}
 
