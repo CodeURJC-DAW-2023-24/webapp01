@@ -336,22 +336,21 @@ Siguiendo estos pasos, podrás descargar, construir y ejecutar la aplicación Sp
 # Jesús Mariscal Alonso:
 
   Tareas realizadas:
-  Crear base de datos. Crear, actualizar (editar), eliminar curso. Editar, eliminar mostrar panel de usuarios siendo administrador implementado con AJAX. Creación del generador de pdfs.       
-  Descarga de archivos
+  Crear base de datos. Crear, actualizar (editar) y eliminar cursos. Editar, eliminar mostrar panel de usuarios siendo administrador implementado con AJAX. Creación del generador de pdfs (certificados) y su implementación dinámica para los cursos. Descarga de archivos de los cursos.
 
   Listado 5 commits más significativos de la fase:
-  - [Structure, templates and resources](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/9e7c2e1321cea83cbe6a65a90a936b161154dee3)
-  - [User registration, refactoring and bug fixes](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/75bb8788d1fd3f9200dd4e2e098c72424e851d82)
-  - [Spring Security and User login](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/8c2bb34710c215145c945b782fce0e04964d1b69)
-  - [DatabaseInitializer-DataModelFixes-TemplatesStandardization-WebSecurity](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/b00549dee0d63d47c9b3456242253920ae0c1f71)
-  - [ForgotPassword & SendEmails & PasswordGenerator & Templates bug fixes](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/35b6428f54dc4bbfad533274a2d2266a67c53100)
+  - [Initialize DB](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/55690ad5bad38896c4af6821c0799dedec710744)
+  - [Course creation](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/53a7133a62fdd7a7ccadf9ec42e04107e0ef65ca)
+  - [Admin header & its fonctionalities]([https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/8c2bb34710c215145c945b782fce0e04964d1b69](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/cbc5ea6a03c187a4b37fb8d5ed106703985fa4bb))
+  - [Algorithm creation](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/ce46508eaac3d6fa61bcaf01dc269d1c570c3dc3)
+  - [PDF generator created](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/284b8343664ae88b562ad33f225cc50893a5bc0d)
 
   Listado 5 ficheros en los que más haya participado:
+  - AdminUserManager.java
   - CourseController.java
-  - UserLoggedController.java
-  - setting-edit-profile.html
+  - add-course.html
+  - instructor-edit-profile.html
   - course-details.html
-  - CourseRepository.java
 
 # Paula Ruiz Rubio:
 
