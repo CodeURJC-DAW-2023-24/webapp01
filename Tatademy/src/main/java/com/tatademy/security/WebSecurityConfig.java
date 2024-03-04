@@ -47,6 +47,8 @@ public class WebSecurityConfig {
 				.requestMatchers("/logout").permitAll()
 				.requestMatchers("/error").permitAll()
 				.requestMatchers("/courses").permitAll()
+				.requestMatchers("/course-search/{numPage}").permitAll()
+				.requestMatchers("/courses/{numPage}").permitAll()
 				.requestMatchers("/course-search").permitAll()
 				.requestMatchers("/course-filter").permitAll()
 				.requestMatchers("/course-details/**").permitAll()
@@ -54,6 +56,7 @@ public class WebSecurityConfig {
 				.requestMatchers("/user/**").hasAnyRole("USER")
 				.requestMatchers("/generate-pdf").hasAnyRole("USER")
 				// ADMIN PAGES
+				.requestMatchers("/course-search-admin/{numPage}").permitAll()
 				.requestMatchers("/courses-panel").hasAnyRole("ADMIN")
 				.requestMatchers("/delete-course").hasAnyRole("ADMIN")
 				.requestMatchers("/new/course").hasAnyRole("ADMIN")

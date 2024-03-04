@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.tatademy.model.Course;
@@ -28,8 +30,8 @@ public class CourseService {
 		return repository.findById(id);
 	}
 
-	public List<Course> findByNameContains(String name) {
-		return repository.findByNameContains(name);
+	public Page<Course> findByNameContains(String name, Pageable pageable) {
+		return repository.findByNameContains(name, pageable);
 	}
 
 	public Course findByName(String name) {
@@ -40,8 +42,8 @@ public class CourseService {
 		return repository.findAllCategories();
 	}
 
-	public List<Course> findByCategoriyIn(List<String> filters) {
-		return repository.findByCategoriyIn(filters);
+	public Page<Course> findByCategoriyIn(List<String> filters, Pageable pageable) {
+		return repository.findByCategoriyIn(filters, pageable);
 	}
 
 	public String findCategoryById(Long idCourse) {
@@ -56,6 +58,10 @@ public class CourseService {
 		return repository.findMaterialsByIdCourse(idCourse);
 	}
 
+	public Page<Course> findAll(Pageable pageable) {
+		return repository.findAll(pageable);
+	}
+	
 	public List<Course> findAll() {
 		return repository.findAll();
 	}

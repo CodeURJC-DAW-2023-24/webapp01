@@ -41,17 +41,13 @@
 						</div>
 						<div class="col-lg-8">
 							<div class="show-filter add-course-info ">
-								<form action="course-search" id="search-form" accept-charset="utf-8">
+								<form action="course-search-admin" id="search-form" accept-charset="utf-8">
 									<div class="row gx-2 align-items-center">
 										<div class="col-md-6 col-item">
 											<div class=" search-group">
 												<i class="feather-search"></i>
 												<input type="text" class="form-control" placeholder="Buscar cursos"
 													name="name" value="{{search}}" id="searcher">
-											</div>
-										</div>
-										<div class="col-md-6 col-lg-6 col-item">
-											<div class="input-block select-form mb-0">
 											</div>
 										</div>
 									</div>
@@ -70,7 +66,8 @@
 			</div>
 			<div class="col-lg-3 theiaStickySidebar">
 				<div class="filter-clear">
-
+					<div class="clear-filter d-flex align-items-center">
+					</div>
 					{{#delete}}
 					<form action="new/course">
 						<button class="btn btn-primary" id="admin">Añadir curso</button>
