@@ -33,7 +33,13 @@
 								<div class="row">
 									<div class="col-lg-8">	
 										<div class="show-filter add-course-info ">
+											{{#delete}}
+											<form action="course-search-admin" id="search-form" accept-charset="utf-8">
+											{{/delete}}
+											{{^delete}}
 											<form action="course-search" id="search-form" accept-charset="utf-8">
+											{{/delete}}
+											
 												<div class="row gx-2 align-items-center">	
 													<div class="col-md-6 col-item">
 														<div class=" search-group">
@@ -119,7 +125,12 @@
 												<h4>Categorías de cursos</h4>
 												<i class="fas fa-angle-down"></i>
 											</div>
+											{{#delete}}
+											<form action="course-filter-admin" accept-charset="utf-8">
+											{{/delete}}
+											{{^delete}}
 											<form action="course-filter" accept-charset="utf-8">
+											{{/delete}}
 												{{#filters}}
 												<div>
 													<label class="custom_check">

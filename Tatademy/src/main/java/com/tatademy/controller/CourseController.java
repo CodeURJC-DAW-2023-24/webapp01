@@ -145,6 +145,273 @@ public class CourseController {
 
 		return "course-grid";
 	}
+	
+	@GetMapping("/course-search-admin")
+	public String courseSearchAdmin(Model model, @RequestParam String name, @RequestParam String sellist1)
+			throws SQLException {
+		List<Course> coursesList = new ArrayList<>();
+		List<String> filters = courseService.findAllCategories();
+		List<String[]> filterPair = new ArrayList<>();
+		List<String[]> courseInfo = new ArrayList<>();
+		List<Map<String, Object>> coursesModel = new ArrayList<>();
+		Double valoration = 0.0;
+		String newest, valorationtxt, mostReviewed;
+		for (int i = 0; i < filters.size(); ++i) {
+			String[] aux = new String[2];
+			aux[0] = filters.get(i);
+			aux[1] = "";
+			filterPair.add(aux);
+		}
+		coursesList = courseService.findByNameContains(name);
+		switch (sellist1) {
+		case "Valoración":
+			newest = "";
+			valorationtxt = "selected";
+			mostReviewed = "";
+			Collections.sort(coursesList, new Comparator<Course>() {
+				public int compare(Course c1, Course c2) {
+					Double val1 = 0.0;
+					Double val2 = 0.0;
+					for (int i = 0; i < c1.getReviews().size(); ++i) {
+						val1 += c1.getReviews().get(i).getStarsValue();
+					}
+					val1 = val1 / c1.getReviews().size();
+					for (int j = 0; j < c2.getReviews().size(); ++j) {
+						val2 += c2.getReviews().get(j).getStarsValue();
+					}
+					val2 = val2 / c2.getReviews().size();
+					if (val1 > val2) {
+						return -1;
+					} else if (val1 < val2) {
+						return 1;
+					} else {
+						return 0;
+					}
+				}
+			});
+			break;
+		case "Más veces valorado":
+			newest = "";
+			valorationtxt = "";
+			mostReviewed = "selected";
+			Collections.sort(coursesList, new Comparator<Course>() {
+				public int compare(Course c1, Course c2) {
+					int size1 = c1.getReviews().size();
+					int size2 = c2.getReviews().size();
+
+					if (size1 > size2) {
+						return -1;
+					} else if (size1 < size2) {
+						return 1;
+					} else {
+						return 0;
+					}
+				}
+			});
+			break;
+		default:
+			newest = "selected";
+			valorationtxt = "";
+			mostReviewed = "";
+			Collections.sort(coursesList, new Comparator<Course>() {
+				public int compare(Course c1, Course c2) {
+					return c1.getCreationDate().compareTo(c2.getCreationDate());
+				}
+			});
+			break;
+		}
+
+		for (int i = 0; i < coursesList.size(); ++i) {
+			String[] aux = new String[6];
+			List<Review> reviews = new ArrayList<>();
+			reviews = coursesList.get(i).getReviews();
+			valoration = 0.0;
+			if (reviews.size() > 0) {
+				for (int j = 0; j < reviews.size(); ++j) {
+					valoration += reviews.get(j).getStarsValue();
+				}
+				valoration = valoration / reviews.size();
+			}
+			aux[0] = coursesList.get(i).getName();
+			aux[1] = String.valueOf(reviews.size());
+			aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(
+					coursesList.get(i).getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+			aux[3] = String.valueOf(valoration);
+			aux[4] = "";
+			aux[5] = String.valueOf(coursesList.get(i).getId());
+			courseInfo.add(aux);
+		}
+		for (String[] aux : courseInfo) {
+			Map<String, Object> courseData = new HashMap<>();
+			valoration = Double.parseDouble(aux[3]);
+			List<Map<String, Object>> stars = new ArrayList<>();
+			for (int i = 0; i < 5; i++) {
+				Map<String, Object> star = new HashMap<>();
+				star.put("filled", i < valoration);
+				stars.add(star);
+			}
+			courseData.put("0", aux[0]);
+			courseData.put("1", aux[1]);
+			courseData.put("2", aux[2]);
+			courseData.put("3", String.valueOf(valoration));
+			courseData.put("stars", stars);
+			courseData.put("5", aux[5]);
+			coursesModel.add(courseData);
+		}
+		switch (sellist1) {
+		case "Publicado recientemente":
+			newest = "selected";
+			valorationtxt = "";
+			mostReviewed = "";
+			break;
+		case "Valoración":
+			newest = "";
+			valorationtxt = "selected";
+			mostReviewed = "";
+			break;
+		case "Más veces valorado":
+			newest = "";
+			valorationtxt = "";
+			mostReviewed = "selected";
+			break;
+		default:
+			newest = "selected";
+			valorationtxt = "";
+			mostReviewed = "";
+			break;
+		}
+		model.addAttribute("newest", newest);
+		model.addAttribute("valoration", valorationtxt);
+		model.addAttribute("mostReviewed", mostReviewed);
+		model.addAttribute("search", name);
+		model.addAttribute("filters", filterPair);
+		model.addAttribute("courses", coursesModel);
+		model.addAttribute("delete", true);
+		return "course-grid";
+	}
+
+	@GetMapping("/course-filter-admin")
+	public String processFormAdmin(Model model, HttpServletRequest request) throws SQLException {
+		Map<String, String[]> paramMap = request.getParameterMap();
+		List<String> allFilters = courseService.findAllCategories();
+		List<String> filters = new ArrayList<>();
+		List<String> filtersMode = new ArrayList<>();
+		List<String> filtersName = new ArrayList<>();
+		List<String[]> filterPair = new ArrayList<>();
+		List<Course> coursesList = new ArrayList<>();
+		List<String[]> courseInfo = new ArrayList<>();
+		List<Map<String, Object>> coursesModel = new ArrayList<>();
+		Double valoration = 0.0;
+		if (!paramMap.isEmpty()) {
+			for (Map.Entry<String, String[]> entry : paramMap.entrySet()) {
+				String paramName = entry.getKey();
+				String[] paramValues = entry.getValue();
+				filtersName.add(paramName);
+				for (String paramValue : paramValues) {
+					filtersMode.add(paramValue);
+					if (paramValue.equals("on")) {
+						filters.add(paramName);
+					}
+				}
+			}
+			coursesList = courseService.findByCategoriyIn(filters);
+			for (int i = 0; i < coursesList.size(); ++i) {
+				String[] aux = new String[6];
+				List<Review> reviews = new ArrayList<>();
+				reviews = coursesList.get(i).getReviews();
+				valoration = 0.0;
+				if (reviews.size() > 0) {
+					for (int j = 0; j < reviews.size(); ++j) {
+						valoration += reviews.get(j).getStarsValue();
+					}
+					valoration = valoration / reviews.size();
+				}
+				aux[0] = coursesList.get(i).getName();
+				aux[1] = String.valueOf(reviews.size());
+				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i)
+						.getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+				aux[3] = String.valueOf(valoration);
+				aux[4] = "";
+				aux[5] = String.valueOf(coursesList.get(i).getId());
+				courseInfo.add(aux);
+			}
+			for (String[] aux : courseInfo) {
+				Map<String, Object> courseData = new HashMap<>();
+				valoration = Double.parseDouble(aux[3]);
+				List<Map<String, Object>> stars = new ArrayList<>();
+				for (int i = 0; i < 5; i++) {
+					Map<String, Object> star = new HashMap<>();
+					star.put("filled", i < valoration);
+					stars.add(star);
+				}
+				courseData.put("0", aux[0]);
+				courseData.put("1", aux[1]);
+				courseData.put("2", aux[2]);
+				courseData.put("3", String.valueOf(valoration));
+				courseData.put("stars", stars);
+				courseData.put("5", aux[5]);
+				coursesModel.add(courseData);
+			}
+			model.addAttribute("courses", coursesModel);
+		} else {
+			coursesList = courseService.findAll();
+			for (int i = 0; i < coursesList.size(); ++i) {
+				String[] aux = new String[6];
+				List<Review> reviews = new ArrayList<>();
+				reviews = coursesList.get(i).getReviews();
+				valoration = 0.0;
+				if (reviews.size() > 0) {
+					for (int j = 0; j < reviews.size(); ++j) {
+						valoration += reviews.get(j).getStarsValue();
+					}
+					valoration = valoration / reviews.size();
+				}
+				aux[0] = coursesList.get(i).getName();
+				aux[1] = String.valueOf(reviews.size());
+				aux[2] = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coursesList.get(i)
+						.getImageFile().getBytes(1, (int) coursesList.get(i).getImageFile().length()));
+				aux[3] = String.valueOf(valoration);
+				aux[4] = "";
+				aux[5] = String.valueOf(coursesList.get(i).getId());
+				courseInfo.add(aux);
+			}
+			for (String[] aux : courseInfo) {
+				Map<String, Object> courseData = new HashMap<>();
+				valoration = Double.parseDouble(aux[3]);
+				List<Map<String, Object>> stars = new ArrayList<>();
+				for (int i = 0; i < 5; i++) {
+					Map<String, Object> star = new HashMap<>();
+					star.put("filled", i < valoration);
+					stars.add(star);
+				}
+				courseData.put("0", aux[0]);
+				courseData.put("1", aux[1]);
+				courseData.put("2", aux[2]);
+				courseData.put("3", String.valueOf(valoration));
+				courseData.put("stars", stars);
+				courseData.put("5", aux[5]);
+				coursesModel.add(courseData);
+			}
+			model.addAttribute("courses", coursesModel);
+		}
+		for (int i = 0; i < allFilters.size(); ++i) {
+			String[] aux = new String[2];
+			aux[0] = allFilters.get(i);
+			if (filters.contains(allFilters.get(i))) {
+				aux[1] = "checked";
+			} else {
+				aux[1] = "";
+			}
+			filterPair.add(aux);
+		}
+		model.addAttribute("newest", "selected");
+		model.addAttribute("valoration", "");
+		model.addAttribute("mostReviewed", "");
+		model.addAttribute("search", "");
+		model.addAttribute("filters", filterPair);
+		model.addAttribute("delete", true);
+		return "course-grid";
+	}
 
 	@GetMapping("/course-search")
 	public String courseSearch(Model model, @RequestParam String name, @RequestParam String sellist1)
