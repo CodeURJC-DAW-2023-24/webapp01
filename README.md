@@ -382,15 +382,15 @@ Siguiendo estos pasos, podrás descargar, construir y ejecutar la aplicación Sp
   Me he encargado de la pantalla de incio, el manejo de cursos al mostrarlos y buscarlos en la base de datos, tanto para usuarios comunes como para administradores, así como dar apoyo en los listados de    usuarios.
 
   Listado 5 commits más significativos de la fase:
-  - [Structure, templates and resources](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/9e7c2e1321cea83cbe6a65a90a936b161154dee3)
-  - [User registration, refactoring and bug fixes](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/75bb8788d1fd3f9200dd4e2e098c72424e851d82)
-  - [Spring Security and User login](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/8c2bb34710c215145c945b782fce0e04964d1b69)
-  - [DatabaseInitializer-DataModelFixes-TemplatesStandardization-WebSecurity](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/b00549dee0d63d47c9b3456242253920ae0c1f71)
-  - [ForgotPassword & SendEmails & PasswordGenerator & Templates bug fixes](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/35b6428f54dc4bbfad533274a2d2266a67c53100)
+  - [Home and search courses](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/bb9765e576573438c0c0d669b11220f665c4068b)
+  - [Edit-course-button](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/ed7e4d45003f7189b388219c4e0ef36595a5c533#diff-db0b2551d77833720491d18d9cd97a4c1bb5b6ffec87e9626c3f359ca2117454)
+  - [Fixed-bug-admin-search-and-clean-screens](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/2664761c5ccc0232095c8d65d933c32d0d6a0e1c)
+  - [Admin-course-list](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/976567055d36de1fbb259dcaa2ce4c0dc2b61fbb)
+  - [OrderBy-Search](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/ffe257097753d64d8462ca60924156782ce9b740)
 
   Listado 5 ficheros en los que más haya participado:
-  - UserLoggedController
-  - UserAnonymousController
-  - WebSecurityConfig
-  - HomeController
-  - DatabaseInitializerService
+  - CourseController
+  - CourseRepository
+  - Course-script
+  - Course-grid
+  - Home
