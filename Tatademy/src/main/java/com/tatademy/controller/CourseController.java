@@ -1,5 +1,6 @@
 package com.tatademy.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -14,6 +15,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +38,7 @@ import com.tatademy.model.Material;
 import com.tatademy.model.Review;
 import com.tatademy.model.User;
 import com.tatademy.service.CourseService;
+import com.tatademy.service.MaterialService;
 import com.tatademy.service.ReviewService;
 import com.tatademy.service.UserService;
 
@@ -47,6 +53,9 @@ public class CourseController {
 
 	@Autowired
 	private ReviewService reviewService;
+
+	@Autowired
+	private MaterialService materialService;
 
 	@Autowired
 	private UserService userService;
@@ -590,6 +599,17 @@ public class CourseController {
 			model.addAttribute("isRecommendedCoursesAvailable", false);
 		}
 		return "course-details";
+	}
+
+	@GetMapping("/download/{fileId}")
+	public ResponseEntity<byte[]> downloadFile(@PathVariable Long fileId) throws SQLException, IOException {
+		Material material = materialService.findById(fileId).orElseThrow();
+		Blob fileBlob = material.getFile();
+		byte[] fileBytes = fileBlob.getBytes(1, (int) fileBlob.length());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_PDF);
+		headers.setContentDispositionFormData("attachment", material.getFilename() + ".pdf");
+		return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
 	}
 
 	@GetMapping("/joinCourse/{courseId}")
