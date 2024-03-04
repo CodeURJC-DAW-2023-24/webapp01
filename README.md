@@ -356,12 +356,8 @@ Siguiendo estos pasos, podrás descargar, construir y ejecutar la aplicación Sp
 # Paula Ruiz Rubio:
 
   Tareas realizadas:
-  - En lo relativo a un curso:
-    En primer lugar, se implementó la capacidad de mostrar información detallada sobre cada curso disponible en la plataforma. Esto incluyó aspectos esenciales como el nombre del curso, su descripción,       la puntuación media proporcionada por los usuarios, el número total de reseñas realizadas, la cantidad de estudiantes matriculados, así como también el número de materiales asociados al curso y su    
-    categoría.
-    Para mejorar la interacción del usuario con la plataforma, se habilitó la visualización de todas las reseñas disponibles para cada curso y el formulario para añadir una reseña al curso. Finalmente,       se desarrolló una funcionalidad que permitía a los usuarios inscribirse en los cursos. Para realizar todo ello, se adaptó la plantilla de cursos a los cambios realizados
-  - En lo referente a las estadísticas:
-    Se implementaron dos funciones, una para recopilar los datos de la creación de un curso por meses y otra para las reviews. Se adaptó el archivo "chart-data.js" para procesar estos datos y permitir la     creación de gráficos.  Además, se ajustó la plantilla de los gráficos para reflejar estos cambios.
+  - En lo relativo a un curso:Se hizo mostrar información los curso. Se habilitó la visualización de todas las reseñas disponibles para cada curso y sus materiales y, la funcionalidad que permitía a los usuarios inscribirse en los cursos. 
+  - En lo referente a las estadísticas: Se implementaron dos funciones, una para recopilar los datos de la creación de un curso por meses y otra para las reviews. Se adaptó el archivo "chart-data.js" para procesar estos datos y permitir la     creación de gráficos.
 
   Listado 5 commits más significativos de la fase:
   - [Course-details In Main (reviews & Materials)](https://github.com/CodeURJC-DAW-2023-24/webapp01/commit/eb8235451036abb678e74d52ff6e8bb48eaf5052)
