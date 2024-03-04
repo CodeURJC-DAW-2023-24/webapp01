@@ -152,7 +152,8 @@ Esta pantalla es solo accesible para los administradores, tanto desde la pantall
 
 Es una pantalla que funciona para que los administradores puedan gestionar a los usuarios y a los cursos de manera más eficiente.
 ### Panel de usuarios
-![Panel de usuarios](https://github.com/CodeURJC-DAW-2023-24/webapp01/assets/116177156/561fc009-21c2-4fb2-92a2-c679e966d15c)
+![Panel de usuarios](https://github.com/CodeURJC-DAW-2023-24/webapp01/assets/116177156/d1c57538-4192-4f1c-8332-29fe8b6527b4)
+)
 
 
 Esta pantalla solo es accesible para los administradores, a la que llegarán desde la pantalla de "Vista de administrador". Aquí, los administradores pueden gestionar a los usuarios de la aplicación, así como crear o eliminar perfiles. También utilizando el panel de la izquierda, pueden controlar diversas estadísticas y otros valores.
